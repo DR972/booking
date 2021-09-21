@@ -1,0 +1,26 @@
+#menu{
+    float: left;
+    margin-bottom: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+	height: 52px;
+	background: #757272 repeat-x;
+}
+
+#menu a{
+    width: auto;
+    display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 16px;
+	padding: 10px;
+}
+
+#menu a:hover {
+	color: #D72020;
+	text-decoration: underline;
+}

@@ -1,0 +1,38 @@
+2021-09-21 10:28:55.994 INFO  JdbcConnectionPool - Connection pool initialized successfully.
+2021-09-21 10:29:19.887 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-21 10:29:45.901 INFO  AllBookings - In booking # 1, the room number was changed to 33 by the admin ADMIN
+2021-09-21 10:30:21.456 INFO  AllBookings - In booking # 1, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-09-21 10:30:44.933 INFO  AllRooms - For room # 11, the price was changed to '51' by admin ADMIN
+2021-09-21 10:30:55.619 INFO  AllRooms - For room # 11, the price was changed to '50' by admin ADMIN
+2021-09-21 10:31:26.545 INFO  RoomParameters - For room # 11, the parameters were changed to '14' by admin ADMIN
+2021-09-21 10:31:38.676 INFO  RoomParameters - For room # 11, the parameters were changed to '12' by admin ADMIN
+2021-09-21 10:31:47.801 INFO  ServicesPrice - For service  'трансфер', the price was changed to '15.5' by admin ADMIN
+2021-09-21 10:31:54.224 INFO  ServicesPrice - For service  'трансфер', the price was changed to '15' by admin ADMIN
+2021-09-21 10:32:24.133 INFO  newRoom - Admin 'ADMIN' created a new room - Room[roomNumber=1, type='Стандарт', sleeps=1, price=1.0]
+2021-09-21 10:32:39.368 INFO  newRoom - Admin 'ADMIN' created a new room - Room[roomNumber=3, type='Полулюкс', sleeps=3, price=100.0]
+2021-09-21 10:32:58.689 INFO  AllRooms - Room # 1 was deleted by admin ADMIN
+2021-09-21 10:32:59.869 INFO  AllRooms - Room # 3 was deleted by admin ADMIN
+2021-09-21 10:33:44.491 INFO  JdbcConnectionPool - Connection pool initialized successfully.
+2021-09-21 10:33:44.589 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-21 10:33:49.883 INFO  AllRooms - For room # 11, the price was changed to '52' by admin ADMIN
+2021-09-21 10:34:14.399 INFO  JdbcConnectionPool - Connection pool initialized successfully.
+2021-09-21 10:34:14.526 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-21 10:34:18.665 INFO  AllRooms - For room # 11, the price was changed to '50' by admin ADMIN
+2021-09-21 11:57:58.600 INFO  JdbcConnectionPool - Connection pool initialized successfully.
+2021-09-21 11:57:58.711 INFO  Login - The user 'newuser' is logged in.
+2021-09-21 11:58:14.817 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-21 11:58:27.557 INFO  Logout - The user 'newuser' is logged out.
+2021-09-21 11:58:37.441 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-21 11:58:52.315 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-21 11:59:15.171 INFO  AllBookings - In booking # 3, the room number was changed to 11 by the admin ADMIN
+2021-09-21 11:59:31.911 INFO  AllBookings - In booking # 3, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-09-21 11:59:36.970 INFO  AllBookings - In booking # 1, the status was changed to 'ЗАКРЫТ'  by the admin ADMIN
+2021-09-21 12:01:34.195 INFO  AllBookings - In booking # 4, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-09-21 12:01:59.064 INFO  AllBookings - In booking # 1, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-09-21 12:04:11.793 INFO  AllBookings - In booking # 1, the status was changed to 'ЗАКРЫТ'  by the admin ADMIN
+2021-09-21 12:04:27.158 INFO  AllBookings - In booking # 1, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-09-21 12:04:29.653 INFO  AllBookings - In booking # 1, the status was changed to 'ОПЛАЧЕН'  by the admin ADMIN
+2021-09-21 12:04:42.818 INFO  AllRooms - For room # 11, the price was changed to '52' by admin ADMIN
+2021-09-21 12:04:45.087 INFO  AllRooms - For room # 11, the price was changed to '50' by admin ADMIN
+2021-09-21 12:05:01.175 INFO  RoomParameters - For room # 12, the parameters were changed to '16' by admin ADMIN
+2021-09-21 12:05:04.829 INFO  RoomParameters - For room # 12, the parameters were changed to '11' by admin ADMIN

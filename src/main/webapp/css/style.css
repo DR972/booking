@@ -1,0 +1,30 @@
+#content {
+    padding: 50px;
+}
+
+#content table {
+    border-spacing: 8px;
+    max-width: 98%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#content table th {
+    align: center;
+    padding: 4px 8px;
+    border: 1px solid black;
+}
+
+#content table td {
+    align: center;
+    padding: 4px 8px;
+    border: 1px solid black;
+}
+
+#btn {
+    border: 0;
+    padding: 5;
+    background: none;
+    margin-left: 10px;
+    color: #D72020;
+}
