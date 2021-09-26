@@ -11,7 +11,14 @@ import java.util.stream.Collectors;
  * Provides the base model implementation for `USER_ROLE` and `ROLE` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class RoleDaoImp implements RoleDao {
-    private final ConnectionSource con = new ConnectionSource();
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object RoleDaoImp with the <b>con</b> property
+     */
+    public RoleDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Searches for the UserRole in the `USER_ROLE` table by id

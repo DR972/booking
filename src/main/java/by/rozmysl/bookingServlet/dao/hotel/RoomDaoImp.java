@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.dao.hotel;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.Room;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -12,7 +13,14 @@ import java.util.stream.Collectors;
  * Provides the base model implementation for `ROOM` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class RoomDaoImp implements RoomDao {
-    private final ConnectionSource con = new ConnectionSource();
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object RoomDaoImp with the <b>con</b> property
+     */
+    public RoomDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Searches for the Room in the `ROOM` table by id
@@ -62,7 +70,7 @@ public class RoomDaoImp implements RoomDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void updatePrice(Room room, double price) throws SQLException {
+    public void updatePrice(Room room, BigDecimal price) throws SQLException {
         con.update("update ROOM set PRICE =" + price + " where TYPE ='" + room.getType() + "' and SLEEPS =" + room.getSleeps());
     }
 
@@ -216,6 +224,7 @@ public class RoomDaoImp implements RoomDao {
      */
     private List<Room> getResultSet(String sql) throws SQLException {
         return con.get(sql).stream().map(d -> new Room(Integer.parseInt(d.get("ROOMNUMBER")), d.get("TYPE"),
-                Integer.parseInt(d.get("SLEEPS")), Double.parseDouble(d.get("PRICE")))).distinct().collect(Collectors.toList());
+                        Integer.parseInt(d.get("SLEEPS")), new BigDecimal(d.get("PRICE"))))
+                .distinct().collect(Collectors.toList());
     }
 }

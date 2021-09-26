@@ -1,7 +1,8 @@
 package by.rozmysl.bookingServlet.validator;
 
-import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.dao.user.UserDao;
 import by.rozmysl.bookingServlet.entity.user.User;
+import by.rozmysl.bookingServlet.exception.BadCredentialsException;
 
 import java.sql.SQLException;
 
@@ -18,14 +19,12 @@ public class UserValidator extends Validator {
      * Executes all user validate
      *
      * @param user user
-     * @return validation result
      * @throws SQLException if there was an error accessing the database
      */
-    public String allValidate(User user) throws SQLException {
-        if (!validateSignUpParam(user)) return getValidationMessage();
-        if (new DaoFactory().userDao().getById(user.getUsername()) != null) return "val.repeatingName";
-        if (!user.getPassword().equals(user.getPasswordConfirm())) return "val.passwordConfirm";
-        return "Ok";
+    public void allValidate(User user, UserDao userDao) throws SQLException, BadCredentialsException {
+        if (!validateSignUpParam(user)) throw new BadCredentialsException(getValidationMessage());
+        if (userDao.getById(user.getUsername()) != null) throw new BadCredentialsException("val.repeatingName");
+        if (!user.getPassword().equals(user.getPasswordConfirm())) throw new BadCredentialsException("val.passwordConfirm");
     }
 
     /**

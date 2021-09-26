@@ -2,7 +2,9 @@ package by.rozmysl.bookingServlet.action.user;
 
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.Booking;
+import by.rozmysl.bookingServlet.exception.BadCredentialsException;
 import by.rozmysl.bookingServlet.validator.BookingValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,21 +25,28 @@ public class BookingDetails implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
-        String resultValidate = new BookingValidator().allValidate(req);
-        if (!resultValidate.equals("Ok")) {
-            req.setAttribute("errorValidate", resultValidate);
+        DaoFactory dao = DaoFactory.getInstance();
+        final ConnectionSource con = new ConnectionSource();
+        req.setAttribute("foodDao", dao.foodDao(con));
+        req.setAttribute("servicesDao", dao.servicesDao(con));
+        if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/user/bookingDetails.jsp");
+
+        try {
+            new BookingValidator().allValidate(req);
+        } catch (BadCredentialsException e) {
+            req.setAttribute("errorValidate", e.getMessage());
             return String.format("forward:%s", "/WEB-INF/views/user/bookingDetails.jsp");
         }
-        DaoFactory dao = new DaoFactory();
         Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
                 LocalDate.parse(req.getParameter("arrival")).plusDays(Integer.parseInt(req.getParameter("days"))),
-                Integer.parseInt(req.getParameter("days")), dao.foodDao().getById(req.getParameter("food")),
-                dao.servicesDao().getById(req.getParameter("service")));
-        if (dao.roomDao().findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                Integer.parseInt(req.getParameter("days")), dao.foodDao(con).getById(req.getParameter("food")),
+                dao.servicesDao(con).getById(req.getParameter("service")));
+        if (dao.roomDao(con).findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
                 (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
             req.setAttribute("noAvailable", "message.noAvailable");
         }
         req.setAttribute("booking", booking);
+        req.setAttribute("roomDao", dao.roomDao(con));
         return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
     }
 }

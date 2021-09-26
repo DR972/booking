@@ -13,7 +13,7 @@ import java.util.Locale;
  * Provides service to format money in jsp with the <b>value</b> properties.
  */
 public class MoneyTag extends TagSupport {
-    private static final Logger logger = LoggerFactory.getLogger(MoneyTag.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MoneyTag.class);
     private double value;
 
     /**
@@ -31,7 +31,7 @@ public class MoneyTag extends TagSupport {
         try {
             this.pageContext.getOut().print(rubleFormat.format(value));
         } catch (IOException e) {
-            logger.error(String.valueOf(e));
+            LOGGER.error(String.valueOf(e));
             throw new JspException(e);
         }
         return SKIP_BODY;

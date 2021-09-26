@@ -11,6 +11,7 @@ import com.itextpdf.layout.Document;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * Provides a service for creating emails.
@@ -62,14 +63,15 @@ public class Letter {
         table.addCell(new Cell().add(String.valueOf(booking.getRoom().getType())));
         table.addCell(new Cell().add(String.valueOf(booking.getDays())));
         table.addCell(new Cell().add(String.valueOf(booking.getRoom().getPrice())));
-        table.addCell(new Cell().add(String.valueOf(booking.getRoom().getPrice() * booking.getDays())));
+        table.addCell(new Cell().add(String.valueOf(booking.getRoom().getPrice().multiply(new BigDecimal(booking.getDays())))));
 
         table.addCell(new Cell().add("2"));
         table.addCell(new Cell().add("Питание"));
         table.addCell(new Cell().add(String.valueOf(booking.getFood().getType())));
         table.addCell(new Cell().add(String.valueOf(booking.getDays() * booking.getPersons())));
         table.addCell(new Cell().add(String.valueOf(booking.getFood().getPrice())));
-        table.addCell(new Cell().add(String.valueOf(booking.getDays() * booking.getPersons() * booking.getFood().getPrice())));
+        table.addCell(new Cell().add(String.valueOf(booking.getFood().getPrice().multiply(
+                new BigDecimal(booking.getDays() * booking.getPersons())))));
 
         table.addCell(new Cell().add("3"));
         table.addCell(new Cell().add("Дополнительные услуги"));
@@ -79,7 +81,7 @@ public class Letter {
         if (booking.getServices().getType().equals("трансфер")) quantity = 1;
         table.addCell(new Cell().add(String.valueOf(quantity)));
         table.addCell(new Cell().add(String.valueOf(booking.getServices().getPrice())));
-        table.addCell(new Cell().add(String.valueOf(quantity * booking.getServices().getPrice())));
+        table.addCell(new Cell().add(String.valueOf(booking.getServices().getPrice().multiply(new BigDecimal(quantity)))));
         doc.add(table);
 
         doc.add(new Paragraph("Итого: " + booking.getAmount() + "\n\n\n"));

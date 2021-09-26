@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.dao.user;
 
 import by.rozmysl.bookingServlet.dao.Dao;
+import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.entity.user.Booking;
 
 import javax.mail.MessagingException;
@@ -49,7 +50,7 @@ public interface BookingDao extends Dao<Booking, Long> {
      * @param roomId    id of the Room
      * @throws SQLException if there was an error accessing the database
      */
-    void changeRoom(long bookingId, int roomId) throws SQLException;
+    void changeRoom(long bookingId, int roomId, DaoFactory dao) throws SQLException;
 
     /**
      * Changes the User's Booking status in the `BOOKING` table
@@ -60,5 +61,5 @@ public interface BookingDao extends Dao<Booking, Long> {
      * @throws MessagingException if the message cannot be created
      * @throws IOException        if the letter cannot be created
      */
-    void changeStatusBooking(long bookingId, String status) throws IOException, MessagingException, SQLException;
+    void changeStatusBooking(long bookingId, String status, DaoFactory dao) throws IOException, MessagingException, SQLException;
 }

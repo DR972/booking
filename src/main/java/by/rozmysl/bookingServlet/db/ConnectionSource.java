@@ -7,7 +7,8 @@ import java.util.*;
  * Provides a service for working with a database.
  */
 public class ConnectionSource {
-    private final Connection con = DataSource.getConnection();
+    private final ConnectionPool pool = ConnectionPool.getInstance();
+    private final Connection con = pool.getConnectionFromPool();
 
     /**
      * Makes changes to the database.
@@ -17,7 +18,7 @@ public class ConnectionSource {
      */
     public void update(String sql) throws SQLException {
         con.prepareStatement(sql).executeUpdate();
-        DataSource.returnConnection(con);
+        pool.returnConnectionToPool(con);
     }
 
     /**
@@ -32,7 +33,7 @@ public class ConnectionSource {
         ResultSet tableKeys = preparedStatement.getGeneratedKeys();
         tableKeys.next();
         tableKeys.getInt(1);
-        DataSource.returnConnection(con);
+        pool.returnConnectionToPool(con);
     }
 
     /**
@@ -54,7 +55,8 @@ public class ConnectionSource {
             }
             result.add(data);
         }
-        DataSource.returnConnection(con);
+        System.out.println("ConnectionSource get "+result);
+        pool.returnConnectionToPool(con);
         return result;
     }
 
@@ -69,7 +71,7 @@ public class ConnectionSource {
         final ResultSet rs = con.prepareStatement(sql).executeQuery();
         rs.next();
         int rows = rs.getInt("count");
-        DataSource.returnConnection(con);
+        pool.returnConnectionToPool(con);
         return rows;
     }
 }

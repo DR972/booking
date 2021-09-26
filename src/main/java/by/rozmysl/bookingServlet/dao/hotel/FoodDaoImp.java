@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.dao.hotel;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.Food;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,7 +12,14 @@ import java.util.stream.Collectors;
  * Provides the base model implementation for `FOOD` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class FoodDaoImp implements FoodDao {
-    private final ConnectionSource con = new ConnectionSource();
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object FoodDaoImp with the <b>con</b> property
+     */
+    public FoodDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Searches for the Food in the `FOOD` table by id
@@ -55,7 +63,7 @@ public class FoodDaoImp implements FoodDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void changeFoodPrice(String type, double price) throws SQLException {
+    public void changeFoodPrice(String type, BigDecimal price) throws SQLException {
         con.update("update FOOD set PRICE = " + price + " where TYPE = '" + type + "'");
     }
 
@@ -67,7 +75,7 @@ public class FoodDaoImp implements FoodDao {
      * @throws SQLException if there was an error accessing the database
      */
     private List<Food> getResultSet(String sql) throws SQLException {
-        return con.get(sql).stream().map(d -> new Food(d.get("TYPE"), Double.parseDouble(d.get("PRICE"))))
+        return con.get(sql).stream().map(d -> new Food(d.get("TYPE"), new BigDecimal(d.get("PRICE"))))
                 .distinct().collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.dao.hotel;
 import by.rozmysl.bookingServlet.dao.Dao;
 import by.rozmysl.bookingServlet.entity.hotel.Room;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -102,7 +103,7 @@ public interface RoomDao extends Dao<Room, Integer> {
      * @param price new price
      * @throws SQLException if there was an error accessing the database
      */
-    void updatePrice(Room room, double price) throws SQLException;
+    void updatePrice(Room room, BigDecimal price) throws SQLException;
 
     /**
      * Changes the parameters of the Room in the `ROOM` table

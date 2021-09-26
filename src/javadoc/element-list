@@ -10,6 +10,7 @@ by.rozmysl.bookingServlet.dao.user
 by.rozmysl.bookingServlet.db
 by.rozmysl.bookingServlet.entity.hotel
 by.rozmysl.bookingServlet.entity.user
+by.rozmysl.bookingServlet.exception
 by.rozmysl.bookingServlet.mail
 by.rozmysl.bookingServlet.security
 by.rozmysl.bookingServlet.tag

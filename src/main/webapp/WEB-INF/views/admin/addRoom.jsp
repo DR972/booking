@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="by.rozmysl.bookingServlet.dao.hotel.RoomDaoImp" %>
-<jsp:useBean id="roomDao" class="by.rozmysl.bookingServlet.dao.hotel.RoomDaoImp" scope="request" />
 
 <!DOCTYPE html>
 <html>

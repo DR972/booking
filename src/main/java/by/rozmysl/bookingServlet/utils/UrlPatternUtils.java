@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Provides a service for working with URLs.
  */
-public class UrlPatternUtils {
+public final class UrlPatternUtils {
 
     /**
      * Maps the URL of the current request to the url mappings of the servlet.

@@ -2,9 +2,6 @@
 <%@ taglib prefix="ctg" uri="/customtags" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ page import="by.rozmysl.bookingServlet.entity.hotel.StatusReservation" %>
-<%@ page import="by.rozmysl.bookingServlet.dao.user.BookingDaoImp, by.rozmysl.bookingServlet.dao.hotel.RoomDaoImp" %>
-<jsp:useBean id="bookingDao" class="by.rozmysl.bookingServlet.dao.user.BookingDaoImp" scope="request" />
-<jsp:useBean id="roomDao" class="by.rozmysl.bookingServlet.dao.hotel.RoomDaoImp" scope="request" />
 
 <!DOCTYPE html>
 <html>

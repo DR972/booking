@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 @WebServlet(urlPatterns = "/ErrorHandler")
 public class ErrorHandler extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -45,13 +45,13 @@ public class ErrorHandler extends HttpServlet {
         req.setAttribute("code", statusCode);
         req.setAttribute("uri", requestUri);
         if (statusCode != 500) {
-            logger.error("Status: " + statusCode + ", uri: " + requestUri);
+            LOGGER.error("Status: " + statusCode + ", uri: " + requestUri);
             getServletContext().getRequestDispatcher("/WEB-INF/views/error/error.jsp").forward(req, resp);
         } else {
             req.setAttribute("servletName", servletName);
             req.setAttribute("name", throwable.getClass().getName());
             req.setAttribute("message", throwable.getMessage());
-            logger.error("Status: " + statusCode + ", Servlet: " + servletName + ", Exception: "
+            LOGGER.error("Status: " + statusCode + ", Servlet: " + servletName + ", Exception: "
                     + throwable.getClass().getName() + ", uri: " + requestUri + ", message: " + throwable.getMessage());
             getServletContext().getRequestDispatcher("/WEB-INF/views/error/error500.jsp").forward(req, resp);
         }

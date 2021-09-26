@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.entity.hotel;
 
+import java.math.BigDecimal;
 import java.util.StringJoiner;
 
 /**
@@ -9,7 +10,7 @@ public class Room {
     private int roomNumber;
     private String type;
     private int sleeps;
-    private double price;
+    private BigDecimal price;
 
     /**
      * The constructor creates a new object Room without parameters
@@ -47,7 +48,7 @@ public class Room {
      * @param sleeps     sleeps
      * @param price      price
      */
-    public Room(int roomNumber, String type, int sleeps, double price) {
+    public Room(int roomNumber, String type, int sleeps, BigDecimal price) {
         this.roomNumber = roomNumber;
         this.type = type;
         this.sleeps = sleeps;
@@ -113,7 +114,7 @@ public class Room {
      *
      * @return a value of the price
      */
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -122,7 +123,7 @@ public class Room {
      *
      * @param price price
      */
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

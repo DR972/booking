@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * <b>realRequest</b> properties.
  */
 public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
-
     private final String username;
     private final Set<String> roles;
     private final HttpServletRequest realRequest;

@@ -3,7 +3,9 @@ package by.rozmysl.bookingServlet.action.login;
 import by.rozmysl.bookingServlet.authenticator.UserAuthentication;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.User;
+import by.rozmysl.bookingServlet.exception.BadCredentialsException;
 import by.rozmysl.bookingServlet.utils.AppUtils;
 
 import org.slf4j.Logger;
@@ -16,7 +18,7 @@ import java.sql.SQLException;
  * Provides service to initialize actions on the Login.
  */
 public class Login implements Action {
-    private static final Logger logger = LoggerFactory.getLogger(Login.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);
 
     /**
      * Executes actions on request content.
@@ -27,14 +29,16 @@ public class Login implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
-        User user = new DaoFactory().userDao().getById(req.getParameter("username"));
-        String resultAuthenticate = new UserAuthentication().allAuthenticate(user, req);
-        if (!resultAuthenticate.equals("Ok")) {
-            req.setAttribute("loginError", resultAuthenticate);
+        if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
+        User user = DaoFactory.getInstance().userDao(new ConnectionSource()).getById(req.getParameter("username"));
+        try {
+            new UserAuthentication().allAuthenticate(user, req);
+        } catch (BadCredentialsException e) {
+            req.setAttribute("loginError", e.getMessage());
             return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
         }
         AppUtils.saveLoggedUser(req.getSession(), user);
-        logger.info("The user '" + user.getUsername() + "' is logged in.");
+        LOGGER.info("The user '" + user.getUsername() + "' is logged in.");
         int redirectId = -1;
         if (!req.getParameter("redirectId").isEmpty()) redirectId = Integer.parseInt(req.getParameter("redirectId"));
         String requestUri = AppUtils.getRedirectAfterLoginUrl(redirectId);

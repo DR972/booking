@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a password encoding service.
  */
-public class PasswordAuthentication {
+public final class PasswordAuthentication {
     private static final Logger logger = LoggerFactory.getLogger(PasswordAuthentication.class);
     private static final int iterations = 20 * 1000;
     private static final int saltLen = 32;

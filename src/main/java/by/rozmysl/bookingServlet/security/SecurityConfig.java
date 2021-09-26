@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Defines the security configuration of the application.
  */
-public class SecurityConfig {
+public final class SecurityConfig {
 
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";

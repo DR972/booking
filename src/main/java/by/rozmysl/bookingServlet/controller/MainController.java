@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @WebServlet(name = "MainController", urlPatterns = {"/admin/*", "/user/*", "/anonymous/*"})
 public class MainController extends HttpServlet {
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private static final long serialVersionUID = 1L;
     private final Map<String, Action> actionMap = new HashMap<>();
 
@@ -36,16 +36,19 @@ public class MainController extends HttpServlet {
         actionMap.put("activation", new ActivationAccount());
         actionMap.put("logout", new Logout());
         actionMap.put("registration", new Registration());
+        actionMap.put("user", new UserPage());
+        actionMap.put("price", new Price());
         actionMap.put("bookingDetails", new BookingDetails());
         actionMap.put("booking", new BookingPage());
         actionMap.put("userBookings", new UserBookings());
-        actionMap.put("allUsers", new AllUsers());
-        actionMap.put("allBookings", new AllBookings());
-        actionMap.put("addRoom", new newRoom());
-        actionMap.put("allRooms", new AllRooms());
+        actionMap.put("admin", new AdminPage());
+        actionMap.put("allUsers", new OperationsWitAllUsers());
+        actionMap.put("allBookings", new OperationsWithAllBookings());
+        actionMap.put("addRoom", new NewRoom());
+        actionMap.put("allRooms", new OperationsWitAllRooms());
         actionMap.put("freeRooms", new FreeRooms());
-        actionMap.put("changeRoomParameters", new RoomParameters());
-        actionMap.put("changeServicesPrice", new ServicesPrice());
+        actionMap.put("changeRoomParameters", new ChangingRoomParameters());
+        actionMap.put("changeServicesPrice", new ChangingServicesPrice());
     }
 
     /**
@@ -58,21 +61,21 @@ public class MainController extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionKey = req.getParameter("action");
+        String actionKey = req.getRequestURI().substring(req.getRequestURI().lastIndexOf('/') + 1).trim();
         if (req.getPathInfo().equals("/logout")) actionKey = "logout";
-        if (actionKey == null && req.getPathInfo().startsWith("/activation")) actionKey = "activation";
-        if (actionKey == null)
-            getServletContext().getRequestDispatcher("/WEB-INF/views" + req.getRequestURI() + ".jsp").forward(req, resp);
-        else {
-            try {
-                Action action = actionMap.get(actionKey);
-                String view = action.execute(req);
-                if (view.startsWith("redirect")) resp.sendRedirect(view.substring(9));
-                else getServletContext().getRequestDispatcher(view.substring(8)).forward(req, resp);
-            } catch (SQLException | MessagingException e) {
-                logger.error(String.valueOf(e));
-                throw new ServletException(e);
-            }
+        if (req.getPathInfo().startsWith("/activation")) actionKey = "activation";
+        Action action = actionMap.get(actionKey);
+        if (action == null) {
+            getServletContext().getRequestDispatcher("/WEB-INF/views/error/pageDoesNotExist.jsp").forward(req, resp);
+            return;
+        }
+        try {
+            String view = action.execute(req);
+            if (view.startsWith("redirect")) resp.sendRedirect(view.substring(9));
+            else getServletContext().getRequestDispatcher(view.substring(8)).forward(req, resp);
+        } catch (SQLException | MessagingException e) {
+            LOGGER.error(String.valueOf(e));
+            throw new ServletException(e);
         }
     }
 }

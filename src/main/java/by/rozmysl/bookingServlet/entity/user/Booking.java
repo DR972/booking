@@ -5,6 +5,7 @@ import by.rozmysl.bookingServlet.entity.hotel.Food;
 import by.rozmysl.bookingServlet.entity.hotel.Room;
 import by.rozmysl.bookingServlet.entity.hotel.StatusReservation;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.StringJoiner;
 
@@ -22,7 +23,7 @@ public class Booking {
     private int days;
     private Food food;
     private AdditionalServices services;
-    private double amount;
+    private BigDecimal amount;
     private String status = StatusReservation.ORDER.getStatus();
 
     /**
@@ -108,7 +109,7 @@ public class Booking {
      * @param status    status
      */
     public Booking(long number, User user, Room room, int persons, LocalDate arrival, LocalDate departure, int days,
-                   Food food, AdditionalServices services, double amount, String status) {
+                   Food food, AdditionalServices services, BigDecimal amount, String status) {
         this.number = number;
         this.user = user;
         this.room = room;
@@ -289,7 +290,7 @@ public class Booking {
      *
      * @return a value of the amount
      */
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
@@ -298,7 +299,7 @@ public class Booking {
      *
      * @param amount amount
      */
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

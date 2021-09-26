@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.dao.hotel;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.AdditionalServices;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,14 @@ import java.util.stream.Collectors;
  * Provides the base model implementation for `ADDITIONALSERVICES` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class AdditionalServicesDaoImp implements AdditionalServicesDao {
-    private final ConnectionSource con = new ConnectionSource();
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object AdditionalServicesDaoImp with the <b>con</b> property
+     */
+    public AdditionalServicesDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Searches for the Additional Services in the `ADDITIONALSERVICES` table by id
@@ -55,7 +63,7 @@ public class AdditionalServicesDaoImp implements AdditionalServicesDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void changeServicePrice(String type, double price) throws SQLException {
+    public void changeServicePrice(String type, BigDecimal price) throws SQLException {
         con.update("update ADDITIONALSERVICES set PRICE = " + price + " where TYPE = '" + type + "'");
     }
 
@@ -67,7 +75,7 @@ public class AdditionalServicesDaoImp implements AdditionalServicesDao {
      * @throws SQLException if there was an error accessing the database
      */
     private List<AdditionalServices> getResultSet(String sql) throws SQLException {
-        return con.get(sql).stream().map(d -> new AdditionalServices(d.get("TYPE"), Double.parseDouble(d.get("PRICE"))))
+        return con.get(sql).stream().map(d -> new AdditionalServices(d.get("TYPE"), new BigDecimal(d.get("PRICE"))))
                 .distinct().collect(Collectors.toList());
     }
 }

@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
-<%@ page import="java.time.LocalDate, by.rozmysl.bookingServlet.dao.user.BookingDaoImp" %>
-<jsp:useBean id="bookingDao" class="by.rozmysl.bookingServlet.dao.user.BookingDaoImp" scope="request" />
+<%@ page import="java.time.LocalDate" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
@@ -19,6 +18,8 @@
 </head>
 
 <body>
+     <% request.setAttribute("action", "userBookings"); %>
+     ${userBookings}
     <jsp:include page="menuUser.jsp"></jsp:include>
     <div id="content" align="center">
         <h3><br/><fmt:message bundle="${msg}" key="page.userBookings"/></h3>
@@ -34,7 +35,7 @@
                 <th><fmt:message bundle="${msg}" key="book.amount"/></th>
                 <th><fmt:message bundle="${msg}" key="button.cancel"/></th>
             </thead>
-            <c:forEach items="${bookingDao.findAllByUser(loggedUser.username)}" var="booking">
+            <c:forEach items="${booking}" var="booking">
                 <div>
                     <tr>
                         <td><fmt:message bundle="${msg}" key="db.${booking.room.type}"/></td>

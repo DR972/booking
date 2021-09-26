@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.entity.hotel;
 
+import java.math.BigDecimal;
 import java.util.StringJoiner;
 
 /**
@@ -7,7 +8,7 @@ import java.util.StringJoiner;
  */
 public class Food {
     private String type;
-    private double price;
+    private BigDecimal price;
 
     /**
      * The constructor creates a new object Food with the <b>type</b> properties
@@ -24,7 +25,7 @@ public class Food {
      * @param type  id of the Food
      * @param price price
      */
-    public Food(String type, double price) {
+    public Food(String type, BigDecimal price) {
         this.type = type;
         this.price = price;
     }
@@ -52,7 +53,7 @@ public class Food {
      *
      * @return a value of the price
      */
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -61,7 +62,7 @@ public class Food {
      *
      * @param price price
      */
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

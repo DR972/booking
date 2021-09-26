@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.dao.hotel;
 import by.rozmysl.bookingServlet.dao.Dao;
 import by.rozmysl.bookingServlet.entity.hotel.AdditionalServices;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 /**
@@ -17,5 +18,5 @@ public interface AdditionalServicesDao extends Dao<AdditionalServices, String> {
      * @param price new price
      * @throws SQLException if there was an error accessing the database
      */
-    void changeServicePrice(String type, double price) throws SQLException;
+    void changeServicePrice(String type, BigDecimal price) throws SQLException;
 }

@@ -1,10 +1,10 @@
 package by.rozmysl.bookingServlet.authenticator;
 
 import by.rozmysl.bookingServlet.entity.user.User;
+import by.rozmysl.bookingServlet.exception.BadCredentialsException;
 import by.rozmysl.bookingServlet.security.PasswordAuthentication;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 /**
  * Provides user authentication.
@@ -16,13 +16,11 @@ public class UserAuthentication {
      *
      * @param user user
      * @param req  request content
-     * @return authentication result
      */
-    public String allAuthenticate(User user, HttpServletRequest req) {
+    public void allAuthenticate(User user, HttpServletRequest req) throws BadCredentialsException {
         if (user == null || !PasswordAuthentication.check(req.getParameter("password"), user.getPassword())) {
-            return "message.loginError";
+            throw new BadCredentialsException("message.loginError");
         }
-        if (!Objects.requireNonNull(user).getActive()) return "message.activeFalse";
-        return "Ok";
+        if (!user.getActive()) throw new BadCredentialsException("message.activeFalse");
     }
 }

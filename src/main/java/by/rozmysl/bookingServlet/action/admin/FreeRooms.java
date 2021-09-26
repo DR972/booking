@@ -1,6 +1,8 @@
 package by.rozmysl.bookingServlet.action.admin;
 
 import by.rozmysl.bookingServlet.action.Action;
+import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionSource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -18,6 +20,7 @@ public class FreeRooms implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) {
+        req.setAttribute("roomDao", DaoFactory.getInstance().roomDao(new ConnectionSource()));
         if (req.getParameter("from") != null) {
             if (LocalDate.parse(req.getParameter("from")).isBefore(LocalDate.parse(req.getParameter("to")))) {
                 req.setAttribute("from", LocalDate.parse(req.getParameter("from")));

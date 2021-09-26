@@ -15,9 +15,9 @@ public interface Action {
      *
      * @param req request content
      * @return page to go
-     * @throws SQLException if there was an error accessing the database
+     * @throws SQLException       if there was an error accessing the database
      * @throws MessagingException if the message cannot be created
-     * @throws IOException if the letter cannot be created
+     * @throws IOException        if the letter cannot be created
      */
     String execute(HttpServletRequest req) throws SQLException, MessagingException, IOException;
 }

@@ -2,19 +2,31 @@ package by.rozmysl.bookingServlet.dao;
 
 import by.rozmysl.bookingServlet.dao.hotel.*;
 import by.rozmysl.bookingServlet.dao.user.*;
+import by.rozmysl.bookingServlet.db.ConnectionSource;
 
 /**
  * Provides class DaoFactory.
  */
 public class DaoFactory {
+    private static DaoFactory dao;
+
+    /**
+     * Returns DaoFactory instance. Initialize instance if it doesn't.
+     *
+     * @return dao
+     */
+    public static synchronized DaoFactory getInstance() {
+        if (dao == null) dao = new DaoFactory();
+        return dao;
+    }
 
     /**
      * Provides access to the AdditionalServicesDao interface.
      *
      * @return the implementation of the AdditionalServicesDao interface
      */
-    public AdditionalServicesDao servicesDao() {
-        return new AdditionalServicesDaoImp();
+    public AdditionalServicesDao servicesDao(ConnectionSource con) {
+        return new AdditionalServicesDaoImp(con);
     }
 
     /**
@@ -22,8 +34,8 @@ public class DaoFactory {
      *
      * @return the implementation of the FoodDao interface
      */
-    public FoodDao foodDao() {
-        return new FoodDaoImp();
+    public FoodDao foodDao(ConnectionSource con) {
+        return new FoodDaoImp(con);
     }
 
     /**
@@ -31,8 +43,8 @@ public class DaoFactory {
      *
      * @return the implementation of the RoomDao interface
      */
-    public RoomDao roomDao() {
-        return new RoomDaoImp();
+    public RoomDao roomDao(ConnectionSource con) {
+        return new RoomDaoImp(con);
     }
 
     /**
@@ -40,8 +52,8 @@ public class DaoFactory {
      *
      * @return the implementation of the BookingDao interface
      */
-    public BookingDao bookingDao() {
-        return new BookingDaoImp();
+    public BookingDao bookingDao(ConnectionSource con) {
+        return new BookingDaoImp(con);
     }
 
     /**
@@ -49,8 +61,8 @@ public class DaoFactory {
      *
      * @return the implementation of the RoleDao interface
      */
-    public RoleDao roleDao() {
-        return new RoleDaoImp();
+    public RoleDao roleDao(ConnectionSource con) {
+        return new RoleDaoImp(con);
     }
 
     /**
@@ -58,7 +70,7 @@ public class DaoFactory {
      *
      * @return the implementation of the UserDao interface
      */
-    public UserDao userDao() {
-        return new UserDaoImp();
+    public UserDao userDao(ConnectionSource con) {
+        return new UserDaoImp(con);
     }
 }

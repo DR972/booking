@@ -1,9 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ page import="by.rozmysl.bookingServlet.dao.hotel.FoodDaoImp, by.rozmysl.bookingServlet.dao.hotel.AdditionalServicesDaoImp" %>
-<jsp:useBean id="fooDao" class="by.rozmysl.bookingServlet.dao.hotel.FoodDaoImp" scope="request" />
-<jsp:useBean id="servicesDao" class="by.rozmysl.bookingServlet.dao.hotel.AdditionalServicesDaoImp" scope="request" />
 
 <!DOCTYPE html>
 <html>

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Provides a service for working with the session.
  */
-public class AppUtils {
+public final class AppUtils {
     private static int REDIRECT_ID = 0;
     private static final Map<Integer, String> ID_URI = new HashMap<>();
     private static final Map<String, Integer> URI_ID = new HashMap<>();

@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
-<%@ page import="by.rozmysl.bookingServlet.dao.hotel.FoodDaoImp, by.rozmysl.bookingServlet.dao.hotel.AdditionalServicesDaoImp" %>
-<jsp:useBean id="fooDao" class="by.rozmysl.bookingServlet.dao.hotel.FoodDaoImp" scope="request" />
-<jsp:useBean id="servicesDao" class="by.rozmysl.bookingServlet.dao.hotel.AdditionalServicesDaoImp" scope="request" />
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
@@ -40,7 +37,7 @@
                 <tr>
                     <td><fmt:message bundle="${msg}" key="book.food"/>: </td>
                     <td><select id="food" name="food" style="width:178px">
-                        <c:forEach items="${fooDao.getAll(0,0)}" var="food">
+                        <c:forEach items="${foodDao.getAll(0,0)}" var="food">
                             <option value="${food.type}"><fmt:message bundle="${msg}" key="db.${food.type}"/>,
                             <fmt:message bundle="${msg}" key="db.price"/>=<ctg:money value="${food.price}"/></option>
                         </c:forEach>

@@ -12,6 +12,7 @@ import by.rozmysl.bookingServlet.mail.MailSender;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,8 +23,14 @@ import java.util.stream.Collectors;
  * Provides the base model implementation for `BOOKING` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class BookingDaoImp implements BookingDao {
-    private final DaoFactory dao = new DaoFactory();
-    private final ConnectionSource con = new ConnectionSource();
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object BookingDaoImp with the <b>con</b> property
+     */
+    public BookingDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Counts the number of pages in the 'BOOKING` table
@@ -128,13 +135,15 @@ public class BookingDaoImp implements BookingDao {
      *
      * @param bookingId id of the Booking
      * @param roomId    id of the Room
+     * @param dao       DaoFactory dao
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void changeRoom(long bookingId, int roomId) throws SQLException {
-        Booking booking = getById(bookingId);
-        booking.setRoom(dao.roomDao().getById(roomId));
-        con.update("update BOOKING set ROOM = " + roomId + ", AMOUNT = " + calculateAmount(booking) + " where NUMBER = " + bookingId);
+    public void changeRoom(long bookingId, int roomId, DaoFactory dao) throws SQLException {
+        Booking booking = getAllBookingInfo(bookingId, dao);
+        booking.setRoom(dao.roomDao(con).getById(roomId));
+        con.update("update BOOKING set ROOM = " + roomId + ", AMOUNT = " + calculateAmount(booking)
+                + " where NUMBER = " + bookingId);
     }
 
     /**
@@ -142,20 +151,18 @@ public class BookingDaoImp implements BookingDao {
      *
      * @param bookingId id of the Booking
      * @param status    booking status
+     * @param dao       DaoFactory dao
      * @throws SQLException       if there was an error accessing the database
      * @throws MessagingException if the message cannot be created
      * @throws IOException        if the letter cannot be created
      */
     @Override
-    public void changeStatusBooking(long bookingId, String status) throws IOException, MessagingException, SQLException {
-        Booking booking = getById(bookingId);
-        booking.setRoom(dao.roomDao().getById(booking.getRoom().getRoomNumber()));
-        booking.setFood(dao.foodDao().getById(booking.getFood().getType()));
-        booking.setServices(dao.servicesDao().getById(booking.getServices().getType()));
+    public void changeStatusBooking(long bookingId, String status, DaoFactory dao) throws IOException, MessagingException, SQLException {
+        Booking booking = getAllBookingInfo(bookingId, dao);
         String filePath = "src/main/resources/static/" + bookingId + ".pdf";
         if (status.equals("СЧЕТ")) {
             new Letter().createInvoice(booking, filePath);
-            new MailSender().sendMailWithAttachment(dao.userDao().getById(booking.getUser().getUsername()).getEmail(),
+            new MailSender().sendMailWithAttachment(dao.userDao(con).getById(booking.getUser().getUsername()).getEmail(),
                     "СЧЕТ", "Счет во вложении", filePath);
         }
         if (status.equals("ЗАКРЫТ")) new Letter().deleteInvoice(filePath);
@@ -174,7 +181,7 @@ public class BookingDaoImp implements BookingDao {
                 new Room(Integer.parseInt(d.get("ROOM")), d.get("TYPE"), Integer.parseInt(d.get("SLEEPS"))),
                 Integer.parseInt(d.get("PERSONS")), LocalDate.parse(d.get("ARRIVAL")), LocalDate.parse(d.get("DEPARTURE")),
                 Integer.parseInt(d.get("DAYS")), new Food(d.get("FOOD")), new AdditionalServices(d.get("SERVICES")),
-                Double.parseDouble(d.get("AMOUNT")), d.get("STATUS"))).distinct().collect(Collectors.toList());
+                new BigDecimal(d.get("AMOUNT")), d.get("STATUS"))).distinct().collect(Collectors.toList());
     }
 
     /**
@@ -183,11 +190,30 @@ public class BookingDaoImp implements BookingDao {
      * @param booking booking
      * @return booking amount
      */
-    private double calculateAmount(Booking booking) {
-        double service = 0;
+    private BigDecimal calculateAmount(Booking booking) {
+        BigDecimal service = BigDecimal.valueOf(0);
         if (booking.getServices().getType().equals("трансфер")) service = booking.getServices().getPrice();
         if (booking.getServices().getType().equals("стоянка"))
-            service = booking.getServices().getPrice() * booking.getDays();
-        return (booking.getRoom().getPrice() + booking.getFood().getPrice() * booking.getPersons()) * booking.getDays() + service;
+            service = booking.getServices().getPrice().multiply(new BigDecimal(booking.getDays()));
+        return (booking.getFood().getPrice().multiply(new BigDecimal(booking.getPersons()))
+                .add(booking.getRoom().getPrice()))
+                .multiply(new BigDecimal(booking.getDays()))
+                .add(service);
+    }
+
+    /**
+     * Calculates the booking amount
+     *
+     * @param bookingId id of the Booking
+     * @param dao       DaoFactory dao
+     * @return Booking Booking
+     * @throws SQLException if there was an error accessing the database
+     */
+    private Booking getAllBookingInfo(long bookingId, DaoFactory dao) throws SQLException {
+        Booking booking = getById(bookingId);
+        booking.setRoom(dao.roomDao(con).getById(booking.getRoom().getRoomNumber()));
+        booking.setFood(dao.foodDao(con).getById(booking.getFood().getType()));
+        booking.setServices(dao.servicesDao(con).getById(booking.getServices().getType()));
+        return booking;
     }
 }

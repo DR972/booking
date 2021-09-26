@@ -1,9 +1,7 @@
 package by.rozmysl.bookingServlet.dao.user;
 
-import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.User;
-import by.rozmysl.bookingServlet.entity.user.UserRole;
 import by.rozmysl.bookingServlet.mail.Letter;
 import by.rozmysl.bookingServlet.mail.MailSender;
 import by.rozmysl.bookingServlet.security.PasswordAuthentication;
@@ -19,9 +17,15 @@ import java.util.*;
  * Provides the base model implementation for `USER` table DAO with the <b>ConnectionSource</b> properties.
  */
 public class UserDaoImp implements UserDao {
-    private static final Logger logger = LoggerFactory.getLogger(UserDaoImp.class);
-    private final ConnectionSource con = new ConnectionSource();
-    private final DaoFactory dao = new DaoFactory();
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImp.class);
+    private final ConnectionSource con;
+
+    /**
+     * The constructor creates a new object UserDaoImp with the <b>con</b> property
+     */
+    public UserDaoImp(ConnectionSource con) {
+        this.con = con;
+    }
 
     /**
      * Counts the number of pages in the 'USER` table
@@ -94,7 +98,6 @@ public class UserDaoImp implements UserDao {
                 + "','" + user.getEmail() + "','" + PasswordAuthentication.getSaltedHash(user.getPassword()) + "','" +
                 user.getActive() + "','" + user.getActivationCode() + "')";
         con.update(sql);
-        dao.roleDao().save(new UserRole(user.getUsername(), "USER"));
         return user;
     }
 
@@ -106,7 +109,6 @@ public class UserDaoImp implements UserDao {
      */
     @Override
     public void delete(String username) throws SQLException {
-        dao.roleDao().delete(username);
         con.update("delete from USER where USERNAME = '" + username + "'");
     }
 
@@ -122,7 +124,7 @@ public class UserDaoImp implements UserDao {
         User user = findUserByActivationCode(code);
         if (user == null) return false;
         con.update("update USER set ACTIVE = 'true', ACTIVATIONCODE = 'null' where USERNAME = '" + user.getUsername() + "'");
-        logger.info("The user '" + user.getUsername() + "' is activated.");
+        LOGGER.info("The user '" + user.getUsername() + "' is activated.");
         return true;
     }
 

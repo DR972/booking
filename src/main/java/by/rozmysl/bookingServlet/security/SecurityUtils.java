@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Checks the user's rights to access the page.
  */
-public class SecurityUtils {
+public final class SecurityUtils {
 
     /**
      * Checks whether this 'request' requires a login or not.
