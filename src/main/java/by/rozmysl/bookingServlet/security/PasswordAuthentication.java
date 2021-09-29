@@ -20,6 +20,9 @@ public final class PasswordAuthentication {
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 256;
 
+    private PasswordAuthentication() {
+    }
+
     /**
      * Computes a salted PBKDF2 hash of given plaintext password
      *

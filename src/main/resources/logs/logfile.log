@@ -24,3 +24,250 @@
 2021-09-26 14:48:39.776 INFO  OperationsWitAllRooms - Room # 2 was deleted by admin ADMIN
 2021-09-26 14:56:16.819 INFO  ConnectionPool - Connection pool initialized successfully.
 2021-09-26 14:56:16.955 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 12:04:47.065 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 12:04:47.246 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 12:05:29.983 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 12:33:06.379 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 12:33:19.659 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 12:33:53.739 INFO  ChangingRoomParameters - For room # 11, the parameters were changed to '31' by admin ADMIN
+2021-09-28 12:33:56.669 INFO  ChangingRoomParameters - For room # 11, the parameters were changed to '12' by admin ADMIN
+2021-09-28 12:33:59.677 INFO  ChangingRoomParameters - For room # 11, the price was changed to '53' by admin ADMIN
+2021-09-28 12:34:02.166 INFO  ChangingRoomParameters - For room # 11, the price was changed to '50' by admin ADMIN
+2021-09-28 12:40:34.737 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 12:40:43.015 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 12:40:48.937 INFO  OperationsWithAllBookings - In booking # 1, the room number was changed to 15 by the admin ADMIN
+2021-09-28 12:40:53.790 INFO  OperationsWithAllBookings - In booking # 1, the room number was changed to 11 by the admin ADMIN
+2021-09-28 12:57:08.539 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 12:57:15.075 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 12:57:47.176 INFO  NewRoom - Admin 'ADMIN' created a new room - Room[roomNumber=1, type='Стандарт', sleeps=2, price=50]
+2021-09-28 12:59:55.253 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 13:00:07.947 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 13:00:18.035 INFO  NewRoom - Admin 'ADMIN' created a new room - Room[roomNumber=3, type='Стандарт', sleeps=2, price=50]
+2021-09-28 13:02:16.885 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 13:02:23.748 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 13:02:37.865 INFO  OperationsWitAllRooms - Room # 1 was deleted by admin ADMIN
+2021-09-28 13:02:38.839 INFO  OperationsWitAllRooms - Room # 3 was deleted by admin ADMIN
+2021-09-28 13:04:57.389 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 13:05:07.048 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 13:05:15.830 INFO  NewRoom - Admin 'ADMIN' created a new room - Room[roomNumber=2, type='Стандарт', sleeps=1, price=2]
+2021-09-28 14:07:24.279 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 14:07:30.913 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 14:07:30.947 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NumberFormatException, uri: /admin/allBookings, message: null
+2021-09-28 14:08:34.952 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 14:08:35.155 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 14:48:35.003 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 14:48:41.546 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 14:50:00.040 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '16' by admin ADMIN
+2021-09-28 14:50:08.734 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '31' by admin ADMIN
+2021-09-28 14:50:16.333 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:50:20.688 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:50:25.215 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '14' by admin ADMIN
+2021-09-28 14:50:30.964 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '14' by admin ADMIN
+2021-09-28 14:50:35.036 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:50:38.270 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:51:21.405 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '32' by admin ADMIN
+2021-09-28 14:51:39.712 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:53:21.705 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 14:53:29.366 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 14:53:33.947 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '14' by admin ADMIN
+2021-09-28 14:53:36.677 INFO  ChangingRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-28 14:53:39.877 INFO  ChangingRoomParameters - For room # 2, the price was changed to '52' by admin ADMIN
+2021-09-28 14:53:42.410 INFO  ChangingRoomParameters - For room # 2, the price was changed to '50' by admin ADMIN
+2021-09-28 14:56:59.699 INFO  OperationsWitAllRooms - For room # 2, the price was changed to '52' by admin ADMIN
+2021-09-28 14:57:02.134 INFO  OperationsWitAllRooms - For room # 2, the price was changed to '50' by admin ADMIN
+2021-09-28 14:57:51.581 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 14:57:58.156 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 14:58:02.127 INFO  OperationsWitAllRooms - For room # 2, the price was changed to '52' by admin ADMIN
+2021-09-28 14:58:04.181 INFO  OperationsWitAllRooms - For room # 2, the price was changed to '50' by admin ADMIN
+2021-09-28 15:13:54.451 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 15:14:01.795 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 15:15:33.798 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 15:15:41.329 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 15:22:23.192 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 16:58:03.662 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 16:58:10.352 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 16:58:13.800 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [60]
+
+57:                         <form action="allBookings" method="POST">
+58:                             <select id ="room" name ="roomId" required>
+59:                                 <option value="">- Выбрать номер -</option>
+60:                                 <c:forEach items="${availableRooms(booking)}" var="r">
+61:                                     <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
+62:                                 </c:forEach>
+63:                                 <input type="hidden" name="action" value="allBookings"/>
+
+
+Stacktrace:
+2021-09-28 16:59:27.220 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 16:59:33.971 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 16:59:34.486 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [60]
+
+57:                         <form action="allBookings" method="POST">
+58:                             <select id ="room" name ="roomId" required>
+59:                                 <option value="">- Выбрать номер -</option>
+60:                                 <c:forEach items="${availableRooms(booking.number)}" var="r">
+61:                                     <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
+62:                                 </c:forEach>
+63:                                 <input type="hidden" name="action" value="allBookings"/>
+
+
+Stacktrace:
+2021-09-28 17:01:38.722 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:01:38.927 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:03:55.335 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:04:01.618 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:08:00.323 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:08:06.288 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:12:40.425 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:12:47.270 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:33:42.071 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: org.apache.jasper.JasperException: javax.el.ELException: Failed to parse the expression [${availableRooms.['1']}]
+2021-09-28 17:37:22.420 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:37:28.407 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:40:57.861 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 17:41:03.232 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 17:45:53.596 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [55]
+
+52:             </thead>
+53:             <c:forEach items="${allBookings}" var="booking">
+54:                 <tr>${booking.number}
+55:                 ${availableRooms.getValue(1)}
+56:                     <td>${booking.number}</td>
+57:                     <td>${booking.room.roomNumber}</td>
+58:                     <td align = "left">
+
+
+Stacktrace:
+2021-09-28 17:55:25.028 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: /WEB-INF/views/admin/allBookings.jsp (line: [62], column: [32]) Attribute [int] invalid for tag [set] according to TLD
+2021-09-28 17:55:38.451 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: /WEB-INF/views/admin/allBookings.jsp (line: [62], column: [32]) Attribute [integer] invalid for tag [set] according to TLD
+2021-09-28 17:55:51.571 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: /WEB-INF/views/admin/allBookings.jsp (line: [62], column: [32]) Attribute [Integer] invalid for tag [set] according to TLD
+2021-09-28 19:09:18.546 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 19:09:24.667 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 19:11:39.842 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [55]
+
+52:             </thead>
+53:             <c:forEach items="${allBookings}" var="booking">
+54:                 <tr>${booking.number}
+55:                 ${availableRooms('1')}
+56:                     <td>${booking.number}</td>
+57:                     <td>${booking.room.roomNumber}</td>
+58:                     <td align = "left">
+
+
+Stacktrace:
+2021-09-28 19:11:56.494 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [55]
+
+52:             </thead>
+53:             <c:forEach items="${allBookings}" var="booking">
+54:                 <tr>${booking.number}
+55:                 ${availableRooms(1)}
+56:                     <td>${booking.number}</td>
+57:                     <td>${booking.room.roomNumber}</td>
+58:                     <td align = "left">
+
+
+Stacktrace:
+2021-09-28 19:16:31.753 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 19:16:38.416 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 19:18:55.043 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 19:19:01.278 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 19:35:38.747 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/admin/allBookings.jsp] at line [62]
+
+59:                         <form action="allBookings" method="POST">
+60:                             <select id ="room" name ="roomId" required>
+61:                                 <option value="">- Выбрать номер -</option>
+62:                                 <c:forEach items="${availableRooms.entrySet()['booking.number']}" var="r">
+63:                                     <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
+64:                                 </c:forEach>
+65:                                 <input type="hidden" name="action" value="allBookings"/>
+
+
+Stacktrace:
+2021-09-28 19:39:15.409 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 19:39:21.609 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 19:58:55.921 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /user/bookingDetails, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/user/bookingDetails.jsp] at line [40]
+
+37:                 <tr>
+38:                     <td><fmt:message bundle="${msg}" key="book.food"/>: </td>
+39:                     <td><select id="food" name="food" style="width:178px">
+40:                         <c:forEach items="${food.getAll(0,0)}" var="food">
+41:                             <option value="${food.type}"><fmt:message bundle="${msg}" key="db.${food.type}"/>,
+42:                             <fmt:message bundle="${msg}" key="db.price"/>=<ctg:money value="${food.price}"/></option>
+43:                         </c:forEach>
+
+
+Stacktrace:
+2021-09-28 20:00:41.239 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /user/bookingDetails, message: org.apache.jasper.JasperException: An exception occurred processing JSP page [/WEB-INF/views/user/bookingDetails.jsp] at line [40]
+
+37:                 <tr>
+38:                     <td><fmt:message bundle="${msg}" key="book.food"/>: </td>
+39:                     <td><select id="food" name="food" style="width:178px">
+40:                         <c:forEach items="${food.getAll(0,0)}" var="food">
+41:                             <option value="${food.type}"><fmt:message bundle="${msg}" key="db.${food.type}"/>,
+42:                             <fmt:message bundle="${msg}" key="db.price"/>=<ctg:money value="${food.price}"/></option>
+43:                         </c:forEach>
+
+
+Stacktrace:
+2021-09-28 20:01:22.022 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:01:33.768 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:01:47.178 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:01:58.599 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:02:13.228 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:02:23.471 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:02:33.270 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NullPointerException, uri: /user/bookingDetails, message: Cannot invoke "by.rozmysl.bookingServlet.db.ConnectionSource.get(String)" because "this.con" is null
+2021-09-28 20:02:44.700 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NullPointerException, uri: /user/bookingDetails, message: Cannot invoke "by.rozmysl.bookingServlet.db.ConnectionSource.get(String)" because "this.con" is null
+2021-09-28 20:02:48.755 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NullPointerException, uri: /user/bookingDetails, message: Cannot invoke "by.rozmysl.bookingServlet.db.ConnectionSource.get(String)" because "this.con" is null
+2021-09-28 20:03:22.342 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 20:03:28.690 INFO  Login - The user 'newuser' is logged in.
+2021-09-28 20:03:40.289 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:03:52.925 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:04:04.002 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:04:15.464 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:04:26.820 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:04:39.686 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:04:49.556 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:05:03.452 INFO  BookingPage - The booking was made by the user - newuser
+2021-09-28 20:05:11.887 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NullPointerException, uri: /user/bookingDetails, message: Cannot invoke "by.rozmysl.bookingServlet.db.ConnectionSource.get(String)" because "this.con" is null
+2021-09-28 20:05:42.419 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 20:05:52.060 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 20:06:02.660 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-28 20:07:14.793 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 20:07:22.089 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-28 20:07:32.834 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NumberFormatException, uri: /admin/allBookings, message: For input string: ""
+2021-09-28 20:07:39.227 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: java.lang.NumberFormatException, uri: /admin/allBookings, message: For input string: ""
+2021-09-28 20:18:29.331 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-28 20:18:37.778 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 08:25:58.017 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-29 08:26:04.976 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 08:26:23.676 INFO  ChangeRoomParameters - For room # 2, the parameters were changed to '16' by admin ADMIN
+2021-09-29 08:26:28.386 INFO  ChangeRoomParameters - For room # 2, the parameters were changed to '11' by admin ADMIN
+2021-09-29 08:26:32.096 INFO  ChangeRoomParameters - For room # 2, the price was changed to '53' by admin ADMIN
+2021-09-29 08:26:35.293 INFO  ChangeRoomParameters - For room # 2, the price was changed to '50' by admin ADMIN
+2021-09-29 08:31:04.678 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-29 08:31:12.788 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 08:31:20.165 INFO  GetUserBookings - Booking # 1 was canceled by the user.
+2021-09-29 08:32:43.378 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-09-29 08:32:46.095 INFO  Logout - The user 'ADMIN' is logged out.
+2021-09-29 08:32:53.514 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 08:33:00.653 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '7.5' by admin ADMIN
+2021-09-29 08:33:03.360 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '7' by admin ADMIN
+2021-09-29 08:33:05.879 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '11.5' by admin ADMIN
+2021-09-29 08:33:07.506 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '12' by admin ADMIN
+2021-09-29 08:33:31.456 INFO  GetAllRooms - For room # 2, the price was changed to '51' by admin ADMIN
+2021-09-29 08:33:34.116 INFO  GetAllRooms - For room # 2, the price was changed to '50' by admin ADMIN
+2021-09-29 08:33:36.212 ERROR MainController - org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Нарушение ссылочной целостности: "FK_ROOM: PUBLIC.BOOKING FOREIGN KEY(ROOM) REFERENCES PUBLIC.ROOM(ROOMNUMBER) (2)"
+Referential integrity constraint violation: "FK_ROOM: PUBLIC.BOOKING FOREIGN KEY(ROOM) REFERENCES PUBLIC.ROOM(ROOMNUMBER) (2)"; SQL statement:
+delete from ROOM where ROOMNUMBER = 2 [23503-200]
+2021-09-29 08:33:36.355 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allRooms, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Нарушение ссылочной целостности: "FK_ROOM: PUBLIC.BOOKING FOREIGN KEY(ROOM) REFERENCES PUBLIC.ROOM(ROOMNUMBER) (2)"
+Referential integrity constraint violation: "FK_ROOM: PUBLIC.BOOKING FOREIGN KEY(ROOM) REFERENCES PUBLIC.ROOM(ROOMNUMBER) (2)"; SQL statement:
+delete from ROOM where ROOMNUMBER = 2 [23503-200]
+2021-09-29 08:34:24.133 INFO  GetAllBookings - Booking # 71 was deleted by admin ADMIN
+2021-09-29 08:37:23.984 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-29 08:37:32.275 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 08:37:43.093 INFO  GetAllBookings - Booking # 72 was deleted by admin ADMIN
+2021-09-29 08:38:03.409 INFO  GetAllRooms - Room # 2 was deleted by admin ADMIN
+2021-09-29 08:41:44.283 INFO  GetAllBookings - In booking # 4, the status was changed to 'ОПЛАЧЕН'  by the admin ADMIN
+2021-09-29 08:41:47.964 INFO  GetAllBookings - In booking # 4, the status was changed to 'ЗАКРЫТ'  by the admin ADMIN
+2021-09-29 08:41:50.722 INFO  GetAllBookings - In booking # 4, the status was changed to 'ЗАКАЗ'  by the admin ADMIN
+2021-09-29 08:45:37.003 INFO  GetAllBookings - In booking # 84, the status was changed to 'ОПЛАЧЕН'  by the admin ADMIN
+2021-09-29 08:45:40.604 INFO  GetAllBookings - In booking # 84, the status was changed to 'ЗАКАЗ'  by the admin ADMIN

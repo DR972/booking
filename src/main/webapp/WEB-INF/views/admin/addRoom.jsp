@@ -29,7 +29,7 @@
                         <c:if test = "${type == null}">
                             <select id="room" name="type" required>
                                 <option value="" label="- Выбрать -"/>
-                                <c:forEach items="${roomDao.findAllTypesRooms()}" var="room">
+                                <c:forEach items="${allRooms}" var="room">
                                     <option value = "${room.type}">${room.type}</option>
                                 </c:forEach>
                             </select>
@@ -39,12 +39,12 @@
                 <tr>
                     <td>Кол-во мест: </td>
                     <td align = "center">${sleeps}
-                        <c:if test = "${roomNumber == null}">
+                        <c:if test = "${sleeps == null}">
                             <input type="number" name="sleeps" min="1" required style="width:87px"></input>
                         </c:if>
                     </td>
                 </tr>
-                <c:if test = "${type!=null && roomDao.findRoomByTypeAndSleeping(type, sleeps) == null}">
+                <c:if test = "${type!=null && newRoom == null}">
                     <tr>
                         <td>Цена: </td>
                         <td align = "center"><input type="number" name="price" min="1" required style="width:87px"></input></td>

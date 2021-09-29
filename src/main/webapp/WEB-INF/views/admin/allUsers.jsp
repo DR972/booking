@@ -11,18 +11,9 @@
 
 <body>
     <jsp:include page="adminMenu.jsp"></jsp:include>
-        <c:if test = "${empty page}">
-            <c:set var="page" value="0"/>
-        </c:if>
-        <c:if test = "${empty rows}">
-            <c:set var="rows" value="10"/>
-        </c:if>
-        <c:set var="countPages" value="${userDao.countUsersPages(rows)}"/>
-
     <div id="content" align="center">
         <h3>Все пользователи</h3>
         <h4 style="color: red;">${errorDeleteUser}</h4>
-
         <c:if test = "${countPages>1}">
             <div align = "right">
                 <a>Количество строк на странице:</a>
@@ -50,7 +41,7 @@
                 <th>Роли</th>
                 <th>Удалить</th>
             </thead>
-            <c:forEach items="${userDao.getAll(page, rows)}" var="user">
+            <c:forEach items="${allUsers}" var="user">
                 <tr align = "center">
                     <td>${user.username}</td>
                     <td>${user.lastname}</td>

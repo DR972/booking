@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ page import="by.rozmysl.bookingServlet.entity.hotel.StatusReservation" %>
+<%@ page import="java.util.Map, java.util.List, by.rozmysl.bookingServlet.entity.hotel.Room" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,14 +12,6 @@
 </head>
 <body>
     <jsp:include page="adminMenu.jsp"></jsp:include>
-    <c:if test = "${empty page}">
-        <c:set var="page" value="0"/>
-    </c:if>
-    <c:if test = "${empty rows}">
-        <c:set var="rows" value="10"/>
-    </c:if>
-    <c:set var="countPages" value="${bookingDao.countBookingsPages(rows)}"/>
-
     <div id="content" align="center">
         <h3>Все бронирования</h3>
         <c:if test = "${countPages>1}">
@@ -57,15 +49,16 @@
                 <th>Изменить статус</th>
                 <th>Удалить</th>
             </thead>
-            <c:forEach items="${bookingDao.getAll(page, rows)}" var="booking">
-                <tr>
+            <c:forEach items="${allBookings}" var="booking">
+                <tr>${booking.number}
+                ${availableRooms[39]}
                     <td>${booking.number}</td>
                     <td>${booking.room.roomNumber}</td>
                     <td align = "left">
                         <form action="allBookings" method="POST">
                             <select id ="room" name ="roomId" required>
                                 <option value="">- Выбрать номер -</option>
-                                <c:forEach items="${roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(booking.arrival, booking.departure, booking.persons)}" var="r">
+                                <c:forEach items="${availableRooms[booking.number]}" var="r">
                                     <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
                                 </c:forEach>
                                 <input type="hidden" name="action" value="allBookings"/>
@@ -89,22 +82,20 @@
                     <td>${booking.user.username}</td>
                     <td>${booking.status}</td>
                     <td>
-                        <c:if test = "${roomDao.getById(booking.room.roomNumber) != null}">
-                            <form action="allBookings" method="POST">
-                                <select id ="status" name ="status" required>
-                                    <option value="">- Изменить -</option>
-                                    <c:forEach items="<%=StatusReservation.values()%>" var="st">
-                                        <option value = "${st.status}">${st.status}</option>
-                                    </c:forEach>
-                                    <input type="hidden" name="action" value="allBookings"/>
-                                    <input type="hidden" name="page" value="${page}"/>
-                                    <input type="hidden" name="rows" value="${rows}"/>
-                                    <input type="hidden" name="bookingId" value="${booking.number}"/>
-                                    <input type="hidden" name="changeStatus" value="changeStatus"/>
-                                    <button type="submit">Подтвердить</button>
-                                </select>
-                            </form>
-                        </c:if>
+                        <form action="allBookings" method="POST">
+                            <select id ="status" name ="status" required>
+                                <option value="">- Изменить -</option>
+                                <c:forEach items="${status}" var="st">
+                                    <option value = "${st.status}">${st.status}</option>
+                                </c:forEach>
+                                <input type="hidden" name="action" value="allBookings"/>
+                                <input type="hidden" name="page" value="${page}"/>
+                                <input type="hidden" name="rows" value="${rows}"/>
+                                <input type="hidden" name="bookingId" value="${booking.number}"/>
+                                <input type="hidden" name="changeStatus" value="changeStatus"/>
+                                <button type="submit">Подтвердить</button>
+                            </select>
+                        </form>
                     </td>
                     <td>
                         <form action="allBookings" method="POST">

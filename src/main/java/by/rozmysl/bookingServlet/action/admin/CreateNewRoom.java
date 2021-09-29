@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.action.admin;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.dao.hotel.RoomDao;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.Room;
 
@@ -14,10 +15,10 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 /**
- * Provides service to initialize actions on the NewRoom.
+ * Provides service to initialize actions on the CreateNewRoom.
  */
-public class NewRoom implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NewRoom.class);
+public class CreateNewRoom implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreateNewRoom.class);
 
     /**
      * Executes actions on request content.
@@ -28,12 +29,14 @@ public class NewRoom implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
-        RoomDao roomDao = DaoFactory.getInstance().roomDao(new ConnectionSource());
-        req.setAttribute("roomDao", roomDao);
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
+        RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
+
         if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
         if (roomDao.getById(Integer.parseInt(req.getParameter("roomNumber"))) != null) {
             req.setAttribute("errorRoomNumber", "Изменить параметры существующих номеров можно на странице" +
                     " \"Изменить параметры номеров\"");
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
         }
         Room room = roomDao.findRoomByTypeAndSleeping(req.getParameter("type"), Integer.parseInt(req.getParameter("sleeps")));
@@ -41,6 +44,8 @@ public class NewRoom implements Action {
             req.setAttribute("roomNumber", req.getParameter("roomNumber"));
             req.setAttribute("type", req.getParameter("type"));
             req.setAttribute("sleeps", Integer.parseInt(req.getParameter("sleeps")));
+            req.setAttribute("newRoom", null);
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
         }
         if (room != null) {
@@ -53,6 +58,8 @@ public class NewRoom implements Action {
                     Integer.parseInt(req.getParameter("sleeps")), new BigDecimal(req.getParameter("price"))));
             LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
         }
+        req.setAttribute("allRooms", roomDao.findAllTypesRooms());
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/admin.jsp");
     }
 }

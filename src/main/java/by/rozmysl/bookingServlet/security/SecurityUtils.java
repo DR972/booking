@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class SecurityUtils {
 
+    private SecurityUtils() {
+    }
+
     /**
      * Checks whether this 'request' requires a login or not.
      *

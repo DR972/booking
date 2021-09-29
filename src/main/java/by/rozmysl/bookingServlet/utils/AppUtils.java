@@ -14,6 +14,9 @@ public final class AppUtils {
     private static final Map<Integer, String> ID_URI = new HashMap<>();
     private static final Map<String, Integer> URI_ID = new HashMap<>();
 
+    private AppUtils() {
+    }
+
     /**
      * Saves the user's information in the Session.
      *

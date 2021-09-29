@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class UrlPatternUtils {
 
+    private UrlPatternUtils() {
+    }
+
     /**
      * Maps the URL of the current request to the url mappings of the servlet.
      *

@@ -33,7 +33,7 @@
             <c:if test="${noAvailable != null}">
                 <h3 style="color: red;"><fmt:message bundle="${msg}" key="${noAvailable}" /></h3><br/>
             </c:if>
-            <c:forEach items="${roomDao.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(booking.arrival, booking.departure, booking.persons)}" var="room">
+            <c:forEach items="${rooms}" var="room">
                 <tr>
                     <td><fmt:message bundle="${msg}" key="db.${room.type}"/></td>
                     <td>${room.sleeps}</td>

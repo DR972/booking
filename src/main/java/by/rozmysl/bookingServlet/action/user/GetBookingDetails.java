@@ -2,6 +2,7 @@ package by.rozmysl.bookingServlet.action.user;
 
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.Booking;
 import by.rozmysl.bookingServlet.exception.BadCredentialsException;
@@ -12,9 +13,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * Provides service to initialize actions on the BookingDetails.
+ * Provides service to initialize actions on the GetBookingDetails.
  */
-public class BookingDetails implements Action {
+public class GetBookingDetails implements Action {
 
     /**
      * Executes actions on request content.
@@ -26,15 +27,15 @@ public class BookingDetails implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
-        final ConnectionSource con = new ConnectionSource();
-        req.setAttribute("foodDao", dao.foodDao(con));
-        req.setAttribute("servicesDao", dao.servicesDao(con));
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
+        req.setAttribute("food", dao.foodDao(con).getAll(0,0));
+        req.setAttribute("services", dao.servicesDao(con).getAll(0,0));
         if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/user/bookingDetails.jsp");
-
         try {
             new BookingValidator().allValidate(req);
         } catch (BadCredentialsException e) {
             req.setAttribute("errorValidate", e.getMessage());
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/user/bookingDetails.jsp");
         }
         Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
@@ -46,7 +47,9 @@ public class BookingDetails implements Action {
             req.setAttribute("noAvailable", "message.noAvailable");
         }
         req.setAttribute("booking", booking);
-        req.setAttribute("roomDao", dao.roomDao(con));
+        req.setAttribute("rooms", dao.roomDao(con).findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
     }
 }

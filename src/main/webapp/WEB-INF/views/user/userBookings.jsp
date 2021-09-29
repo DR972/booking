@@ -18,7 +18,6 @@
 </head>
 
 <body>
-     <% request.setAttribute("action", "userBookings"); %>
      ${userBookings}
     <jsp:include page="menuUser.jsp"></jsp:include>
     <div id="content" align="center">

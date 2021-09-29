@@ -10,14 +10,15 @@ import java.util.Set;
  * Defines the security configuration of the application.
  */
 public final class SecurityConfig {
-
     public static final String ROLE_ADMIN = "ADMIN";
     public static final String ROLE_USER = "USER";
-
     private static final Map<String, List<String>> mapConfig = new HashMap<>();
 
     static {
         init();
+    }
+
+    private SecurityConfig() {
     }
 
     /**

@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.action.login;
 import by.rozmysl.bookingServlet.authenticator.UserAuthentication;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.User;
 import by.rozmysl.bookingServlet.exception.BadCredentialsException;
@@ -29,8 +30,10 @@ public class Login implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
         if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
-        User user = DaoFactory.getInstance().userDao(new ConnectionSource()).getById(req.getParameter("username"));
+        User user = DaoFactory.getInstance().userDao(con).getById(req.getParameter("username"));
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         try {
             new UserAuthentication().allAuthenticate(user, req);
         } catch (BadCredentialsException e) {

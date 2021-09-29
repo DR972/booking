@@ -2,8 +2,13 @@ package by.rozmysl.bookingServlet.action.admin;
 
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.dao.hotel.RoomDao;
 import by.rozmysl.bookingServlet.dao.user.BookingDao;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
+import by.rozmysl.bookingServlet.entity.hotel.Room;
+import by.rozmysl.bookingServlet.entity.hotel.StatusReservation;
+import by.rozmysl.bookingServlet.entity.user.Booking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,12 +16,16 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Provides service to initialize actions on the OperationsWithAllBookings.
+ * Provides service to initialize actions on the GetAllBookings.
  */
-public class OperationsWithAllBookings implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(OperationsWithAllBookings.class);
+public class GetAllBookings implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetAllBookings.class);
 
     /**
      * Executes actions on request content.
@@ -30,9 +39,10 @@ public class OperationsWithAllBookings implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException, MessagingException, IOException {
         DaoFactory dao = DaoFactory.getInstance();
-        BookingDao bookingDao = dao.bookingDao(new ConnectionSource());
-        req.setAttribute("bookingDao", bookingDao);
-        req.setAttribute("roomDao", dao.roomDao(new ConnectionSource()));
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
+        BookingDao bookingDao = dao.bookingDao(con);
+        RoomDao roomDao = dao.roomDao(con);
+
         if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
             bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
             LOGGER.info("Booking # " + req.getParameter("bookingId") + " was deleted by admin " + req.getUserPrincipal().getName());
@@ -47,8 +57,29 @@ public class OperationsWithAllBookings implements Action {
             LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the status was changed to '" +
                     req.getParameter("status") + "'  by the admin " + req.getUserPrincipal().getName());
         }
-        if (req.getParameter("rows") != null) req.setAttribute("rows", Integer.parseInt(req.getParameter("rows")));
-        if (req.getParameter("page") != null) req.setAttribute("page", Integer.parseInt(req.getParameter("page")));
+
+        int page = 0;
+        int rows = 10;
+        if (req.getParameter("rows") != null) rows = Integer.parseInt(req.getParameter("rows"));
+        if (req.getParameter("page") != null) page =  Integer.parseInt(req.getParameter("page"));
+        req.setAttribute("rows", rows);
+        req.setAttribute("page", page);
+        req.setAttribute("countPages", bookingDao.countBookingsPages(rows));
+
+        List<Booking> allBookings = bookingDao.getAll(page, rows);
+
+//        Map<Integer, List<Room>> availableRooms = allBookings.stream().collect(Collectors.toMap(b -> b.getNumber(),
+//                b -> roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(b.getArrival(), b.getDeparture(), b.getPersons())));
+
+        Map<Integer, List<Room>> availableRooms = new HashMap<>();
+        for (Booking b : allBookings) {
+            availableRooms.put((int) b.getNumber(), roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(b.getArrival(), b.getDeparture(), b.getPersons()));
+        }
+        req.setAttribute("roomDao", dao.roomDao(con));
+        req.setAttribute("availableRooms", availableRooms);
+        req.setAttribute("allBookings", allBookings);
+        req.setAttribute("status", StatusReservation.values());
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/allBookings.jsp");
     }
 }

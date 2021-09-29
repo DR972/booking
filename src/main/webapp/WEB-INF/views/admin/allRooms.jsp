@@ -25,7 +25,7 @@
                 <th>Удалить</th>
             </thead>
             <form action="allRooms" method="POST">
-                <c:forEach items="${roomDao.getAll(page, rows)}" var="room">
+                <c:forEach items="${allRooms}" var="room">
                     <tr>
                         <td>${room.roomNumber}</td>
                         <td>${room.type}</td>

@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.action.login;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.dao.user.UserDao;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.User;
 import by.rozmysl.bookingServlet.entity.user.UserRole;
@@ -34,7 +35,7 @@ public class Registration implements Action {
     public String execute(HttpServletRequest req) throws SQLException, MessagingException {
         if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/registration.jsp");
         DaoFactory dao = DaoFactory.getInstance();
-        final ConnectionSource con = new ConnectionSource();
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
         UserDao userDao = dao.userDao(con);
         User user = new User(req.getParameter("username"), req.getParameter("lastname"), req.getParameter("firstname"),
                 req.getParameter("password"), req.getParameter("passwordConfirm"), req.getParameter("email"));
@@ -42,11 +43,13 @@ public class Registration implements Action {
             new UserValidator().allValidate(user, userDao);
         } catch (BadCredentialsException e) {
             req.setAttribute("errorValidate", e.getMessage());
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/anonymous/registration.jsp");
         }
         userDao.save(user, req.getParameter("language"));
         dao.roleDao(con).save(new UserRole(user.getUsername(), "USER"));
         LOGGER.info("A new user has been registered - " + user.getUsername());
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("redirect:%s", "/anonymous/login");
     }
 }

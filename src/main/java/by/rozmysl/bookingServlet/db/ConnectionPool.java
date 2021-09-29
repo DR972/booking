@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ConnectionPool {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
-    private final List<Connection> availableConnections = new ArrayList<>();
+    private final List<ConnectionSource> availableConnections = new ArrayList<>();
     private static ConnectionPool instance;
     private static final Properties properties = new Properties();
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
@@ -36,6 +36,9 @@ public class ConnectionPool {
         initializeConnectionPool();
     }
 
+    private static class LazyHolder {
+        static final ConnectionPool INSTANCE = new ConnectionPool();
+    }
     /**
      * Returns ConnectionPool instance. Initialize instance if it doesn't.
      *
@@ -44,8 +47,10 @@ public class ConnectionPool {
     public static ConnectionPool getInstance() {
         if (!isInitialized.get()) {
             if (instance == null) {
-                instance = new ConnectionPool();
+                instance  = LazyHolder.INSTANCE;
+                //instance = new ConnectionPool();
                 isInitialized.set(true);
+
                 LOGGER.info("Connection pool initialized successfully.");
             }
         }
@@ -58,8 +63,8 @@ public class ConnectionPool {
     private void initializeConnectionPool() {
         while (!checkIfConnectionPoolIsFull()) {
             try {
-                availableConnections.add(DriverManager.getConnection(properties.getProperty("db.url"),
-                        properties.getProperty("db.user"), properties.getProperty("db.password")));
+                availableConnections.add(new ConnectionSource(DriverManager.getConnection(properties.getProperty("db.url"),
+                        properties.getProperty("db.user"), properties.getProperty("db.password"))));
             } catch (SQLException e) {
                 LOGGER.error(String.valueOf(e));
             }
@@ -80,8 +85,8 @@ public class ConnectionPool {
      *
      * @return connection
      */
-    public synchronized Connection getConnectionFromPool() {
-        Connection connection = null;
+    public synchronized ConnectionSource getConnectionFromPool() {
+        ConnectionSource connection = null;
         if (availableConnections.size() > 0) {
             connection = availableConnections.get(0);
             availableConnections.remove(0);
@@ -94,7 +99,7 @@ public class ConnectionPool {
      *
      * @param connection connection
      */
-    public synchronized void returnConnectionToPool(Connection connection) {
+    public synchronized void returnConnectionToPool(ConnectionSource connection) {
         availableConnections.add(connection);
     }
 }

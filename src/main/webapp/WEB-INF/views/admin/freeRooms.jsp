@@ -37,7 +37,7 @@
             <button type="submit">Искать</button>
         </form>
     </div>
-    <c:if test = "${from != null && to != null}">
+    <c:if test = "${!empty freeRooms}">
         <div id="content" style="padding: 0;">
             <table align="center">
                 <thead>
@@ -47,7 +47,7 @@
                     <th>Цена</th>
                 </thead>
                 <form action="freeRooms" method="POST">
-                    <c:forEach items="${roomDao.findAllFreeRoomsBetweenTwoDates(from, to)}" var="room">
+                    <c:forEach items="${freeRooms}" var="room">
                         <tr>
                             <td>${room.roomNumber}</td>
                             <td>${room.type}</td>

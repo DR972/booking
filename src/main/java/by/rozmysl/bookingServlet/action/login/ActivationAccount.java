@@ -2,6 +2,7 @@ package by.rozmysl.bookingServlet.action.login;
 
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +22,11 @@ public class ActivationAccount implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
-        if (DaoFactory.getInstance().userDao(new ConnectionSource()).activateUser(req.getPathInfo().substring(12)))
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
+        if (DaoFactory.getInstance().userDao(con).activateUser(req.getPathInfo().substring(12)))
             req.setAttribute("messageActive", "message.activeTrue");
         else req.setAttribute("messageActive", "message.activeError");
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
     }
 }

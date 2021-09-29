@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.action.admin;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.dao.hotel.RoomDao;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +13,10 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 
 /**
- * Provides service to initialize actions on the ChangingRoomParameters.
+ * Provides service to initialize actions on the ChangeRoomParameters.
  */
-public class ChangingRoomParameters implements Action {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChangingRoomParameters.class);
+public class ChangeRoomParameters implements Action {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeRoomParameters.class);
 
     /**
      * Executes actions on request content.
@@ -26,8 +27,8 @@ public class ChangingRoomParameters implements Action {
      */
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
-        RoomDao roomDao = DaoFactory.getInstance().roomDao(new ConnectionSource());
-        req.setAttribute("roomDao", roomDao);
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
+        RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
         if (req.getParameter("changeParameters") != null && req.getParameter("changeParameters").equals("changeParameters")) {
             roomDao.updateParameters(Integer.parseInt(req.getParameter("roomId")),
                     roomDao.getById(Integer.parseInt(req.getParameter("parameter"))));
@@ -40,6 +41,9 @@ public class ChangingRoomParameters implements Action {
             LOGGER.info("For room # " + req.getParameter("roomId") + ", the price was changed to '" +
                     req.getParameter("price") + "' by admin " + req.getUserPrincipal().getName());
         }
+        req.setAttribute("allRooms", roomDao.getAll(0, 0));
+        req.setAttribute("allRoomsByTypesAndSleeps", roomDao.findAllRoomsByTypesAndSleeps());
+        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/changeRoomParameters.jsp");
     }
 }

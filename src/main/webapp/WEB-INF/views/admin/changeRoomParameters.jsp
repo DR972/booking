@@ -24,7 +24,7 @@
                 <th>Цена</th>
                 <th>Изменить цену</th>
             </thead>
-            <c:forEach items="${roomDao.getAll(page, rows)}" var="room">
+            <c:forEach items="${allRooms}" var="room">
                 <tr>
                     <td>${room.roomNumber}</td>
                     <td>${room.type}</td>
@@ -33,7 +33,7 @@
                         <form action="changeRoomParameters" method="POST">
                             <select id ="r" name ="parameter" required>
                                 <option value="">- Выбрать тип -</option>
-                                <c:forEach items="${roomDao.findAllRoomsByTypesAndSleeps()}" var="r">
+                                <c:forEach items="${allRoomsByTypesAndSleeps}" var="r">
                                     <c:if test = "${!(room.type==r.type && room.sleeps==r.sleeps)}">
                                         <option value = "${r.roomNumber}">тип=${r.type}, мест=${r.sleeps},
                                         цена=<ctg:money value="${r.price}"/></option>

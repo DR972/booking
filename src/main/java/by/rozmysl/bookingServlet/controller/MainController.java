@@ -38,17 +38,17 @@ public class MainController extends HttpServlet {
         actionMap.put("registration", new Registration());
         actionMap.put("user", new UserPage());
         actionMap.put("price", new Price());
-        actionMap.put("bookingDetails", new BookingDetails());
+        actionMap.put("bookingDetails", new GetBookingDetails());
         actionMap.put("booking", new BookingPage());
-        actionMap.put("userBookings", new UserBookings());
+        actionMap.put("userBookings", new GetUserBookings());
         actionMap.put("admin", new AdminPage());
-        actionMap.put("allUsers", new OperationsWitAllUsers());
-        actionMap.put("allBookings", new OperationsWithAllBookings());
-        actionMap.put("addRoom", new NewRoom());
-        actionMap.put("allRooms", new OperationsWitAllRooms());
-        actionMap.put("freeRooms", new FreeRooms());
-        actionMap.put("changeRoomParameters", new ChangingRoomParameters());
-        actionMap.put("changeServicesPrice", new ChangingServicesPrice());
+        actionMap.put("allUsers", new GetAllUsers());
+        actionMap.put("allBookings", new GetAllBookings());
+        actionMap.put("addRoom", new CreateNewRoom());
+        actionMap.put("allRooms", new GetAllRooms());
+        actionMap.put("freeRooms", new GetFreeRooms());
+        actionMap.put("changeRoomParameters", new ChangeRoomParameters());
+        actionMap.put("changeServicesPrice", new ChangeServicesPrice());
     }
 
     /**

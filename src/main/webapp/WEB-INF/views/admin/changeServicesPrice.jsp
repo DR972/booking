@@ -20,7 +20,7 @@
                 <th>Цена</th>
                 <th>Изменить цену</th>
             </thead>
-            <c:forEach items="${fooDao.getAll(page, rows)}" begin="1" var="food">
+            <c:forEach items="${food}" begin="1" var="food">
                 <div align="center">
                     <tr>
                         <td>${food.type}</td>
@@ -46,7 +46,7 @@
                 <th>Цена</th>
                 <th>Изменить цену</th>
             </thead>
-            <c:forEach items="${servicesDao.getAll(page, rows)}" begin="1" var="service">
+            <c:forEach items="${services}" begin="1" var="service">
                 <div align="center">
                     <tr>
                         <td>${service.type}</td>

@@ -3,6 +3,7 @@ package by.rozmysl.bookingServlet.action.user;
 import by.rozmysl.bookingServlet.action.Action;
 import by.rozmysl.bookingServlet.dao.DaoFactory;
 import by.rozmysl.bookingServlet.dao.hotel.RoomDao;
+import by.rozmysl.bookingServlet.db.ConnectionPool;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.Room;
 import by.rozmysl.bookingServlet.entity.user.Booking;
@@ -31,7 +32,7 @@ public class BookingPage implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
-        final ConnectionSource con = new ConnectionSource();
+        final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
         RoomDao roomDao = dao.roomDao(con);
         Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
                 LocalDate.parse(req.getParameter("arrival")).plusDays(Integer.parseInt(req.getParameter("days"))),
@@ -47,12 +48,14 @@ public class BookingPage implements Action {
                     (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
                 req.setAttribute("noAvailable", "message.noAvailable");
             }
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
         } else {
             booking.setRoom(suitableRooms.get(0));
             booking.setUser(dao.userDao(con).getById(req.getUserPrincipal().getName()));
             req.setAttribute("booking", dao.bookingDao(con).save(booking));
             LOGGER.info("The booking was made by the user - " + booking.getUser().getUsername());
+            ConnectionPool.getInstance().returnConnectionToPool(con);
             return String.format("forward:%s", "/WEB-INF/views/user/confirmation.jsp");
         }
     }

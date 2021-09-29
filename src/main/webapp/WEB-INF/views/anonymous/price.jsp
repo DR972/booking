@@ -26,7 +26,7 @@
                 <th><fmt:message bundle="${msg}" key="book.sleeps"/></th>
                 <th><fmt:message bundle="${msg}" key="book.price"/></th>
             </thead>
-            <c:forEach items="${roomDao.findAllRoomsByTypesAndSleeps()}" var="room">
+            <c:forEach items="${allRooms}" var="room">
                 <tr>
                     <td><fmt:message bundle="${msg}" key="db.${room.type}"/></td>
                     <td>${room.sleeps}</td>
@@ -40,7 +40,7 @@
                 <th><fmt:message bundle="${msg}" key="book.food"/></th>
                 <th><fmt:message bundle="${msg}" key="book.price"/></th>
             </thead>
-            <c:forEach items="${foodDao.getAll(0,0)}" begin="1" var="food">
+            <c:forEach items="${allFood}" begin="1" var="food">
                 <tr>
                     <td><fmt:message bundle="${msg}" key="db.${food.type}"/></td>
                     <td><ctg:money value="${food.price}"/></td>
@@ -53,7 +53,7 @@
                 <th><fmt:message bundle="${msg}" key="book.service"/></th>
                 <th><fmt:message bundle="${msg}" key="book.price"/></th>
             </thead>
-            <c:forEach items="${servicesDao.getAll(0,0)}" begin="1" var="service">
+            <c:forEach items="${allServices}" begin="1" var="service">
                 <tr>
                     <td><fmt:message bundle="${msg}" key="db.${service.type}"/></td>
                     <td><ctg:money value="${service.price}"/></td>
