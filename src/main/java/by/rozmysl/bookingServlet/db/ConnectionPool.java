@@ -91,4 +91,18 @@ public class ConnectionPool {
     public synchronized void returnConnectionToPool(ConnectionSource connection) {
         availableConnections.add(connection);
     }
+
+    /**
+     * Destroys ConnectionPool.
+     */
+    public void destroy() {
+        availableConnections.forEach(connectionSource -> {
+            try {
+                connectionSource.close();
+            } catch (SQLException e) {
+                LOGGER.error( "Can't close connection.", e);
+            }
+        });
+        LOGGER.info("Connection pool has been successfully deinitialized.");
+    }
 }

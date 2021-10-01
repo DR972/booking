@@ -1,5 +1,8 @@
 package by.rozmysl.bookingServlet.db;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 import java.util.*;
 
@@ -7,6 +10,7 @@ import java.util.*;
  * Provides a service for working with a database.
  */
 public class ConnectionSource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
     private final Connection con;
 
     /**
@@ -75,5 +79,12 @@ public class ConnectionSource {
         final ResultSet rs = con.prepareStatement(sql).executeQuery();
         rs.next();
         return rs.getInt("count");
+    }
+
+    /**
+     * Closes the database connection.
+     */
+    public void close() throws SQLException {
+        con.close();
     }
 }
