@@ -22,9 +22,13 @@ public class Price implements Action {
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        req.setAttribute("allRooms", dao.roomDao(con).findAllRoomsByTypesAndSleeps());
-        req.setAttribute("allFood", dao.foodDao(con).getAll(0,0));
-        req.setAttribute("allServices", dao.servicesDao(con).getAll(0,0));
+        try {
+            req.setAttribute("allRooms", dao.roomDao(con).findAllRoomsByTypesAndSleeps());
+            req.setAttribute("allFood", dao.foodDao(con).getAll(0, 0));
+            req.setAttribute("allServices", dao.servicesDao(con).getAll(0, 0));
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
+        }
         return String.format("forward:%s", "/WEB-INF/views/anonymous/price.jsp");
     }
 }

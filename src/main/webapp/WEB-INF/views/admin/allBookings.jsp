@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ page import="java.util.Map, java.util.List, by.rozmysl.bookingServlet.entity.hotel.Room" %>
 
 <!DOCTYPE html>
 <html>
@@ -50,8 +49,7 @@
                 <th>Удалить</th>
             </thead>
             <c:forEach items="${allBookings}" var="booking">
-                <tr>${booking.number}
-                ${availableRooms[39]}
+                <tr>
                     <td>${booking.number}</td>
                     <td>${booking.room.roomNumber}</td>
                     <td align = "left">

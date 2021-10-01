@@ -9,6 +9,11 @@ import java.util.*;
 public class ConnectionSource {
     private final Connection con;
 
+    /**
+     * The constructor creates a new object ConnectionSource with the <b>con</b> property
+     *
+     * @param con Connection con
+     */
     public ConnectionSource(Connection con) {
         this.con = con;
     }

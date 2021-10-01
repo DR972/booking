@@ -31,24 +31,28 @@ public class Login implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
-        User user = DaoFactory.getInstance().userDao(con).getById(req.getParameter("username"));
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         try {
-            new UserAuthentication().allAuthenticate(user, req);
-        } catch (BadCredentialsException e) {
-            req.setAttribute("loginError", e.getMessage());
-            return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
-        }
-        AppUtils.saveLoggedUser(req.getSession(), user);
-        LOGGER.info("The user '" + user.getUsername() + "' is logged in.");
-        int redirectId = -1;
-        if (!req.getParameter("redirectId").isEmpty()) redirectId = Integer.parseInt(req.getParameter("redirectId"));
-        String requestUri = AppUtils.getRedirectAfterLoginUrl(redirectId);
-        if (requestUri != null) return String.format("redirect:%s", requestUri);
-        else {
-            if (user.getRoles().contains("ADMIN")) return String.format("redirect:%s", "/admin/admin");
-            else return String.format("redirect:%s", "/user/user");
+            if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
+            User user = DaoFactory.getInstance().userDao(con).getById(req.getParameter("username"));
+            try {
+                new UserAuthentication().allAuthenticate(user, req);
+            } catch (BadCredentialsException e) {
+                req.setAttribute("loginError", e.getMessage());
+                return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
+            }
+            AppUtils.saveLoggedUser(req.getSession(), user);
+            LOGGER.info("The user '" + user.getUsername() + "' is logged in.");
+            int redirectId = -1;
+            if (!req.getParameter("redirectId").isEmpty())
+                redirectId = Integer.parseInt(req.getParameter("redirectId"));
+            String requestUri = AppUtils.getRedirectAfterLoginUrl(redirectId);
+            if (requestUri != null) return String.format("redirect:%s", requestUri);
+            else {
+                if (user.getRoles().contains("ADMIN")) return String.format("redirect:%s", "/admin/admin");
+                else return String.format("redirect:%s", "/user/user");
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
     }
 }

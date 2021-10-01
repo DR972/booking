@@ -28,27 +28,29 @@ public class GetAllUsers implements Action {
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        UserDao userDao = dao.userDao(con);
-        if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
-            String username = req.getParameter("userId");
-            if (!dao.bookingDao(con).findAllByUser(username).isEmpty()) {
-                req.setAttribute("errorDeleteUser", "Нельзя удалить пользователя, имеющего бронирования!");
-            } else {
-                dao.roleDao(con).delete(username);
-                userDao.delete(username);
-                LOGGER.info("The user '" + username + "' was deleted by the admin " + req.getUserPrincipal().getName());
+        try {
+            UserDao userDao = dao.userDao(con);
+            if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
+                String username = req.getParameter("userId");
+                if (!dao.bookingDao(con).findAllByUser(username).isEmpty()) {
+                    req.setAttribute("errorDeleteUser", "Нельзя удалить пользователя, имеющего бронирования!");
+                } else {
+                    dao.roleDao(con).delete(username);
+                    userDao.delete(username);
+                    LOGGER.info("The user '" + username + "' was deleted by the admin " + req.getUserPrincipal().getName());
+                }
             }
+            int page = 0;
+            int rows = 10;
+            if (req.getParameter("rows") != null) rows = Integer.parseInt(req.getParameter("rows"));
+            if (req.getParameter("page") != null) page = Integer.parseInt(req.getParameter("page"));
+            req.setAttribute("rows", rows);
+            req.setAttribute("page", page);
+            req.setAttribute("countPages", userDao.countUsersPages(rows));
+            req.setAttribute("allUsers", userDao.getAll(page, rows));
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-
-        int page = 0;
-        int rows = 10;
-        if (req.getParameter("rows") != null) rows = Integer.parseInt(req.getParameter("rows"));
-        if (req.getParameter("page") != null) page =  Integer.parseInt(req.getParameter("page"));
-        req.setAttribute("rows", rows);
-        req.setAttribute("page", page);
-        req.setAttribute("countPages", userDao.countUsersPages(rows));
-        req.setAttribute("allUsers", userDao.getAll(page, rows));
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/allUsers.jsp");
     }
 }

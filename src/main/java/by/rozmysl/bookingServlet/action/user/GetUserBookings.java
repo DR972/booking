@@ -28,13 +28,16 @@ public class GetUserBookings implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException, IOException {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        BookingDao bookingDao = DaoFactory.getInstance().bookingDao(con);
-        if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
-            bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
-            LOGGER.info("Booking # " + req.getParameter("bookingId") + " was canceled by the user.");
+        try {
+            BookingDao bookingDao = DaoFactory.getInstance().bookingDao(con);
+            if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
+                bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
+                LOGGER.info("Booking # " + req.getParameter("bookingId") + " was canceled by the user.");
+            }
+            req.setAttribute("booking", bookingDao.findAllByUser(req.getUserPrincipal().getName()));
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-        req.setAttribute("booking", bookingDao.findAllByUser(req.getUserPrincipal().getName()));
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/user/userBookings.jsp");
     }
 }

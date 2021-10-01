@@ -23,13 +23,16 @@ public class GetFreeRooms implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        if (req.getParameter("from") != null && req.getParameter("to") != null) {
-            if (LocalDate.parse(req.getParameter("from")).isBefore(LocalDate.parse(req.getParameter("to")))) {
-                req.setAttribute("freeRooms", DaoFactory.getInstance().roomDao(con).findAllFreeRoomsBetweenTwoDates(
-                        LocalDate.parse(req.getParameter("from")), LocalDate.parse(req.getParameter("to"))));
-            } else req.setAttribute("dateError", "Неправильно указаны даты!");
+        try {
+            if (req.getParameter("from") != null && req.getParameter("to") != null) {
+                if (LocalDate.parse(req.getParameter("from")).isBefore(LocalDate.parse(req.getParameter("to")))) {
+                    req.setAttribute("freeRooms", DaoFactory.getInstance().roomDao(con).findAllFreeRoomsBetweenTwoDates(
+                            LocalDate.parse(req.getParameter("from")), LocalDate.parse(req.getParameter("to"))));
+                } else req.setAttribute("dateError", "Неправильно указаны даты!");
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/freeRooms.jsp");
     }
 }

@@ -271,3 +271,49 @@ delete from ROOM where ROOMNUMBER = 2 [23503-200]
 2021-09-29 08:41:50.722 INFO  GetAllBookings - In booking # 4, the status was changed to 'ЗАКАЗ'  by the admin ADMIN
 2021-09-29 08:45:37.003 INFO  GetAllBookings - In booking # 84, the status was changed to 'ОПЛАЧЕН'  by the admin ADMIN
 2021-09-29 08:45:40.604 INFO  GetAllBookings - In booking # 84, the status was changed to 'ЗАКАЗ'  by the admin ADMIN
+2021-09-29 12:25:43.361 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-29 12:25:50.757 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 12:25:59.607 INFO  GetAllBookings - In booking # 4, the room number was changed to 33 by the admin ADMIN
+2021-09-29 12:30:10.059 INFO  GetAllBookings - In booking # 4, the room number was changed to 12 by the admin ADMIN
+2021-09-29 12:30:21.741 INFO  GetAllBookings - In booking # 84, the room number was changed to 34 by the admin ADMIN
+2021-09-29 12:35:32.954 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-29 12:35:39.511 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-29 12:35:55.674 INFO  GetAllBookings - In booking # 4, the room number was changed to 24 by the admin ADMIN
+2021-09-29 12:36:02.173 INFO  GetAllBookings - In booking # 4, the room number was changed to 12 by the admin ADMIN
+2021-09-30 11:17:48.477 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:55.502 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:55.535 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:55.681 INFO  Login - The user 'ADMIN' is logged in.
+2021-09-30 11:17:55.692 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:55.729 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:59.021 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:17:59.031 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:26:37.141 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-09-30 11:26:45.159 INFO  Login - The user 'ADMIN' is logged in.
+2021-10-01 08:37:09.663 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-10-01 08:37:28.044 INFO  Registration - A new user has been registered - rdv-72
+2021-10-01 08:44:22.285 INFO  UserDaoImp - The user 'rdv-72' is activated.
+2021-10-01 08:44:51.155 INFO  Login - The user 'rdv-72' is logged in.
+2021-10-01 08:45:04.226 INFO  Logout - The user 'rdv-72' is logged out.
+2021-10-01 08:45:11.676 INFO  Login - The user 'ADMIN' is logged in.
+2021-10-01 08:45:38.247 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-10-01 08:45:59.318 INFO  GetAllUsers - The user 'rdv-72' was deleted by the admin ADMIN
+2021-10-01 08:46:10.829 INFO  GetAllBookings - In booking # 5, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-10-01 08:46:31.716 INFO  GetAllBookings - In booking # 85, the status was changed to 'СЧЕТ'  by the admin ADMIN
+2021-10-01 08:46:44.501 INFO  GetAllRooms - For room # 11, the price was changed to '53' by admin ADMIN
+2021-10-01 08:46:47.397 INFO  GetAllRooms - For room # 11, the price was changed to '50' by admin ADMIN
+2021-10-01 08:47:27.540 INFO  ChangeRoomParameters - For room # 11, the parameters were changed to '16' by admin ADMIN
+2021-10-01 08:47:31.701 INFO  ChangeRoomParameters - For room # 11, the parameters were changed to '12' by admin ADMIN
+2021-10-01 08:47:34.872 INFO  ChangeRoomParameters - For room # 11, the price was changed to '43' by admin ADMIN
+2021-10-01 08:47:38.728 INFO  ChangeRoomParameters - For room # 11, the price was changed to '50' by admin ADMIN
+2021-10-01 08:47:45.007 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '7.5' by admin ADMIN
+2021-10-01 08:47:47.457 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '7' by admin ADMIN
+2021-10-01 08:47:52.162 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '11.5' by admin ADMIN
+2021-10-01 08:47:54.152 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '12' by admin ADMIN
+2021-10-01 08:51:26.499 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-10-01 08:51:33.419 INFO  Login - The user 'ADMIN' is logged in.
+2021-10-01 08:54:42.424 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-10-01 08:54:48.642 INFO  Login - The user 'ADMIN' is logged in.
+2021-10-01 08:55:29.687 INFO  CreateNewRoom - Admin 'ADMIN' created a new room - Room[roomNumber=1, type='Стандарт', sleeps=2, price=50]
+2021-10-01 08:55:44.304 INFO  CreateNewRoom - Admin 'ADMIN' created a new room - Room[roomNumber=3, type='Люкс', sleeps=1, price=3]
+2021-10-01 08:56:07.682 INFO  GetAllRooms - For room # 3, the price was changed to '80' by admin ADMIN

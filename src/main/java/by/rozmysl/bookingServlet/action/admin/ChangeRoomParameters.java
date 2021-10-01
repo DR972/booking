@@ -28,22 +28,25 @@ public class ChangeRoomParameters implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
-        if (req.getParameter("changeParameters") != null && req.getParameter("changeParameters").equals("changeParameters")) {
-            roomDao.updateParameters(Integer.parseInt(req.getParameter("roomId")),
-                    roomDao.getById(Integer.parseInt(req.getParameter("parameter"))));
-            LOGGER.info("For room # " + req.getParameter("roomId") + ", the parameters were changed to '" +
-                    req.getParameter("parameter") + "' by admin " + req.getUserPrincipal().getName());
+        try {
+            RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
+            if (req.getParameter("changeParameters") != null && req.getParameter("changeParameters").equals("changeParameters")) {
+                roomDao.updateParameters(Integer.parseInt(req.getParameter("roomId")),
+                        roomDao.getById(Integer.parseInt(req.getParameter("parameter"))));
+                LOGGER.info("For room # " + req.getParameter("roomId") + ", the parameters were changed to '" +
+                        req.getParameter("parameter") + "' by admin " + req.getUserPrincipal().getName());
+            }
+            if (req.getParameter("changePrice") != null && req.getParameter("changePrice").equals("changePrice")) {
+                roomDao.updatePrice(roomDao.getById(Integer.parseInt(req.getParameter("roomId"))),
+                        new BigDecimal(req.getParameter("price")));
+                LOGGER.info("For room # " + req.getParameter("roomId") + ", the price was changed to '" +
+                        req.getParameter("price") + "' by admin " + req.getUserPrincipal().getName());
+            }
+            req.setAttribute("allRooms", roomDao.getAll(0, 0));
+            req.setAttribute("allRoomsByTypesAndSleeps", roomDao.findAllRoomsByTypesAndSleeps());
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-        if (req.getParameter("changePrice") != null && req.getParameter("changePrice").equals("changePrice")) {
-            roomDao.updatePrice(roomDao.getById(Integer.parseInt(req.getParameter("roomId"))),
-                    new BigDecimal(req.getParameter("price")));
-            LOGGER.info("For room # " + req.getParameter("roomId") + ", the price was changed to '" +
-                    req.getParameter("price") + "' by admin " + req.getUserPrincipal().getName());
-        }
-        req.setAttribute("allRooms", roomDao.getAll(0, 0));
-        req.setAttribute("allRoomsByTypesAndSleeps", roomDao.findAllRoomsByTypesAndSleeps());
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/changeRoomParameters.jsp");
     }
 }

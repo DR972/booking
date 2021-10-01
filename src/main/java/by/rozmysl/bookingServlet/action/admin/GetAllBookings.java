@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Provides service to initialize actions on the GetAllBookings.
@@ -40,46 +39,43 @@ public class GetAllBookings implements Action {
     public String execute(HttpServletRequest req) throws SQLException, MessagingException, IOException {
         DaoFactory dao = DaoFactory.getInstance();
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        BookingDao bookingDao = dao.bookingDao(con);
-        RoomDao roomDao = dao.roomDao(con);
-
-        if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
-            bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
-            LOGGER.info("Booking # " + req.getParameter("bookingId") + " was deleted by admin " + req.getUserPrincipal().getName());
+        try {
+            BookingDao bookingDao = dao.bookingDao(con);
+            RoomDao roomDao = dao.roomDao(con);
+            if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
+                bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
+                LOGGER.info("Booking # " + req.getParameter("bookingId") + " was deleted by admin " + req.getUserPrincipal().getName());
+            }
+            if (req.getParameter("changeRoom") != null && req.getParameter("changeRoom").equals("changeRoom")) {
+                bookingDao.changeRoom(Long.parseLong(req.getParameter("bookingId")), Integer.parseInt(req.getParameter("roomId")), dao);
+                LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the room number was changed to " +
+                        req.getParameter("roomId") + " by the admin " + req.getUserPrincipal().getName());
+            }
+            if (req.getParameter("changeStatus") != null && req.getParameter("changeStatus").equals("changeStatus")) {
+                bookingDao.changeStatusBooking(Long.parseLong(req.getParameter("bookingId")), req.getParameter("status"), dao);
+                LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the status was changed to '" +
+                        req.getParameter("status") + "'  by the admin " + req.getUserPrincipal().getName());
+            }
+            int page = 0;
+            int rows = 10;
+            if (req.getParameter("rows") != null) rows = Integer.parseInt(req.getParameter("rows"));
+            if (req.getParameter("page") != null) page = Integer.parseInt(req.getParameter("page"));
+            req.setAttribute("rows", rows);
+            req.setAttribute("page", page);
+            req.setAttribute("countPages", bookingDao.countBookingsPages(rows));
+            List<Booking> allBookings = bookingDao.getAll(page, rows);
+            Map<Long, List<Room>> availableRooms = new HashMap<>();
+            for (Booking booking : allBookings) {
+                availableRooms.put(booking.getNumber(), roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                        (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+            }
+            req.setAttribute("roomDao", dao.roomDao(con));
+            req.setAttribute("availableRooms", availableRooms);
+            req.setAttribute("allBookings", allBookings);
+            req.setAttribute("status", StatusReservation.values());
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-        if (req.getParameter("changeRoom") != null && req.getParameter("changeRoom").equals("changeRoom")) {
-            bookingDao.changeRoom(Long.parseLong(req.getParameter("bookingId")), Integer.parseInt(req.getParameter("roomId")), dao);
-            LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the room number was changed to " +
-                    req.getParameter("roomId") + " by the admin " + req.getUserPrincipal().getName());
-        }
-        if (req.getParameter("changeStatus") != null && req.getParameter("changeStatus").equals("changeStatus")) {
-            bookingDao.changeStatusBooking(Long.parseLong(req.getParameter("bookingId")), req.getParameter("status"), dao);
-            LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the status was changed to '" +
-                    req.getParameter("status") + "'  by the admin " + req.getUserPrincipal().getName());
-        }
-
-        int page = 0;
-        int rows = 10;
-        if (req.getParameter("rows") != null) rows = Integer.parseInt(req.getParameter("rows"));
-        if (req.getParameter("page") != null) page =  Integer.parseInt(req.getParameter("page"));
-        req.setAttribute("rows", rows);
-        req.setAttribute("page", page);
-        req.setAttribute("countPages", bookingDao.countBookingsPages(rows));
-
-        List<Booking> allBookings = bookingDao.getAll(page, rows);
-
-//        Map<Integer, List<Room>> availableRooms = allBookings.stream().collect(Collectors.toMap(b -> b.getNumber(),
-//                b -> roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(b.getArrival(), b.getDeparture(), b.getPersons())));
-
-        Map<Integer, List<Room>> availableRooms = new HashMap<>();
-        for (Booking b : allBookings) {
-            availableRooms.put((int) b.getNumber(), roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(b.getArrival(), b.getDeparture(), b.getPersons()));
-        }
-        req.setAttribute("roomDao", dao.roomDao(con));
-        req.setAttribute("availableRooms", availableRooms);
-        req.setAttribute("allBookings", allBookings);
-        req.setAttribute("status", StatusReservation.values());
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/allBookings.jsp");
     }
 }

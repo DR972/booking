@@ -30,36 +30,38 @@ public class CreateNewRoom implements Action {
     @Override
     public String execute(HttpServletRequest req) throws SQLException {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
-
-        if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
-        if (roomDao.getById(Integer.parseInt(req.getParameter("roomNumber"))) != null) {
-            req.setAttribute("errorRoomNumber", "Изменить параметры существующих номеров можно на странице" +
-                    " \"Изменить параметры номеров\"");
+        try {
+            RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
+            req.setAttribute("allRooms", roomDao.findAllTypesRooms());
+            if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
+            if (roomDao.getById(Integer.parseInt(req.getParameter("roomNumber"))) != null) {
+                req.setAttribute("errorRoomNumber", "Изменить параметры существующих номеров можно на странице" +
+                        " \"Изменить параметры номеров\"");
+                ConnectionPool.getInstance().returnConnectionToPool(con);
+                return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
+            }
+            Room room = roomDao.findRoomByTypeAndSleeping(req.getParameter("type"), Integer.parseInt(req.getParameter("sleeps")));
+            if (room == null && req.getParameter("price") == null) {
+                req.setAttribute("roomNumber", req.getParameter("roomNumber"));
+                req.setAttribute("type", req.getParameter("type"));
+                req.setAttribute("sleeps", Integer.parseInt(req.getParameter("sleeps")));
+                req.setAttribute("newRoom", null);
+                ConnectionPool.getInstance().returnConnectionToPool(con);
+                return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
+            }
+            if (room != null) {
+                room = roomDao.save(new Room(Integer.parseInt(req.getParameter("roomNumber")), room.getType(),
+                        room.getSleeps(), room.getPrice()));
+                LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
+            }
+            if (req.getParameter("price") != null) {
+                room = roomDao.save(new Room(Integer.parseInt(req.getParameter("roomNumber")), req.getParameter("type"),
+                        Integer.parseInt(req.getParameter("sleeps")), new BigDecimal(req.getParameter("price"))));
+                LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
+            }
+        } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
-            return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
         }
-        Room room = roomDao.findRoomByTypeAndSleeping(req.getParameter("type"), Integer.parseInt(req.getParameter("sleeps")));
-        if (room == null && req.getParameter("price") == null) {
-            req.setAttribute("roomNumber", req.getParameter("roomNumber"));
-            req.setAttribute("type", req.getParameter("type"));
-            req.setAttribute("sleeps", Integer.parseInt(req.getParameter("sleeps")));
-            req.setAttribute("newRoom", null);
-            ConnectionPool.getInstance().returnConnectionToPool(con);
-            return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
-        }
-        if (room != null) {
-            room = roomDao.save(new Room(Integer.parseInt(req.getParameter("roomNumber")), room.getType(),
-                    room.getSleeps(), room.getPrice()));
-            LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
-        }
-        if (req.getParameter("price") != null) {
-            room = roomDao.save(new Room(Integer.parseInt(req.getParameter("roomNumber")), req.getParameter("type"),
-                    Integer.parseInt(req.getParameter("sleeps")), new BigDecimal(req.getParameter("price"))));
-            LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
-        }
-        req.setAttribute("allRooms", roomDao.findAllTypesRooms());
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/admin.jsp");
     }
 }

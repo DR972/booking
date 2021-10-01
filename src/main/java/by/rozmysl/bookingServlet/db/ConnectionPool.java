@@ -5,13 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Provides a pool of connections to database. Singleton.
@@ -19,9 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ConnectionPool {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionPool.class);
     private final List<ConnectionSource> availableConnections = new ArrayList<>();
-    private static ConnectionPool instance;
     private static final Properties properties = new Properties();
-    private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
 
     /**
      * The constructor creates a new object ConnectionPool without parameters
@@ -39,22 +35,14 @@ public class ConnectionPool {
     private static class LazyHolder {
         static final ConnectionPool INSTANCE = new ConnectionPool();
     }
+
     /**
      * Returns ConnectionPool instance. Initialize instance if it doesn't.
      *
      * @return instance
      */
     public static ConnectionPool getInstance() {
-        if (!isInitialized.get()) {
-            if (instance == null) {
-                instance  = LazyHolder.INSTANCE;
-                //instance = new ConnectionPool();
-                isInitialized.set(true);
-
-                LOGGER.info("Connection pool initialized successfully.");
-            }
-        }
-        return instance;
+        return LazyHolder.INSTANCE;
     }
 
     /**
@@ -69,6 +57,7 @@ public class ConnectionPool {
                 LOGGER.error(String.valueOf(e));
             }
         }
+        LOGGER.info("Connection pool initialized successfully.");
     }
 
     /**

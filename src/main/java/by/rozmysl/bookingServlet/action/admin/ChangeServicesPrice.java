@@ -30,21 +30,24 @@ public class ChangeServicesPrice implements Action {
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        FoodDao foodDao =dao.foodDao(con);
-        AdditionalServicesDao servicesDao = dao.servicesDao(con);
-        if (req.getParameter("changeFoodPrice") != null && req.getParameter("changeFoodPrice").equals("changeFoodPrice")) {
-            foodDao.changeFoodPrice(req.getParameter("foodId"), new BigDecimal(req.getParameter("foodPrice")));
-            LOGGER.info("For food  '" + req.getParameter("foodId") + "', the price was changed to '" +
-                    req.getParameter("foodPrice") + "' by admin " + req.getUserPrincipal().getName());
+        try {
+            FoodDao foodDao = dao.foodDao(con);
+            AdditionalServicesDao servicesDao = dao.servicesDao(con);
+            if (req.getParameter("changeFoodPrice") != null && req.getParameter("changeFoodPrice").equals("changeFoodPrice")) {
+                foodDao.changeFoodPrice(req.getParameter("foodId"), new BigDecimal(req.getParameter("foodPrice")));
+                LOGGER.info("For food  '" + req.getParameter("foodId") + "', the price was changed to '" +
+                        req.getParameter("foodPrice") + "' by admin " + req.getUserPrincipal().getName());
+            }
+            if (req.getParameter("changeServicePrice") != null && req.getParameter("changeServicePrice").equals("changeServicePrice")) {
+                servicesDao.changeServicePrice(req.getParameter("serviceId"), new BigDecimal(req.getParameter("servicePrice")));
+                LOGGER.info("For service  '" + req.getParameter("serviceId") + "', the price was changed to '" +
+                        req.getParameter("servicePrice") + "' by admin " + req.getUserPrincipal().getName());
+            }
+            req.setAttribute("food", foodDao.getAll(0, 0));
+            req.setAttribute("services", servicesDao.getAll(0, 0));
+        } finally {
+            ConnectionPool.getInstance().returnConnectionToPool(con);
         }
-        if (req.getParameter("changeServicePrice") != null && req.getParameter("changeServicePrice").equals("changeServicePrice")) {
-            servicesDao.changeServicePrice(req.getParameter("serviceId"), new BigDecimal(req.getParameter("servicePrice")));
-            LOGGER.info("For service  '" + req.getParameter("serviceId") + "', the price was changed to '" +
-                    req.getParameter("servicePrice") + "' by admin " + req.getUserPrincipal().getName());
-        }
-        req.setAttribute("food", foodDao.getAll(0, 0));
-        req.setAttribute("services", servicesDao.getAll(0, 0));
-        ConnectionPool.getInstance().returnConnectionToPool(con);
         return String.format("forward:%s", "/WEB-INF/views/admin/changeServicesPrice.jsp");
     }
 }

@@ -33,30 +33,34 @@ public class BookingPage implements Action {
     public String execute(HttpServletRequest req) throws SQLException {
         DaoFactory dao = DaoFactory.getInstance();
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
-        RoomDao roomDao = dao.roomDao(con);
-        Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
-                LocalDate.parse(req.getParameter("arrival")).plusDays(Integer.parseInt(req.getParameter("days"))),
-                Integer.parseInt(req.getParameter("days")), dao.foodDao(con).getById(req.getParameter("food")),
-                dao.servicesDao(con).getById(req.getParameter("service")));
-        Room room = roomDao.getById(Integer.parseInt(req.getParameter("roomId")));
-        List<Room> suitableRooms = roomDao.findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(booking.getArrival(),
-                booking.getDeparture(), room.getType(), room.getSleeps());
-        if (suitableRooms.size() == 0) {
-            req.setAttribute("booking", booking);
-            req.setAttribute("missed", "message.missed");
-            if (roomDao.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                    (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
-                req.setAttribute("noAvailable", "message.noAvailable");
+        try {
+            RoomDao roomDao = dao.roomDao(con);
+            Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
+                    LocalDate.parse(req.getParameter("arrival")).plusDays(Integer.parseInt(req.getParameter("days"))),
+                    Integer.parseInt(req.getParameter("days")), dao.foodDao(con).getById(req.getParameter("food")),
+                    dao.servicesDao(con).getById(req.getParameter("service")));
+            Room room = roomDao.getById(Integer.parseInt(req.getParameter("roomId")));
+            List<Room> suitableRooms = roomDao.findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(booking.getArrival(),
+                    booking.getDeparture(), room.getType(), room.getSleeps());
+            if (suitableRooms.size() == 0) {
+                req.setAttribute("booking", booking);
+                req.setAttribute("missed", "message.missed");
+                if (roomDao.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                        (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
+                    req.setAttribute("noAvailable", "message.noAvailable");
+                }
+                ConnectionPool.getInstance().returnConnectionToPool(con);
+                return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
+            } else {
+                booking.setRoom(suitableRooms.get(0));
+                booking.setUser(dao.userDao(con).getById(req.getUserPrincipal().getName()));
+                req.setAttribute("booking", dao.bookingDao(con).save(booking));
+                LOGGER.info("The booking was made by the user - " + booking.getUser().getUsername());
+                ConnectionPool.getInstance().returnConnectionToPool(con);
+                return String.format("forward:%s", "/WEB-INF/views/user/confirmation.jsp");
             }
+        } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
-            return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
-        } else {
-            booking.setRoom(suitableRooms.get(0));
-            booking.setUser(dao.userDao(con).getById(req.getUserPrincipal().getName()));
-            req.setAttribute("booking", dao.bookingDao(con).save(booking));
-            LOGGER.info("The booking was made by the user - " + booking.getUser().getUsername());
-            ConnectionPool.getInstance().returnConnectionToPool(con);
-            return String.format("forward:%s", "/WEB-INF/views/user/confirmation.jsp");
         }
     }
 }
