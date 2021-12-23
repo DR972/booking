@@ -19,7 +19,6 @@
                 <c:forEach var="r" begin="5" end="20" step="5">
                     <form action="allBookings" method="post">
                         <span>
-                            <input type="hidden" name="action" value="allBookings"/>
                             <input type="hidden" name="page" value="0"/>
                             <input type="hidden" name="rows" value="${r}"/>
                             <button type="submit" id="btn" style="color: #D72020;"/> ${r}

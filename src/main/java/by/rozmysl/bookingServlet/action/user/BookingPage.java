@@ -37,9 +37,9 @@ public class BookingPage implements Action {
             RoomDao roomDao = dao.roomDao(con);
             Booking booking = new Booking(Integer.parseInt(req.getParameter("persons")), LocalDate.parse(req.getParameter("arrival")),
                     LocalDate.parse(req.getParameter("arrival")).plusDays(Integer.parseInt(req.getParameter("days"))),
-                    Integer.parseInt(req.getParameter("days")), dao.foodDao(con).getById(req.getParameter("food")),
-                    dao.servicesDao(con).getById(req.getParameter("service")));
-            Room room = roomDao.getById(Integer.parseInt(req.getParameter("roomId")));
+                    Integer.parseInt(req.getParameter("days")), dao.foodDao(con).findById(req.getParameter("food")),
+                    dao.servicesDao(con).findById(req.getParameter("service")));
+            Room room = roomDao.findById(Integer.parseInt(req.getParameter("roomId")));
             List<Room> suitableRooms = roomDao.findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(booking.getArrival(),
                     booking.getDeparture(), room.getType(), room.getSleeps());
             if (suitableRooms.size() == 0) {
@@ -53,7 +53,7 @@ public class BookingPage implements Action {
                 return String.format("forward:%s", "/WEB-INF/views/user/booking.jsp");
             } else {
                 booking.setRoom(suitableRooms.get(0));
-                booking.setUser(dao.userDao(con).getById(req.getUserPrincipal().getName()));
+                booking.setUser(dao.userDao(con).findById(req.getUserPrincipal().getName()));
                 req.setAttribute("booking", dao.bookingDao(con).save(booking));
                 LOGGER.info("The booking was made by the user - " + booking.getUser().getUsername());
                 ConnectionPool.getInstance().returnConnectionToPool(con);

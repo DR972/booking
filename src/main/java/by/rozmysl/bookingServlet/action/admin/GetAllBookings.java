@@ -52,7 +52,7 @@ public class GetAllBookings implements Action {
                         req.getParameter("roomId") + " by the admin " + req.getUserPrincipal().getName());
             }
             if (req.getParameter("changeStatus") != null && req.getParameter("changeStatus").equals("changeStatus")) {
-                bookingDao.changeStatusBooking(Long.parseLong(req.getParameter("bookingId")), req.getParameter("status"), dao);
+                bookingDao.changeBookingStatus(Long.parseLong(req.getParameter("bookingId")), req.getParameter("status"), dao);
                 LOGGER.info("In booking # " + req.getParameter("bookingId") + ", the status was changed to '" +
                         req.getParameter("status") + "'  by the admin " + req.getUserPrincipal().getName());
             }
@@ -63,7 +63,7 @@ public class GetAllBookings implements Action {
             req.setAttribute("rows", rows);
             req.setAttribute("page", page);
             req.setAttribute("countPages", bookingDao.countBookingsPages(rows));
-            List<Booking> allBookings = bookingDao.getAll(page, rows);
+            List<Booking> allBookings = bookingDao.findAll(page, rows);
             Map<Long, List<Room>> availableRooms = new HashMap<>();
             for (Booking booking : allBookings) {
                 availableRooms.put(booking.getNumber(), roomDao.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps

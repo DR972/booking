@@ -32,7 +32,7 @@ public class GetAllUsers implements Action {
             UserDao userDao = dao.userDao(con);
             if (req.getParameter("delete") != null && req.getParameter("delete").equals("delete")) {
                 String username = req.getParameter("userId");
-                if (!dao.bookingDao(con).findAllByUser(username).isEmpty()) {
+                if (!dao.bookingDao(con).findAllBookingsByUser(username).isEmpty()) {
                     req.setAttribute("errorDeleteUser", "Нельзя удалить пользователя, имеющего бронирования!");
                 } else {
                     dao.roleDao(con).delete(username);
@@ -47,7 +47,7 @@ public class GetAllUsers implements Action {
             req.setAttribute("rows", rows);
             req.setAttribute("page", page);
             req.setAttribute("countPages", userDao.countUsersPages(rows));
-            req.setAttribute("allUsers", userDao.getAll(page, rows));
+            req.setAttribute("allUsers", userDao.findAll(page, rows));
         } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
         }

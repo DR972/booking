@@ -40,7 +40,6 @@
                     <td><ctg:money value="${room.price}"/></td>
                     <td>
                         <form action="booking" method="POST">
-                            <input type="hidden" name="action" value="booking"/>
                             <input type="hidden" name="arrival" value= "${booking.arrival}"/>
                             <input type="hidden" name="days" value= "${booking.days}"/>
                             <input type="hidden" name="persons" value= "${booking.persons}"/>

@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.dao.hotel;
 
+import by.rozmysl.bookingServlet.dao.TableConstant;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.AdditionalServices;
 
@@ -29,8 +30,9 @@ public class AdditionalServicesDaoImp implements AdditionalServicesDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public AdditionalServices getById(String type) throws SQLException {
-        return getResultSet("select * from ADDITIONALSERVICES where TYPE = '" + type + "'").get(0);
+    public AdditionalServices findById(String type) throws SQLException {
+//        return getResultSet("select * from ADDITIONALSERVICES where TYPE = '" + type + "'").get(0);
+        return getResultSet(TableConstant.ADDITIONALSERVICES_QUERY_FIND_BY_ID.replace("?type", type)).get(0);
     }
 
     /**
@@ -42,8 +44,9 @@ public class AdditionalServicesDaoImp implements AdditionalServicesDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<AdditionalServices> getAll(int page, int rows) throws SQLException {
-        return getResultSet("select * from ADDITIONALSERVICES");
+    public List<AdditionalServices> findAll(int page, int rows) throws SQLException {
+//        return getResultSet("select * from ADDITIONALSERVICES");
+        return getResultSet(TableConstant.ADDITIONALSERVICES_QUERY_FIND_ALL);
     }
 
     @Override
@@ -64,7 +67,9 @@ public class AdditionalServicesDaoImp implements AdditionalServicesDao {
      */
     @Override
     public void changeServicePrice(String type, BigDecimal price) throws SQLException {
-        con.update("update ADDITIONALSERVICES set PRICE = " + price + " where TYPE = '" + type + "'");
+//        con.update("update ADDITIONALSERVICES set PRICE = " + price + " where TYPE = '" + type + "'");
+        con.update(TableConstant.ADDITIONALSERVICES_QUERY_CHANGE_SERVICE_PRICE.replace("?price", String.valueOf(price))
+                .replace("?type", type));
     }
 
     /**

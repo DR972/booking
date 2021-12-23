@@ -17,7 +17,7 @@ public interface Dao<T, Id> {
      * @return T object
      * @throws SQLException if there was an error accessing the database
      */
-    T getById(Id Id) throws SQLException;
+    T findById(Id Id) throws SQLException;
 
     /**
      * Searches for all T objects in the `T` table
@@ -27,7 +27,7 @@ public interface Dao<T, Id> {
      * @return list of T objects
      * @throws SQLException if there was an error accessing the database
      */
-    List<T> getAll(int page, int rows) throws SQLException;
+    List<T> findAll(int page, int rows) throws SQLException;
 
     /**
      * Saves the T object in the `T` table

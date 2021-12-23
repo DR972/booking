@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.dao.user;
 
+import by.rozmysl.bookingServlet.dao.TableConstant;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.User;
 import by.rozmysl.bookingServlet.mail.Letter;
@@ -36,7 +37,8 @@ public class UserDaoImp implements UserDao {
      */
     @Override
     public int countUsersPages(int rows) throws SQLException {
-        return (int) Math.ceil((float) con.countRows("select COUNT(*) as count from USER") / rows);
+//        return (int) Math.ceil((float) con.countRows("select COUNT(*) as count from USER") / rows);
+        return (int) Math.ceil((float) con.countRows(TableConstant.USER_QUERY_FIND_ROWS_COUNT) / rows);
     }
 
     /**
@@ -47,9 +49,20 @@ public class UserDaoImp implements UserDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public User getById(String username) throws SQLException {
-        List<User> users = getResultSet("select USER.*, ROLE.NAME from USER left join USER_ROLE on USERNAME = USER " +
-                " left join ROLE on ROLE = NAME where USERNAME = '" + username + "'");
+    public User findById(String username) throws SQLException {
+//        List<User> users = getResultSet("select USER.*, ROLE.NAME from USER left join USER_ROLE on USERNAME = USER " +
+//                " left join ROLE on ROLE = NAME where USERNAME = '" + username + "'");
+        List<User> users = getResultSet(TableConstant.USER_QUERY_FIND_BY_ID.replace("?username", username));//, statement -> {
+//            statement.setString(1, "%" + username + "%");});//"select USER.*, ROLE.NAME from USER left join USER_ROLE on USERNAME = USER " +
+////                " left join ROLE on ROLE = NAME where USERNAME = '" + username + "'");
+//        , statement -> {
+//            statement.setString(1, "%" + username + "%");
+//            statement.setInt(2, offset);
+//            statement.setInt(3, limit);
+//        });
+//        statement = connection.prepareStatement(command);
+//        statement.setString(1,eml);
+//        resultSet = statement.executeQuery();
         return users.size() != 0 ? users.get(0) : null;
     }
 
@@ -62,10 +75,11 @@ public class UserDaoImp implements UserDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<User> getAll(int page, int rows) throws SQLException {
-        return getResultSet("select USER.*, ROLE.NAME from USER left join USER_ROLE on USERNAME = USER " +
-                "left join ROLE on ROLE = NAME order by UPPER (USERNAME) OFFSET " + rows + "*" + page +
-                " ROWS FETCH NEXT " + rows + " ROWS ONLY");
+    public List<User> findAll(int page, int rows) throws SQLException {
+//        return getResultSet("select USER.*, ROLE.NAME from USER left join USER_ROLE on USERNAME = USER " +
+//                "left join ROLE on ROLE = NAME order by UPPER (USERNAME) OFFSET " + rows + "*" + page +
+//                " ROWS FETCH NEXT " + rows + " ROWS ONLY");
+        return getResultSet(TableConstant.USER_QUERY_FIND_ALL.replace("?rows", String.valueOf(rows)).replace("?page", String.valueOf(page)));
     }
 
     /**
@@ -93,10 +107,13 @@ public class UserDaoImp implements UserDao {
     public User save(User user, String language) throws SQLException, MessagingException {
         user.setActivationCode(UUID.randomUUID().toString());
         new MailSender().sendMail(user.getEmail(), "Activation code", new Letter().createMessage(user, language));
-        String sql = "insert into USER(USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE) VALUES('"
-                + user.getUsername() + "','" + user.getLastname() + "','" + user.getFirstname()
-                + "','" + user.getEmail() + "','" + PasswordAuthentication.getSaltedHash(user.getPassword()) + "','" +
-                user.getActive() + "','" + user.getActivationCode() + "')";
+//        String sql = "insert into USER(USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE) VALUES('"
+//                + user.getUsername() + "','" + user.getLastname() + "','" + user.getFirstname()
+//                + "','" + user.getEmail() + "','" + PasswordAuthentication.getSaltedHash(user.getPassword()) + "','" +
+//                user.getActive() + "','" + user.getActivationCode() + "')";
+        String sql = TableConstant.USER_QUERY_SAVE.replace("?, ?, ?, ?, ?, ?, ?", "'" + user.getUsername() + "','"
+                + user.getLastname() + "','" + user.getFirstname() + "','" + user.getEmail() + "','"
+                + PasswordAuthentication.getSaltedHash(user.getPassword()) + "','" + user.getActive() + "','" + user.getActivationCode() + "'");
         con.update(sql);
         return user;
     }
@@ -109,7 +126,8 @@ public class UserDaoImp implements UserDao {
      */
     @Override
     public void delete(String username) throws SQLException {
-        con.update("delete from USER where USERNAME = '" + username + "'");
+//        con.update("delete from USER where USERNAME = '" + username + "'");
+        con.update(TableConstant.USER_QUERY_DELETE.replace("?username", username));
     }
 
     /**
@@ -123,7 +141,8 @@ public class UserDaoImp implements UserDao {
     public boolean activateUser(String code) throws SQLException {
         User user = findUserByActivationCode(code);
         if (user == null) return false;
-        con.update("update USER set ACTIVE = 'true', ACTIVATIONCODE = 'null' where USERNAME = '" + user.getUsername() + "'");
+//        con.update("update USER set ACTIVE = 'true', ACTIVATIONCODE = 'null' where USERNAME = '" + user.getUsername() + "'");
+        con.update(TableConstant.USER_QUERY_ACTIVATE.replace("?username", user.getUsername()));
         LOGGER.info("The user '" + user.getUsername() + "' is activated.");
         return true;
     }
@@ -155,8 +174,9 @@ public class UserDaoImp implements UserDao {
      * @throws SQLException if there was an error accessing the database
      */
     private User findUserByActivationCode(String code) throws SQLException {
-        List<User> users = getResultSet("select USER.*, ROLE.NAME as role from USER left join USER_ROLE on USERNAME = USER " +
-                " left join ROLE on ROLE = NAME where ACTIVATIONCODE = '" + code + "'");
+//        List<User> users = getResultSet("select USER.*, ROLE.NAME as role from USER left join USER_ROLE on USERNAME = USER " +
+//                " left join ROLE on ROLE = NAME where ACTIVATIONCODE = '" + code + "'");
+        List<User> users = getResultSet(TableConstant.USER_QUERY_FIND_BY_ACTIVATION_CODE.replace("?code", code));
         return users.size() != 0 ? users.get(0) : null;
     }
 }

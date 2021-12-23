@@ -31,7 +31,7 @@ public class GetAllRooms implements Action {
         try {
             RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
             if (req.getParameter("changePrice") != null && req.getParameter("changePrice").equals("changePrice")) {
-                roomDao.updatePrice(roomDao.getById(Integer.parseInt(req.getParameter("roomId"))), new BigDecimal(req.getParameter("price")));
+                roomDao.updatePrice(roomDao.findById(Integer.parseInt(req.getParameter("roomId"))), new BigDecimal(req.getParameter("price")));
                 LOGGER.info("For room # " + req.getParameter("roomId") + ", the price was changed to '" +
                         req.getParameter("price") + "' by admin " + req.getUserPrincipal().getName());
             }
@@ -39,7 +39,7 @@ public class GetAllRooms implements Action {
                 roomDao.delete(Integer.parseInt(req.getParameter("roomId")));
                 LOGGER.info("Room # " + req.getParameter("roomId") + " was deleted by admin " + req.getUserPrincipal().getName());
             }
-            req.setAttribute("allRooms", roomDao.getAll(0, 0));
+            req.setAttribute("allRooms", roomDao.findAll(0, 0));
         } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
         }

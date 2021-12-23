@@ -33,7 +33,7 @@ public class Login implements Action {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
         try {
             if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/anonymous/login.jsp");
-            User user = DaoFactory.getInstance().userDao(con).getById(req.getParameter("username"));
+            User user = DaoFactory.getInstance().userDao(con).findById(req.getParameter("username"));
             try {
                 new UserAuthentication().allAuthenticate(user, req);
             } catch (BadCredentialsException e) {

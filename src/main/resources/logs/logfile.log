@@ -1,10 +1,140 @@
-2021-10-01 15:59:24.388 INFO  Login - The user 'ADMIN' is logged in.
-2021-10-01 15:59:39.205 INFO  GetAllBookings - In booking # 4, the room number was changed to 1 by the admin ADMIN
-2021-10-01 15:59:41.570 INFO  GetAllBookings - In booking # 4, the room number was changed to 41 by the admin ADMIN
-2021-10-01 15:59:43.584 INFO  GetAllBookings - In booking # 4, the room number was changed to 24 by the admin ADMIN
-2021-10-01 15:59:47.073 INFO  GetAllBookings - In booking # 4, the room number was changed to 33 by the admin ADMIN
-2021-10-01 15:59:51.091 INFO  GetAllBookings - In booking # 4, the room number was changed to 12 by the admin ADMIN
-2021-10-01 16:00:10.716 INFO  ChangeRoomParameters - For room # 1, the parameters were changed to '31' by admin ADMIN
-2021-10-01 16:00:13.878 INFO  ChangeRoomParameters - For room # 1, the parameters were changed to '11' by admin ADMIN
-2021-10-01 16:00:48.142 INFO  BookingPage - The booking was made by the user - ADMIN
-2021-10-01 16:01:03.971 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 11:37:27.597 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 11:59:21.969 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 12:48:20.085 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 12:48:26.611 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 12:49:04.143 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:07:33.170 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:07:33.172 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:08:02.736 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:08:02.736 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:08:29.150 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:08:35.556 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:08:54.514 ERROR MainController - org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Нарушение ссылочной целостности: "FK_USER: PUBLIC.USER_ROLE FOREIGN KEY(USER) REFERENCES PUBLIC.USER(USERNAME) ('ASSSS')"
+Referential integrity constraint violation: "FK_USER: PUBLIC.USER_ROLE FOREIGN KEY(USER) REFERENCES PUBLIC.USER(USERNAME) ('ASSSS')"; SQL statement:
+delete from USER where USERNAME  = 'ASSSS' [23503-200]
+2021-12-23 14:08:54.572 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allUsers, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException: Нарушение ссылочной целостности: "FK_USER: PUBLIC.USER_ROLE FOREIGN KEY(USER) REFERENCES PUBLIC.USER(USERNAME) ('ASSSS')"
+Referential integrity constraint violation: "FK_USER: PUBLIC.USER_ROLE FOREIGN KEY(USER) REFERENCES PUBLIC.USER(USERNAME) ('ASSSS')"; SQL statement:
+delete from USER where USERNAME  = 'ASSSS' [23503-200]
+2021-12-23 14:14:28.699 ERROR MainController - org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:14:28.766 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:15:06.071 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:15:27.426 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:15:34.883 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:15:36.685 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:15:36.762 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:18:19.314 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:18:53.626 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:19:05.467 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:19:05.482 ERROR MainController - org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:19:05.567 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:19:18.321 ERROR MainController - org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:19:18.428 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLDataException: Ошибка преобразования данных при конвертации "?number"
+Data conversion error converting "?number"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = '?number' offset 10 * 0 ROWS fetch next 10 ROWS only [22018-200]
+2021-12-23 14:21:46.516 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:22:40.503 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:22:48.413 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:22:50.551 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:22:50.628 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:23:56.885 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:24:18.252 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:24:25.505 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:24:27.734 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:24:27.827 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:25:47.771 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:26:25.790 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:26:32.828 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:26:38.915 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:26:38.992 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:26:58.939 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:39:10.454 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:39:16.400 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:39:41.487 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "USER" не найден
+Column "USER" not found; SQL statement:
+insert into USER(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('ADMIN',32,4),'2022-01-01','2022-01-11','завтрак',10,'трансфер',2135,'ЗАКАЗ' [42122-200]
+2021-12-23 14:39:41.565 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /user/booking, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "USER" не найден
+Column "USER" not found; SQL statement:
+insert into USER(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('ADMIN',32,4),'2022-01-01','2022-01-11','завтрак',10,'трансфер',2135,'ЗАКАЗ' [42122-200]
+2021-12-23 14:42:38.280 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:42:57.514 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:43:03.289 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:43:08.937 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "USERNAME" не найден
+Column "USERNAME" not found; SQL statement:
+delete from USER_ROLE where USERNAME  = 'ASSSS' [42122-200]
+2021-12-23 14:43:09.038 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allUsers, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Столбец "USERNAME" не найден
+Column "USERNAME" not found; SQL statement:
+delete from USER_ROLE where USERNAME  = 'ASSSS' [42122-200]
+2021-12-23 14:44:08.483 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:44:26.015 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:44:31.036 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:44:34.925 INFO  GetAllUsers - The user 'ASSSS' was deleted by the admin ADMIN
+2021-12-23 14:44:40.446 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:44:40.547 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:44:58.144 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Неверное количество столбцов
+Column count does not match; SQL statement:
+insert into BOOKING(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('ADMIN',1,2),'2022-01-01','2022-01-10','завтрак',9,'трансфер',834,'ЗАКАЗ' [21002-200]
+2021-12-23 14:44:58.187 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /user/booking, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Неверное количество столбцов
+Column count does not match; SQL statement:
+insert into BOOKING(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('ADMIN',1,2),'2022-01-01','2022-01-10','завтрак',9,'трансфер',834,'ЗАКАЗ' [21002-200]
+2021-12-23 14:46:25.789 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:46:52.338 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:46:57.543 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:47:10.596 INFO  BookingPage - The booking was made by the user - ADMIN
+2021-12-23 14:47:38.196 ERROR MainController - org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:47:38.253 ERROR ErrorHandler - Status: 500, Servlet: MainController, Exception: javax.servlet.ServletException, uri: /admin/allBookings, message: javax.servlet.ServletException: org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"
+Syntax error in SQL statement "SELECT NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS FROM BOOKING LEFT JOIN ROOM ON ROOM = ROOMNUMBER WHERE NUMBER = ?NUMBER[*] OFFSET 10 * 0 ROWS FETCH NEXT 10 ROWS ONLY"; SQL statement:
+select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?number offset 10 * 0 ROWS fetch next 10 ROWS only [42000-200]
+2021-12-23 14:51:25.505 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 14:51:45.109 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 14:51:51.253 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 14:52:13.408 INFO  GetAllBookings - In booking # 4, the room number was changed to 1 by the admin ADMIN
+2021-12-23 14:52:17.137 INFO  GetAllBookings - In booking # 4, the room number was changed to 24 by the admin ADMIN
+2021-12-23 14:52:33.227 INFO  GetAllBookings - In booking # 188, the room number was changed to 23 by the admin ADMIN
+2021-12-23 14:52:35.977 INFO  GetAllBookings - Booking # 188 was deleted by admin ADMIN
+2021-12-23 15:07:10.492 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 15:07:31.008 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 15:07:39.935 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 15:07:54.319 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '9' by admin ADMIN
+2021-12-23 15:07:57.738 INFO  ChangeServicesPrice - For food  'завтрак', the price was changed to '8' by admin ADMIN
+2021-12-23 15:08:02.469 INFO  ChangeServicesPrice - For service  'трансфер', the price was changed to '16' by admin ADMIN
+2021-12-23 15:08:05.244 INFO  ChangeServicesPrice - For service  'трансфер', the price was changed to '15' by admin ADMIN
+2021-12-23 15:08:08.431 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '11' by admin ADMIN
+2021-12-23 15:08:11.257 INFO  ChangeServicesPrice - For service  'стоянка', the price was changed to '12' by admin ADMIN
+2021-12-23 15:08:16.104 INFO  ConnectionPool - Connection pool has been successfully deinitialized.
+2021-12-23 15:39:16.176 INFO  ConnectionPool - Connection pool initialized successfully.
+2021-12-23 15:39:21.986 INFO  Login - The user 'ADMIN' is logged in.
+2021-12-23 15:39:28.934 INFO  GetAllBookings - In booking # 4, the room number was changed to 1 by the admin ADMIN
+2021-12-23 15:39:32.142 INFO  GetAllBookings - Booking # 4 was deleted by admin ADMIN
+2021-12-23 15:39:37.894 INFO  ConnectionPool - Connection pool has been successfully deinitialized.

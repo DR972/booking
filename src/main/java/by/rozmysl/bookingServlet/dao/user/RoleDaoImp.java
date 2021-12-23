@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.dao.user;
 
+import by.rozmysl.bookingServlet.dao.TableConstant;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.user.UserRole;
 
@@ -28,8 +29,9 @@ public class RoleDaoImp implements RoleDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public UserRole getById(String name) throws SQLException {
-        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = '" + name + "'").get(0);
+    public UserRole findById(String name) throws SQLException {
+//        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = '" + name + "'").get(0);
+        return getResultSet(TableConstant.USER_ROLE_QUERY_FIND_BY_ROLE.replace("?name", name)).get(0);
     }
 
     /**
@@ -41,7 +43,8 @@ public class RoleDaoImp implements RoleDao {
      */
     @Override
     public List<UserRole> findUserRoleByUser(String username) throws SQLException {
-        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = '" + username + "'");
+//        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = '" + username + "'");
+        return getResultSet(TableConstant.USER_ROLE_QUERY_FIND_BY_USER.replace("?username", username));
     }
 
     /**
@@ -53,8 +56,9 @@ public class RoleDaoImp implements RoleDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<UserRole> getAll(int page, int rows) throws SQLException {
-        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME");
+    public List<UserRole> findAll(int page, int rows) throws SQLException {
+//        return getResultSet("select * from USER_ROLE left join ROLE on ROLE = ROLE.NAME");
+        return getResultSet(TableConstant.USER_ROLE_QUERY_FIND_ALL);
     }
 
     /**
@@ -66,19 +70,21 @@ public class RoleDaoImp implements RoleDao {
      */
     @Override
     public UserRole save(UserRole userRole) throws SQLException {
-        con.update("insert into USER_ROLE(USER, ROLE) VALUES('" + userRole.getUsername() + "', '" + userRole.getRole() + "')");
+//        con.update("insert into USER_ROLE(USER, ROLE) VALUES('" + userRole.getUsername() + "', '" + userRole.getRole() + "')");
+        con.update(TableConstant.USER_ROLE_QUERY_SAVE.replace("?, ?", "'" + userRole.getUsername() + "', '" + userRole.getRole() + "'"));
         return userRole;
     }
 
     /**
      * Deletes the UserRole in the `USER_ROLE` table
      *
-     * @param name of UserRole
+     * @param username of UserRole
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void delete(String name) throws SQLException {
-        con.update("delete from USER_ROLE where USER = '" + name + "'");
+    public void delete(String username) throws SQLException {
+//        con.update("delete from USER_ROLE where USER = '" + username + "'");
+        con.update(TableConstant.USER_ROLE_QUERY_DELETE.replace("?username", username));
     }
 
     /**

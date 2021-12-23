@@ -39,7 +39,6 @@
                                         цена=<ctg:money value="${r.price}"/></option>
                                     </c:if>
                                 </c:forEach>
-                                <input type="hidden" name="action" value="changeRoomParameters"/>
                                 <input type="hidden" name="roomId" value="${room.roomNumber}"/>
                                 <input type="hidden" name="changeParameters" value="changeParameters"/>
                                 <button type="submit">Изменить</button>
@@ -49,7 +48,6 @@
                     <td><ctg:money value="${room.price}"/></td>
                     <td>
                         <form action="changeRoomParameters" method="post">
-                            <input type="hidden" name="action" value="changeRoomParameters"/>
                             <input type="number" step="1" name="price" value="${room.price}"></input>
                             <input type="hidden" name="roomId" value="${room.roomNumber}"/>
                             <input type="hidden" name="changePrice" value="changePrice"/>

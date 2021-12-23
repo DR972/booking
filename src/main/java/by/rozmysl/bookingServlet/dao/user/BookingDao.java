@@ -41,7 +41,7 @@ public interface BookingDao extends Dao<Booking, Long> {
      * @return list of Booking objects
      * @throws SQLException if there was an error accessing the database
      */
-    List<Booking> findAllByUser(String user) throws SQLException;
+    List<Booking> findAllBookingsByUser(String user) throws SQLException;
 
     /**
      * Changes the Room in the User's Booking in the `BOOKING` table
@@ -61,5 +61,5 @@ public interface BookingDao extends Dao<Booking, Long> {
      * @throws MessagingException if the message cannot be created
      * @throws IOException        if the letter cannot be created
      */
-    void changeStatusBooking(long bookingId, String status, DaoFactory dao) throws IOException, MessagingException, SQLException;
+    void changeBookingStatus(long bookingId, String status, DaoFactory dao) throws IOException, MessagingException, SQLException;
 }

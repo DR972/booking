@@ -34,7 +34,7 @@ public class GetUserBookings implements Action {
                 bookingDao.delete(Long.parseLong(req.getParameter("bookingId")));
                 LOGGER.info("Booking # " + req.getParameter("bookingId") + " was canceled by the user.");
             }
-            req.setAttribute("booking", bookingDao.findAllByUser(req.getUserPrincipal().getName()));
+            req.setAttribute("booking", bookingDao.findAllBookingsByUser(req.getUserPrincipal().getName()));
         } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
         }

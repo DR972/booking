@@ -27,7 +27,6 @@
                         <td><ctg:money value="${food.price}"/></td>
                         <td>
                             <form action="changeServicesPrice" method="post">
-                                <input type="hidden" name="action" value="changeServicesPrice"/>
                                 <input type="number" step="0.5" name="foodPrice" value="${food.price}"></input>
                                 <input type="hidden" name="foodId" value="${food.type}"/>
                                 <input type="hidden" name="changeFoodPrice" value="changeFoodPrice"/>
@@ -53,7 +52,6 @@
                         <td><ctg:money value="${service.price}"/></td>
                         <td>
                             <form action="changeServicesPrice" method="post">
-                                <input type="hidden" name="action" value="changeServicesPrice"/>
                                 <input type="number" step="0.5" name="servicePrice" value="${service.price}"></input>
                                 <input type="hidden" name="serviceId" value="${service.type}"/>
                                 <input type="hidden" name="changeServicePrice" value="changeServicePrice"/>

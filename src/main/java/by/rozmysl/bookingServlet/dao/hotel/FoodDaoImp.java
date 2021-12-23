@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.dao.hotel;
 
+import by.rozmysl.bookingServlet.dao.TableConstant;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.Food;
 
@@ -29,8 +30,9 @@ public class FoodDaoImp implements FoodDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public Food getById(String type) throws SQLException {
-        return getResultSet("select * from FOOD where TYPE = '" + type + "'").get(0);
+    public Food findById(String type) throws SQLException {
+//        return getResultSet("select * from FOOD where TYPE = '" + type + "'").get(0);
+        return getResultSet(TableConstant.FOOD_QUERY_FIND_BY_ID.replace("?type", type)).get(0);
     }
 
     /**
@@ -42,8 +44,9 @@ public class FoodDaoImp implements FoodDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<Food> getAll(int page, int rows) throws SQLException {
-        return getResultSet("select * from FOOD");
+    public List<Food> findAll(int page, int rows) throws SQLException {
+//        return getResultSet("select * from FOOD");
+        return getResultSet(TableConstant.FOOD_QUERY_FIND_ALL);
     }
 
     @Override
@@ -64,7 +67,8 @@ public class FoodDaoImp implements FoodDao {
      */
     @Override
     public void changeFoodPrice(String type, BigDecimal price) throws SQLException {
-        con.update("update FOOD set PRICE = " + price + " where TYPE = '" + type + "'");
+//        con.update("update FOOD set PRICE = " + price + " where TYPE = '" + type + "'");
+        con.update(TableConstant.FOOD_QUERY_CHANGE_FOOD_PRICE.replace("?price", String.valueOf(price)).replace("?type", type));
     }
 
     /**

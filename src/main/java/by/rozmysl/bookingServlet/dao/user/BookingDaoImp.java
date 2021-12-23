@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.dao.user;
 
 import by.rozmysl.bookingServlet.dao.DaoFactory;
+import by.rozmysl.bookingServlet.dao.TableConstant;
 import by.rozmysl.bookingServlet.db.ConnectionSource;
 import by.rozmysl.bookingServlet.entity.hotel.AdditionalServices;
 import by.rozmysl.bookingServlet.entity.hotel.Food;
@@ -41,7 +42,8 @@ public class BookingDaoImp implements BookingDao {
      */
     @Override
     public int countBookingsPages(int rows) throws SQLException {
-        return (int) Math.ceil((float) con.countRows("select COUNT(*) as count from BOOKING") / rows);
+//        return (int) Math.ceil((float) con.countRows("select COUNT(*) as count from BOOKING") / rows);
+        return (int) Math.ceil((float) con.countRows(TableConstant.BOOKING_QUERY_FIND_ROWS_COUNT) / rows);
     }
 
     /**
@@ -52,9 +54,10 @@ public class BookingDaoImp implements BookingDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public Booking getById(Long number) throws SQLException {
-        List<Booking> bookings = getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join " +
-                "ROOM on ROOM = ROOMNUMBER where NUMBER = " + number);
+    public Booking findById(Long number) throws SQLException {
+//        List<Booking> bookings = getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join " +
+//                "ROOM on ROOM = ROOMNUMBER where NUMBER = " + number);
+        List<Booking> bookings = getResultSet(TableConstant.BOOKING_QUERY_FIND_BY_ID.replace("?number", String.valueOf(number)));
         return bookings.size() != 0 ? bookings.get(0) : null;
     }
 
@@ -67,9 +70,10 @@ public class BookingDaoImp implements BookingDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<Booking> getAll(int page, int rows) throws SQLException {
-        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
-                "OFFSET " + rows + "*" + page + " ROWS FETCH NEXT " + rows + " ROWS ONLY");
+    public List<Booking> findAll(int page, int rows) throws SQLException {
+//        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
+//                "OFFSET " + rows + "*" + page + " ROWS FETCH NEXT " + rows + " ROWS ONLY");
+        return getResultSet(TableConstant.BOOKING_QUERY_FIND_ALL.replace("?rows", String.valueOf(rows)).replace("?page", String.valueOf(page)));
     }
 
     /**
@@ -82,11 +86,16 @@ public class BookingDaoImp implements BookingDao {
     @Override
     public Booking save(Booking booking) throws SQLException {
         booking.setAmount(calculateAmount(booking));
-        String sql = "insert into BOOKING(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('"
-                + booking.getUser().getUsername() + "'," + booking.getRoom().getRoomNumber() + "," + booking.getPersons()
+//        String sql = "insert into BOOKING(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES('"
+//                + booking.getUser().getUsername() + "'," + booking.getRoom().getRoomNumber() + "," + booking.getPersons()
+//                + ",'" + Date.valueOf(booking.getArrival()) + "','" + Date.valueOf(booking.getDeparture()) + "','" +
+//                booking.getFood().getType() + "'," + booking.getDays() + ",'" + booking.getServices().getType() + "'," +
+//                booking.getAmount() + ",'" + booking.getStatus() + "')";
+        String sql = TableConstant.BOOKING_QUERY_SAVE.replace("?, ?, ?, ?, ?, ?, ?, ?, ?, ?",
+                "'" + booking.getUser().getUsername() + "'," + booking.getRoom().getRoomNumber() + "," + booking.getPersons()
                 + ",'" + Date.valueOf(booking.getArrival()) + "','" + Date.valueOf(booking.getDeparture()) + "','" +
                 booking.getFood().getType() + "'," + booking.getDays() + ",'" + booking.getServices().getType() + "'," +
-                booking.getAmount() + ",'" + booking.getStatus() + "')";
+                booking.getAmount() + ",'" + booking.getStatus() + "'");
         con.saveWithGeneratedKeys(sql);
         return booking;
     }
@@ -94,13 +103,14 @@ public class BookingDaoImp implements BookingDao {
     /**
      * Deletes the Booking in the `BOOKING` table
      *
-     * @param bookingId id of the Booking
+     * @param number id of the Booking
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void delete(Long bookingId) throws SQLException {
-        new Letter().deleteInvoice("src/main/resources/static/" + bookingId + ".pdf");
-        con.update("delete from BOOKING where NUMBER = " + bookingId);
+    public void delete(Long number) throws SQLException {
+        new Letter().deleteInvoice("src/main/resources/static/" + number + ".pdf");
+//        con.update("delete from BOOKING where NUMBER = " + bookingId);
+        con.update(TableConstant.BOOKING_QUERY_DELETE.replace("?number", String.valueOf(number)));
     }
 
     /**
@@ -113,8 +123,10 @@ public class BookingDaoImp implements BookingDao {
      */
     @Override
     public List<Booking> findAllBookingsBetweenTwoDates(LocalDate arrival, LocalDate departure) throws SQLException {
-        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
-                "where ARRIVAL < '" + departure + "' and DEPARTURE > '" + arrival + "'");
+//        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
+//                "where ARRIVAL < '" + departure + "' and DEPARTURE > '" + arrival + "'");
+        return getResultSet(TableConstant.BOOKING_QUERY_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES
+                .replace("?departure", String.valueOf(departure)).replace("?arrival", String.valueOf(arrival)));
     }
 
     /**
@@ -125,31 +137,34 @@ public class BookingDaoImp implements BookingDao {
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public List<Booking> findAllByUser(String user) throws SQLException {
-        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
-                "where USER = '" + user + "'");
+    public List<Booking> findAllBookingsByUser(String user) throws SQLException {
+//        return getResultSet("select BOOKING.*, ROOM.TYPE, ROOM.SLEEPS from BOOKING left join ROOM on ROOM = ROOMNUMBER " +
+//                "where USER = '" + user + "'");
+        return getResultSet(TableConstant.BOOKING_QUERY_FIND_ALL_BOOKINGS_BY_USER.replace("?user", String.valueOf (user)));
     }
 
     /**
      * Changes the Room in the User's Booking in the `BOOKING` table
      *
-     * @param bookingId id of the Booking
-     * @param roomId    id of the Room
+     * @param number id of the Booking
+     * @param roomNumber    id of the Room
      * @param dao       DaoFactory dao
      * @throws SQLException if there was an error accessing the database
      */
     @Override
-    public void changeRoom(long bookingId, int roomId, DaoFactory dao) throws SQLException {
-        Booking booking = getAllBookingInfo(bookingId, dao);
-        booking.setRoom(dao.roomDao(con).getById(roomId));
-        con.update("update BOOKING set ROOM = " + roomId + ", AMOUNT = " + calculateAmount(booking)
-                + " where NUMBER = " + bookingId);
+    public void changeRoom(long number, int roomNumber, DaoFactory dao) throws SQLException {
+        Booking booking = getAllBookingInfo(number, dao);
+        booking.setRoom(dao.roomDao(con).findById(roomNumber));
+//        con.update("update BOOKING set ROOM = " + roomNumber + ", AMOUNT = " + calculateAmount(booking)
+//                + " where NUMBER = " + number);
+        con.update(TableConstant.BOOKING_QUERY_CHANGE_ROOM.replace("?roomNumber", String.valueOf(roomNumber))
+                .replace("?amount", String.valueOf(calculateAmount(booking))).replace("?number", String.valueOf(number)));
     }
 
     /**
      * Changes the User's Booking status in the `BOOKING` table
      *
-     * @param bookingId id of the Booking
+     * @param number id of the Booking
      * @param status    booking status
      * @param dao       DaoFactory dao
      * @throws SQLException       if there was an error accessing the database
@@ -157,16 +172,17 @@ public class BookingDaoImp implements BookingDao {
      * @throws IOException        if the letter cannot be created
      */
     @Override
-    public void changeStatusBooking(long bookingId, String status, DaoFactory dao) throws IOException, MessagingException, SQLException {
-        Booking booking = getAllBookingInfo(bookingId, dao);
-        String filePath = "src/main/resources/static/" + bookingId + ".pdf";
+    public void changeBookingStatus(long number, String status, DaoFactory dao) throws IOException, MessagingException, SQLException {
+        Booking booking = getAllBookingInfo(number, dao);
+        String filePath = "src/main/resources/static/" + number + ".pdf";
         if (status.equals("СЧЕТ")) {
             new Letter().createInvoice(booking, filePath);
-            new MailSender().sendMailWithAttachment(dao.userDao(con).getById(booking.getUser().getUsername()).getEmail(),
+            new MailSender().sendMailWithAttachment(dao.userDao(con).findById(booking.getUser().getUsername()).getEmail(),
                     "СЧЕТ", "Счет во вложении", filePath);
         }
         if (status.equals("ЗАКРЫТ")) new Letter().deleteInvoice(filePath);
-        con.update("update BOOKING set STATUS = '" + status + "' where NUMBER = " + bookingId);
+        con.update(TableConstant.BOOKING_QUERY_CHANGE_BOOKING_STATUS.replace("?status", status).replace("?number", String.valueOf(number)));
+//        con.update("update BOOKING set STATUS = '" + status + "' where NUMBER = " + number);
     }
 
     /**
@@ -177,11 +193,18 @@ public class BookingDaoImp implements BookingDao {
      * @throws SQLException if there was an error accessing the database
      */
     private List<Booking> getResultSet(String sql) throws SQLException {
-        return con.get(sql).stream().map(d -> new Booking(Long.parseLong(d.get("NUMBER")), new User(d.get("USER")),
+        return con.get(sql).stream().map(d -> new Booking(
+                Long.parseLong(d.get("NUMBER")),
+                new User(d.get("USER")),
                 new Room(Integer.parseInt(d.get("ROOM")), d.get("TYPE"), Integer.parseInt(d.get("SLEEPS"))),
-                Integer.parseInt(d.get("PERSONS")), LocalDate.parse(d.get("ARRIVAL")), LocalDate.parse(d.get("DEPARTURE")),
-                Integer.parseInt(d.get("DAYS")), new Food(d.get("FOOD")), new AdditionalServices(d.get("SERVICES")),
-                new BigDecimal(d.get("AMOUNT")), d.get("STATUS"))).distinct().collect(Collectors.toList());
+                Integer.parseInt(d.get("PERSONS")),
+                LocalDate.parse(d.get("ARRIVAL")),
+                LocalDate.parse(d.get("DEPARTURE")),
+                Integer.parseInt(d.get("DAYS")),
+                new Food(d.get("FOOD")),
+                new AdditionalServices(d.get("SERVICES")),
+                new BigDecimal(d.get("AMOUNT")),
+                d.get("STATUS"))).distinct().collect(Collectors.toList());
     }
 
     /**
@@ -210,10 +233,10 @@ public class BookingDaoImp implements BookingDao {
      * @throws SQLException if there was an error accessing the database
      */
     private Booking getAllBookingInfo(long bookingId, DaoFactory dao) throws SQLException {
-        Booking booking = getById(bookingId);
-        booking.setRoom(dao.roomDao(con).getById(booking.getRoom().getRoomNumber()));
-        booking.setFood(dao.foodDao(con).getById(booking.getFood().getType()));
-        booking.setServices(dao.servicesDao(con).getById(booking.getServices().getType()));
+        Booking booking = findById(bookingId);
+        booking.setRoom(dao.roomDao(con).findById(booking.getRoom().getRoomNumber()));
+        booking.setFood(dao.foodDao(con).findById(booking.getFood().getType()));
+        booking.setServices(dao.servicesDao(con).findById(booking.getServices().getType()));
         return booking;
     }
 }

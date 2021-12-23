@@ -34,7 +34,7 @@ public class CreateNewRoom implements Action {
             RoomDao roomDao = DaoFactory.getInstance().roomDao(con);
             req.setAttribute("allRooms", roomDao.findAllTypesRooms());
             if (req.getParameter("action") == null) return String.format("forward:%s", "/WEB-INF/views/admin/addRoom.jsp");
-            if (roomDao.getById(Integer.parseInt(req.getParameter("roomNumber"))) != null) {
+            if (roomDao.findById(Integer.parseInt(req.getParameter("roomNumber"))) != null) {
                 req.setAttribute("errorRoomNumber", "Изменить параметры существующих номеров можно на странице" +
                         " \"Изменить параметры номеров\"");
                 ConnectionPool.getInstance().returnConnectionToPool(con);

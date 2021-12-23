@@ -48,7 +48,6 @@
                         <td>
                             <c:if test = "${LocalDate.now().isBefore(booking.arrival)}">
                                 <form action="userBookings" method="POST">
-                                    <input type="hidden" name="action" value="userBookings"/>
                                     <input type="hidden" name="bookingId" value="${booking.number}"/>
                                     <input type="hidden" name="delete" value="delete"/>
                                     <button type="submit"><fmt:message bundle="${msg}" key="button.cancel"/></button>

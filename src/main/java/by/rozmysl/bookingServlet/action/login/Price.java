@@ -24,8 +24,8 @@ public class Price implements Action {
         final ConnectionSource con = ConnectionPool.getInstance().getConnectionFromPool();
         try {
             req.setAttribute("allRooms", dao.roomDao(con).findAllRoomsByTypesAndSleeps());
-            req.setAttribute("allFood", dao.foodDao(con).getAll(0, 0));
-            req.setAttribute("allServices", dao.servicesDao(con).getAll(0, 0));
+            req.setAttribute("allFood", dao.foodDao(con).findAll(0, 0));
+            req.setAttribute("allServices", dao.servicesDao(con).findAll(0, 0));
         } finally {
             ConnectionPool.getInstance().returnConnectionToPool(con);
         }

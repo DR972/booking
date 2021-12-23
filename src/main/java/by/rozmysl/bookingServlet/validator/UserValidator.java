@@ -23,7 +23,7 @@ public class UserValidator extends Validator {
      */
     public void allValidate(User user, UserDao userDao) throws SQLException, BadCredentialsException {
         if (!validateSignUpParam(user)) throw new BadCredentialsException(getValidationMessage());
-        if (userDao.getById(user.getUsername()) != null) throw new BadCredentialsException("val.repeatingName");
+        if (userDao.findById(user.getUsername()) != null) throw new BadCredentialsException("val.repeatingName");
         if (!user.getPassword().equals(user.getPasswordConfirm())) throw new BadCredentialsException("val.passwordConfirm");
     }
 

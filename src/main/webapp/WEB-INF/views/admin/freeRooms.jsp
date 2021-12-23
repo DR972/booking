@@ -31,7 +31,6 @@
                     </td>
                 </tr>
             </table><br/>
-            <input type="hidden" name="action" value="freeRooms"/>
             <input type="hidden" name="from" value="${from}"/>
             <input type="hidden" name="to" value="${to}"/>
             <button type="submit">Искать</button>
