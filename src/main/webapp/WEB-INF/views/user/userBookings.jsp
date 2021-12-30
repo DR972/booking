@@ -34,7 +34,7 @@
                 <th><fmt:message bundle="${msg}" key="book.amount"/></th>
                 <th><fmt:message bundle="${msg}" key="button.cancel"/></th>
             </thead>
-            <c:forEach items="${booking}" var="booking">
+            <c:forEach items="${userBooking}" var="booking">
                 <div>
                     <tr>
                         <td><fmt:message bundle="${msg}" key="db.${booking.room.type}"/></td>
@@ -48,7 +48,7 @@
                         <td>
                             <c:if test = "${LocalDate.now().isBefore(booking.arrival)}">
                                 <form action="userBookings" method="POST">
-                                    <input type="hidden" name="bookingId" value="${booking.number}"/>
+                                    <input type="hidden" name="bookingNumber" value="${booking.number}"/>
                                     <input type="hidden" name="delete" value="delete"/>
                                     <button type="submit"><fmt:message bundle="${msg}" key="button.cancel"/></button>
                                 </form>

@@ -6,7 +6,7 @@
 <title>RoleDao</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-10-01">
-<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.dao.user, interface: RoleDao">
+<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.model.dao.user, interface: RoleDao">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -74,21 +74,21 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.dao.user</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.model.dao.user</a></div>
 <h1 title="Interface RoleDao" class="title">Interface RoleDao</h1>
 </div>
 <section class="description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
+<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="RoleDaoImp.html" title="class in by.rozmysl.bookingServlet.dao.user">RoleDaoImp</a></code></dd>
+<dd><code><a href="RoleDaoImp.html" title="class in by.rozmysl.bookingServlet.model.dao.user">RoleDaoImp</a></code></dd>
 </dl>
 <hr>
 <pre>public interface <span class="type-name-label">RoleDao</span>
-extends <a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</pre>
+extends <a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</pre>
 <div class="block">Provides the base model DAO interface for `USER_ROLE` table.</div>
 </section>
 <section class="summary">
@@ -110,7 +110,7 @@ extends <a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao"
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findUserRoleByUser(java.lang.String)">findUserRoleByUser</a></span>&#8203;(java.lang.String&nbsp;username)</code></th>
 <td class="col-last">
 <div class="block">Searches for all User's UserRoles in the `USER_ROLE` table</div>
@@ -121,7 +121,7 @@ extends <a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao"
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods.inherited.from.class.by.rozmysl.bookingServlet.dao.Dao">Methods inherited from interface&nbsp;by.rozmysl.bookingServlet.dao.<a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a></h3>
+<h3 id="methods.inherited.from.class.by.rozmysl.bookingServlet.model.dao.Dao">Methods inherited from interface&nbsp;by.rozmysl.bookingServlet.model.dao.<a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a></h3>
 <code><a href="../Dao.html#delete(Id)">delete</a>, <a href="../Dao.html#getAll(int,int)">getAll</a>, <a href="../Dao.html#getById(Id)">getById</a>, <a href="../Dao.html#save(T)">save</a></code></div>
 </section>
 </li>
@@ -137,7 +137,7 @@ extends <a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao"
 <li>
 <section class="detail" id="findUserRoleByUser(java.lang.String)">
 <h3>findUserRoleByUser</h3>
-<div class="member-signature"><span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">findUserRoleByUser</span>&#8203;(<span class="parameters">java.lang.String&nbsp;username)</span>
+<div class="member-signature"><span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">findUserRoleByUser</span>&#8203;(<span class="parameters">java.lang.String&nbsp;username)</span>
                                      throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all User's UserRoles in the `USER_ROLE` table</div>
 <dl class="notes">

@@ -34,7 +34,7 @@
                         <td>
                             <form action="allRooms" method="POST">
                                 <input type="number" step="1" name="price" value="${room.price}"></input>
-                                <input type="hidden" name="roomId" value="${room.roomNumber}"/>
+                                <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
                                 <input type="hidden" name="changePrice" value="changePrice"/>
                                 <button type="submit">Изменить</button>
                             </form>
@@ -42,7 +42,7 @@
                         <td>
                             <form action="allRooms" method="POST">
                                 <input type="hidden" name="action" value="allRooms"/>
-                                <input type="hidden" name="roomId" value="${room.roomNumber}"/>
+                                <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
                                 <input type="hidden" name="delete" value="delete"/>
                                 <button type="submit">Удалить</button>
                             </form>

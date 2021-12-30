@@ -6,7 +6,7 @@
 <title>RoleDaoImp</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-10-01">
-<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.dao.user, class: RoleDaoImp">
+<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.model.dao.user, class: RoleDaoImp">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -74,21 +74,21 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.dao.user</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.model.dao.user</a></div>
 <h1 title="Class RoleDaoImp" class="title">Class RoleDaoImp</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">by.rozmysl.bookingServlet.dao.user.RoleDaoImp</div>
+<div class="inheritance">by.rozmysl.bookingServlet.model.dao.Impl.RoleDaoImpl</div>
 </div>
 <section class="description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code>, <code><a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.dao.user">RoleDao</a></code></dd>
+<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code>, <code><a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.user">RoleDao</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="type-name-label">RoleDaoImp</span>
 extends java.lang.Object
-implements <a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.dao.user">RoleDao</a></pre>
+implements <a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.user">RoleDao</a></pre>
 <div class="block">Provides the base model implementation for `USER_ROLE` and `ROLE` table DAO with the <b>ConnectionSource</b> properties.</div>
 </section>
 <section class="summary">
@@ -109,7 +109,7 @@ implements <a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a></code></td>
+<td class="col-first"><code>private <a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#con">con</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -133,7 +133,7 @@ implements <a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.
 </thead>
 <tbody>
 <tr class="alt-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(by.rozmysl.bookingServlet.db.ConnectionSource)">RoleDaoImp</a></span>&#8203;(<a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a>&nbsp;con)</code></th>
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(by.rozmysl.bookingServlet.model.db.ConnectionSource)">RoleDaoImp</a></span>&#8203;(<a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a>&nbsp;con)</code></th>
 <td class="col-last">
 <div class="block">The constructor creates a new object RoleDaoImp with the <b>con</b> property</div>
 </td>
@@ -167,14 +167,14 @@ implements <a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.
 </td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findUserRoleByUser(java.lang.String)">findUserRoleByUser</a></span>&#8203;(java.lang.String&nbsp;username)</code></th>
 <td class="col-last">
 <div class="block">Searches for all User's UserRoles in the `USER_ROLE` table</div>
 </td>
 </tr>
 <tr class="alt-color" id="i2">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getAll(int,int)">getAll</a></span>&#8203;(int&nbsp;page,
 int&nbsp;rows)</code></th>
 <td class="col-last">
@@ -182,22 +182,22 @@ int&nbsp;rows)</code></th>
 </td>
 </tr>
 <tr class="row-color" id="i3">
-<td class="col-first"><code><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a></code></td>
+<td class="col-first"><code><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getById(java.lang.String)">getById</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="col-last">
 <div class="block">Searches for the UserRole in the `USER_ROLE` table by id</div>
 </td>
 </tr>
 <tr class="alt-color" id="i4">
-<td class="col-first"><code>private java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</code></td>
+<td class="col-first"><code>private java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getResultSet(java.lang.String)">getResultSet</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
 <td class="col-last">
 <div class="block">Get a list of query results from the 'USER_ROLE' table</div>
 </td>
 </tr>
 <tr class="row-color" id="i5">
-<td class="col-first"><code><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#save(by.rozmysl.bookingServlet.entity.user.UserRole)">save</a></span>&#8203;(<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&nbsp;userRole)</code></th>
+<td class="col-first"><code><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#save(by.rozmysl.bookingServlet.model.entity.user.UserRole)">save</a></span>&#8203;(<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&nbsp;userRole)</code></th>
 <td class="col-last">
 <div class="block">Saves the UserRole in the `USER_ROLE` table</div>
 </td>
@@ -223,7 +223,7 @@ int&nbsp;rows)</code></th>
 <li>
 <section class="detail" id="con">
 <h3>con</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a></span>&nbsp;<span class="member-name">con</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a></span>&nbsp;<span class="member-name">con</span></div>
 </section>
 </li>
 </ul>
@@ -235,9 +235,9 @@ int&nbsp;rows)</code></th>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(by.rozmysl.bookingServlet.db.ConnectionSource)">
+<section class="detail" id="&lt;init&gt;(by.rozmysl.bookingServlet.model.db.ConnectionSource)">
 <h3>RoleDaoImp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">RoleDaoImp</span>&#8203;(<span class="parameters"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a>&nbsp;con)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">RoleDaoImp</span>&#8203;(<span class="parameters"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a>&nbsp;con)</span></div>
 <div class="block">The constructor creates a new object RoleDaoImp with the <b>con</b> property</div>
 </section>
 </li>
@@ -252,12 +252,12 @@ int&nbsp;rows)</code></th>
 <li>
 <section class="detail" id="getById(java.lang.String)">
 <h3>getById</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a></span>&nbsp;<span class="member-name">getById</span>&#8203;(<span class="parameters">java.lang.String&nbsp;name)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a></span>&nbsp;<span class="member-name">getById</span>&#8203;(<span class="parameters">java.lang.String&nbsp;name)</span>
                  throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for the UserRole in the `USER_ROLE` table by id</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#getById(Id)">getById</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
+<dd><code><a href="../Dao.html#getById(Id)">getById</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>name</code> - of Role</dd>
 <dt>Returns:</dt>
@@ -270,12 +270,12 @@ int&nbsp;rows)</code></th>
 <li>
 <section class="detail" id="findUserRoleByUser(java.lang.String)">
 <h3>findUserRoleByUser</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">findUserRoleByUser</span>&#8203;(<span class="parameters">java.lang.String&nbsp;username)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">findUserRoleByUser</span>&#8203;(<span class="parameters">java.lang.String&nbsp;username)</span>
                                             throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all User's UserRoles in the `USER_ROLE` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoleDao.html#findUserRoleByUser(java.lang.String)">findUserRoleByUser</a></code>&nbsp;in interface&nbsp;<code><a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.dao.user">RoleDao</a></code></dd>
+<dd><code><a href="RoleDao.html#findUserRoleByUser(java.lang.String)">findUserRoleByUser</a></code>&nbsp;in interface&nbsp;<code><a href="RoleDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.user">RoleDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>username</code> - User's id</dd>
 <dt>Returns:</dt>
@@ -288,13 +288,13 @@ int&nbsp;rows)</code></th>
 <li>
 <section class="detail" id="getAll(int,int)">
 <h3>getAll</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">getAll</span>&#8203;(<span class="parameters">int&nbsp;page,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">getAll</span>&#8203;(<span class="parameters">int&nbsp;page,
 int&nbsp;rows)</span>
                                 throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all UserRoles in the `USER_ROLE` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#getAll(int,int)">getAll</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
+<dd><code><a href="../Dao.html#getAll(int,int)">getAll</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>page</code> - number of the page to return</dd>
 <dd><code>rows</code> - number of rows per page</dd>
@@ -306,14 +306,14 @@ int&nbsp;rows)</span>
 </section>
 </li>
 <li>
-<section class="detail" id="save(by.rozmysl.bookingServlet.entity.user.UserRole)">
+<section class="detail" id="save(by.rozmysl.bookingServlet.model.entity.user.UserRole)">
 <h3>save</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a></span>&nbsp;<span class="member-name">save</span>&#8203;(<span class="parameters"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&nbsp;userRole)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a></span>&nbsp;<span class="member-name">save</span>&#8203;(<span class="parameters"><a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&nbsp;userRole)</span>
               throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Saves the UserRole in the `USER_ROLE` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#save(T)">save</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
+<dd><code><a href="../Dao.html#save(T)">save</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>userRole</code> - UserRole</dd>
 <dt>Returns:</dt>
@@ -331,7 +331,7 @@ int&nbsp;rows)</span>
 <div class="block">Deletes the UserRole in the `USER_ROLE` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#delete(Id)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
+<dd><code><a href="../Dao.html#delete(Id)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>,&#8203;java.lang.String&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>name</code> - of UserRole</dd>
 <dt>Throws:</dt>
@@ -342,7 +342,7 @@ int&nbsp;rows)</span>
 <li>
 <section class="detail" id="getResultSet(java.lang.String)">
 <h3>getResultSet</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">getResultSet</span>&#8203;(<span class="parameters">java.lang.String&nbsp;sql)</span>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/user/UserRole.html" title="class in by.rozmysl.bookingServlet.model.entity.user">UserRole</a>&gt;</span>&nbsp;<span class="member-name">getResultSet</span>&#8203;(<span class="parameters">java.lang.String&nbsp;sql)</span>
                                        throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Get a list of query results from the 'USER_ROLE' table</div>
 <dl class="notes">

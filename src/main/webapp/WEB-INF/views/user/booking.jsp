@@ -45,7 +45,7 @@
                             <input type="hidden" name="persons" value= "${booking.persons}"/>
                             <input type="hidden" name="food" value="${booking.food.type}"/>
                             <input type="hidden" name="service" value="${booking.services.type}"/>
-                            <input type="hidden" name="roomId" value="${room.roomNumber}"/>
+                            <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
                             <button type="submit"><fmt:message bundle="${msg}" key="button.choose"/></button>
                         </form>
                     </td>

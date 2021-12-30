@@ -37,7 +37,7 @@
                 <tr>
                     <td><fmt:message bundle="${msg}" key="book.food"/>: </td>
                     <td><select id="food" name="food" style="width:178px">
-                        <c:forEach items="${food}" var="food">
+                        <c:forEach items="${allFood}" var="food">
                             <option value="${food.type}"><fmt:message bundle="${msg}" key="db.${food.type}"/>,
                             <fmt:message bundle="${msg}" key="db.price"/>=<ctg:money value="${food.price}"/></option>
                         </c:forEach>
@@ -46,7 +46,7 @@
                 <tr>
                     <td><fmt:message bundle="${msg}" key="book.service"/>: </td>
                     <td><select id="service" name="service" style="width:178px">
-                        <c:forEach items="${services}" var="service">
+                        <c:forEach items="${allServices}" var="service">
                             <option value="${service.type}"><fmt:message bundle="${msg}" key="db.${service.type}"/>,
                             <fmt:message bundle="${msg}" key="db.price"/>=<ctg:money value="${service.price}"/></option>
                         </c:forEach>

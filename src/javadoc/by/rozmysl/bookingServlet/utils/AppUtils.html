@@ -6,7 +6,7 @@
 <title>AppUtils</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-10-01">
-<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.utils, class: AppUtils">
+<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.controller.util, class: AppUtils">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -74,11 +74,11 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.utils</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.controller.util</a></div>
 <h1 title="Class AppUtils" class="title">Class AppUtils</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">by.rozmysl.bookingServlet.utils.AppUtils</div>
+<div class="inheritance">by.rozmysl.bookingServlet.controller.util.AppUtils</div>
 </div>
 <section class="description">
 <hr>
@@ -165,7 +165,7 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code>static <a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.entity.user">User</a></code></td>
+<td class="col-first"><code>static <a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.model.entity.user">User</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getLoggedUser(javax.servlet.http.HttpSession)">getLoggedUser</a></span>&#8203;(javax.servlet.http.HttpSession&nbsp;session)</code></th>
 <td class="col-last">
 <div class="block">Gets the user's information stored in the Session.</div>
@@ -180,8 +180,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="alt-color" id="i2">
 <td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveLoggedUser(javax.servlet.http.HttpSession,by.rozmysl.bookingServlet.entity.user.User)">saveLoggedUser</a></span>&#8203;(javax.servlet.http.HttpSession&nbsp;session,
-<a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.entity.user">User</a>&nbsp;loggedUser)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveLoggedUser(javax.servlet.http.HttpSession,by.rozmysl.bookingServlet.model.entity.user.User)">saveLoggedUser</a></span>&#8203;(javax.servlet.http.HttpSession&nbsp;session,
+<a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.model.entity.user">User</a>&nbsp;loggedUser)</code></th>
 <td class="col-last">
 <div class="block">Saves the user's information in the Session.</div>
 </td>
@@ -252,10 +252,10 @@ extends java.lang.Object</pre>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="saveLoggedUser(javax.servlet.http.HttpSession,by.rozmysl.bookingServlet.entity.user.User)">
+<section class="detail" id="saveLoggedUser(javax.servlet.http.HttpSession,by.rozmysl.bookingServlet.model.entity.user.User)">
 <h3>saveLoggedUser</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveLoggedUser</span>&#8203;(<span class="parameters">javax.servlet.http.HttpSession&nbsp;session,
-<a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.entity.user">User</a>&nbsp;loggedUser)</span></div>
+<a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.model.entity.user">User</a>&nbsp;loggedUser)</span></div>
 <div class="block">Saves the user's information in the Session.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -267,7 +267,7 @@ extends java.lang.Object</pre>
 <li>
 <section class="detail" id="getLoggedUser(javax.servlet.http.HttpSession)">
 <h3>getLoggedUser</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.entity.user">User</a></span>&nbsp;<span class="member-name">getLoggedUser</span>&#8203;(<span class="parameters">javax.servlet.http.HttpSession&nbsp;session)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../entity/user/User.html" title="class in by.rozmysl.bookingServlet.model.entity.user">User</a></span>&nbsp;<span class="member-name">getLoggedUser</span>&#8203;(<span class="parameters">javax.servlet.http.HttpSession&nbsp;session)</span></div>
 <div class="block">Gets the user's information stored in the Session.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

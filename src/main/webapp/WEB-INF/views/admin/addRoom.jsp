@@ -29,7 +29,7 @@
                         <c:if test = "${type == null}">
                             <select id="room" name="type" required>
                                 <option value="" label="- Выбрать -"/>
-                                <c:forEach items="${allRooms}" var="room">
+                                <c:forEach items="${allTypesRooms}" var="room">
                                     <option value = "${room.type}">${room.type}</option>
                                 </c:forEach>
                             </select>

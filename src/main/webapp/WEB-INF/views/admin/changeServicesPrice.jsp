@@ -20,7 +20,7 @@
                 <th>Цена</th>
                 <th>Изменить цену</th>
             </thead>
-            <c:forEach items="${food}" begin="1" var="food">
+            <c:forEach items="${allFood}" begin="1" var="food">
                 <div align="center">
                     <tr>
                         <td>${food.type}</td>
@@ -28,7 +28,7 @@
                         <td>
                             <form action="changeServicesPrice" method="post">
                                 <input type="number" step="0.5" name="foodPrice" value="${food.price}"></input>
-                                <input type="hidden" name="foodId" value="${food.type}"/>
+                                <input type="hidden" name="foodType" value="${food.type}"/>
                                 <input type="hidden" name="changeFoodPrice" value="changeFoodPrice"/>
                                 <button type="submit">Изменить</button>
                             </form>
@@ -45,7 +45,7 @@
                 <th>Цена</th>
                 <th>Изменить цену</th>
             </thead>
-            <c:forEach items="${services}" begin="1" var="service">
+            <c:forEach items="${allServices}" begin="1" var="service">
                 <div align="center">
                     <tr>
                         <td>${service.type}</td>
@@ -53,7 +53,7 @@
                         <td>
                             <form action="changeServicesPrice" method="post">
                                 <input type="number" step="0.5" name="servicePrice" value="${service.price}"></input>
-                                <input type="hidden" name="serviceId" value="${service.type}"/>
+                                <input type="hidden" name="serviceType" value="${service.type}"/>
                                 <input type="hidden" name="changeServicePrice" value="changeServicePrice"/>
                                 <button type="submit">Изменить</button>
                             </form>

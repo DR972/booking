@@ -26,7 +26,7 @@
                 <th><fmt:message bundle="${msg}" key="book.sleeps"/></th>
                 <th><fmt:message bundle="${msg}" key="book.price"/></th>
             </thead>
-            <c:forEach items="${allRooms}" var="room">
+            <c:forEach items="${allRoomsByTypesAndSleeps}" var="room">
                 <tr>
                     <td><fmt:message bundle="${msg}" key="db.${room.type}"/></td>
                     <td>${room.sleeps}</td>

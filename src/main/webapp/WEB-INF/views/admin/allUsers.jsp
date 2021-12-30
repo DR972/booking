@@ -53,10 +53,9 @@
                     </td>
                     <td>
                         <form action="allUsers" method="post">
-                            <input type="hidden" name="action" value="allUsers"/>
                             <input type="hidden" name="rows" value="${rows}"/>
                             <input type="hidden" name="page" value="${page}"/>
-                            <input type="hidden" name="userId" value="${user.username}"/>
+                            <input type="hidden" name="username" value="${user.username}"/>
                             <input type="hidden" name="delete" value="delete"/>
                             <button type="submit">Удалить</button>
                         </form>
@@ -74,7 +73,6 @@
                                      <button type="submit" id="btn"/>...
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="hidden" name="action" value="allUsers"/>
                                     <input type="hidden" name="rows" value="${rows}"/>
                                     <input type="hidden" name="page" value="${p}"/>
                                     <button type="submit" style="margin-left: 10px;"/>${p+1}

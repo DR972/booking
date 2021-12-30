@@ -1,18 +1,16 @@
 package by.rozmysl.bookingServlet.controller;
 
-import by.rozmysl.bookingServlet.action.Action;
-import by.rozmysl.bookingServlet.action.ActionType;
+import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Provides service for working with standard requests  with the <b>actionMap</b> properties.
@@ -32,19 +30,15 @@ public class MainController extends HttpServlet {
      */
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String actionType = req.getPathInfo().replace("/", "");
-        if (actionType.startsWith("activation")) actionType = "activation";
-
-        Action action = ActionType.valueOf(actionType.replaceAll("([a-z])([A-Z]+)", "$1_$2").toUpperCase()).getAction();
-        if (action == null) {
-            getServletContext().getRequestDispatcher("/WEB-INF/views/error/pageDoesNotExist.jsp").forward(req, resp);
-            return;
-        }
+        Command command = CommandType.chooseCommandType(req.getPathInfo()).getAction();
         try {
-            String view = action.execute(req);
-            if (view.startsWith("redirect")) resp.sendRedirect(view.substring(9));
-            else getServletContext().getRequestDispatcher(view.substring(8)).forward(req, resp);
-        } catch (SQLException | MessagingException e) {
+            PageGuide pageGuide = command.execute(req);
+            if (TransferMethod.FORWARD.equals(pageGuide.getTransferMethod())) {
+                req.getRequestDispatcher(pageGuide.getPageAddress()).forward(req, resp);
+            } else {
+                resp.sendRedirect(pageGuide.getPageAddress());
+            }
+        } catch (ServiceException e) {
             LOGGER.error(String.valueOf(e));
             throw new ServletException(e);
         }

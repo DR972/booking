@@ -6,7 +6,7 @@
 <title>RoomDaoImp</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-10-01">
-<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.dao.hotel, class: RoomDaoImp">
+<meta name="description" content="declaration: package: by.rozmysl.bookingServlet.model.dao.hotel, class: RoomDaoImp">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
@@ -74,21 +74,21 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.dao.hotel</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">by.rozmysl.bookingServlet.model.dao.hotel</a></div>
 <h1 title="Class RoomDaoImp" class="title">Class RoomDaoImp</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">by.rozmysl.bookingServlet.dao.hotel.RoomDaoImp</div>
+<div class="inheritance">by.rozmysl.bookingServlet.model.dao.Impl.RoomDaoImpl</div>
 </div>
 <section class="description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code>, <code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code>, <code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="type-name-label">RoomDaoImp</span>
 extends java.lang.Object
-implements <a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></pre>
+implements <a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></pre>
 <div class="block">Provides the base model implementation for `ROOM` table DAO with the <b>ConnectionSource</b> properties.</div>
 </section>
 <section class="summary">
@@ -109,7 +109,7 @@ implements <a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private <a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a></code></td>
+<td class="col-first"><code>private <a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#con">con</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -133,7 +133,7 @@ implements <a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.
 </thead>
 <tbody>
 <tr class="alt-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(by.rozmysl.bookingServlet.db.ConnectionSource)">RoomDaoImp</a></span>&#8203;(<a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a>&nbsp;con)</code></th>
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(by.rozmysl.bookingServlet.model.db.ConnectionSource)">RoomDaoImp</a></span>&#8203;(<a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a>&nbsp;con)</code></th>
 <td class="col-last">
 <div class="block">The constructor creates a new object RoomDaoImp with the <b>con</b> property</div>
 </td>
@@ -167,7 +167,7 @@ implements <a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.
 </td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllFreeRoomsBetweenTwoDates</a></span>&#8203;(java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second)</code></th>
 <td class="col-last">
@@ -175,7 +175,7 @@ java.time.LocalDate&nbsp;second)</code></th>
 </td>
 </tr>
 <tr class="alt-color" id="i2">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(java.time.LocalDate,java.time.LocalDate,java.lang.String,int)">findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</a></span>&#8203;(java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 java.lang.String&nbsp;type,
@@ -185,7 +185,7 @@ int&nbsp;sleeps)</code></th>
 </td>
 </tr>
 <tr class="row-color" id="i3">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></span>&#8203;(java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 int&nbsp;sleeps)</code></th>
@@ -194,14 +194,14 @@ int&nbsp;sleeps)</code></th>
 </td>
 </tr>
 <tr class="alt-color" id="i4">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllRoomsByTypesAndSleeps()">findAllRoomsByTypesAndSleeps</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Searches for all Rooms by type and sleeps in the `ROOM` table</div>
 </td>
 </tr>
 <tr class="row-color" id="i5">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllTypesFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllTypesFreeRoomsBetweenTwoDates</a></span>&#8203;(java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second)</code></th>
 <td class="col-last">
@@ -209,7 +209,7 @@ java.time.LocalDate&nbsp;second)</code></th>
 </td>
 </tr>
 <tr class="alt-color" id="i6">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></span>&#8203;(java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 int&nbsp;sleeps)</code></th>
@@ -218,14 +218,14 @@ int&nbsp;sleeps)</code></th>
 </td>
 </tr>
 <tr class="row-color" id="i7">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findAllTypesRooms()">findAllTypesRooms</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Searches for all Room types in the `ROOM` table</div>
 </td>
 </tr>
 <tr class="alt-color" id="i8">
-<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></code></td>
+<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#findRoomByTypeAndSleeping(java.lang.String,int)">findRoomByTypeAndSleeping</a></span>&#8203;(java.lang.String&nbsp;type,
 int&nbsp;sleeps)</code></th>
 <td class="col-last">
@@ -233,7 +233,7 @@ int&nbsp;sleeps)</code></th>
 </td>
 </tr>
 <tr class="row-color" id="i9">
-<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getAll(int,int)">getAll</a></span>&#8203;(int&nbsp;page,
 int&nbsp;rows)</code></th>
 <td class="col-last">
@@ -241,37 +241,37 @@ int&nbsp;rows)</code></th>
 </td>
 </tr>
 <tr class="alt-color" id="i10">
-<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></code></td>
+<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getById(java.lang.Integer)">getById</a></span>&#8203;(java.lang.Integer&nbsp;roomNumber)</code></th>
 <td class="col-last">
 <div class="block">Searches for the Room in the `ROOM` table by id</div>
 </td>
 </tr>
 <tr class="row-color" id="i11">
-<td class="col-first"><code>private java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</code></td>
+<td class="col-first"><code>private java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getResultSet(java.lang.String)">getResultSet</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
 <td class="col-last">
 <div class="block">Get a list of query results from the 'ROOM' table</div>
 </td>
 </tr>
 <tr class="alt-color" id="i12">
-<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#save(by.rozmysl.bookingServlet.entity.hotel.Room)">save</a></span>&#8203;(<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;room)</code></th>
+<td class="col-first"><code><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#save(by.rozmysl.bookingServlet.model.entity.hotel.Room)">save</a></span>&#8203;(<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;room)</code></th>
 <td class="col-last">
 <div class="block">Saves the Room in the `ROOM` table</div>
 </td>
 </tr>
 <tr class="row-color" id="i13">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#updateParameters(int,by.rozmysl.bookingServlet.entity.hotel.Room)">updateParameters</a></span>&#8203;(int&nbsp;roomNumber,
-<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;param)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#updateParameters(int,by.rozmysl.bookingServlet.model.entity.hotel.Room)">updateParameters</a></span>&#8203;(int&nbsp;roomNumber,
+<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;param)</code></th>
 <td class="col-last">
 <div class="block">Changes the parameters of the Room in the `ROOM` table</div>
 </td>
 </tr>
 <tr class="alt-color" id="i14">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#updatePrice(by.rozmysl.bookingServlet.entity.hotel.Room,java.math.BigDecimal)">updatePrice</a></span>&#8203;(<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;room,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#updatePrice(by.rozmysl.bookingServlet.model.entity.hotel.Room,java.math.BigDecimal)">updatePrice</a></span>&#8203;(<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;room,
 java.math.BigDecimal&nbsp;price)</code></th>
 <td class="col-last">
 <div class="block">Changes the price of the Room in the `ROOM` table</div>
@@ -298,7 +298,7 @@ java.math.BigDecimal&nbsp;price)</code></th>
 <li>
 <section class="detail" id="con">
 <h3>con</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a></span>&nbsp;<span class="member-name">con</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a></span>&nbsp;<span class="member-name">con</span></div>
 </section>
 </li>
 </ul>
@@ -310,9 +310,9 @@ java.math.BigDecimal&nbsp;price)</code></th>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(by.rozmysl.bookingServlet.db.ConnectionSource)">
+<section class="detail" id="&lt;init&gt;(by.rozmysl.bookingServlet.model.db.ConnectionSource)">
 <h3>RoomDaoImp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">RoomDaoImp</span>&#8203;(<span class="parameters"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.db">ConnectionSource</a>&nbsp;con)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">RoomDaoImp</span>&#8203;(<span class="parameters"><a href="../../db/ConnectionSource.html" title="class in by.rozmysl.bookingServlet.model.db">ConnectionSource</a>&nbsp;con)</span></div>
 <div class="block">The constructor creates a new object RoomDaoImp with the <b>con</b> property</div>
 </section>
 </li>
@@ -327,12 +327,12 @@ java.math.BigDecimal&nbsp;price)</code></th>
 <li>
 <section class="detail" id="getById(java.lang.Integer)">
 <h3>getById</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></span>&nbsp;<span class="member-name">getById</span>&#8203;(<span class="parameters">java.lang.Integer&nbsp;roomNumber)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></span>&nbsp;<span class="member-name">getById</span>&#8203;(<span class="parameters">java.lang.Integer&nbsp;roomNumber)</span>
              throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for the Room in the `ROOM` table by id</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#getById(Id)">getById</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
+<dd><code><a href="../Dao.html#getById(Id)">getById</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>roomNumber</code> - id of the Room</dd>
 <dt>Returns:</dt>
@@ -345,13 +345,13 @@ java.math.BigDecimal&nbsp;price)</code></th>
 <li>
 <section class="detail" id="getAll(int,int)">
 <h3>getAll</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">getAll</span>&#8203;(<span class="parameters">int&nbsp;page,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">getAll</span>&#8203;(<span class="parameters">int&nbsp;page,
 int&nbsp;rows)</span>
                             throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all Rooms in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#getAll(int,int)">getAll</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
+<dd><code><a href="../Dao.html#getAll(int,int)">getAll</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>page</code> - number of the page to return</dd>
 <dd><code>rows</code> - number of rows per page</dd>
@@ -363,14 +363,14 @@ int&nbsp;rows)</span>
 </section>
 </li>
 <li>
-<section class="detail" id="save(by.rozmysl.bookingServlet.entity.hotel.Room)">
+<section class="detail" id="save(by.rozmysl.bookingServlet.model.entity.hotel.Room)">
 <h3>save</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></span>&nbsp;<span class="member-name">save</span>&#8203;(<span class="parameters"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;room)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></span>&nbsp;<span class="member-name">save</span>&#8203;(<span class="parameters"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;room)</span>
           throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Saves the Room in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#save(T)">save</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
+<dd><code><a href="../Dao.html#save(T)">save</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>room</code> - Room</dd>
 <dt>Returns:</dt>
@@ -381,15 +381,15 @@ int&nbsp;rows)</span>
 </section>
 </li>
 <li>
-<section class="detail" id="updatePrice(by.rozmysl.bookingServlet.entity.hotel.Room,java.math.BigDecimal)">
+<section class="detail" id="updatePrice(by.rozmysl.bookingServlet.model.entity.hotel.Room,java.math.BigDecimal)">
 <h3>updatePrice</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">updatePrice</span>&#8203;(<span class="parameters"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;room,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">updatePrice</span>&#8203;(<span class="parameters"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;room,
 java.math.BigDecimal&nbsp;price)</span>
                  throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Changes the price of the Room in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#updatePrice(by.rozmysl.bookingServlet.entity.hotel.Room,java.math.BigDecimal)">updatePrice</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#updatePrice(by.rozmysl.bookingServlet.model.entity.hotel.Room,java.math.BigDecimal)">updatePrice</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>room</code> - Room</dd>
 <dd><code>price</code> - new price</dd>
@@ -399,15 +399,15 @@ java.math.BigDecimal&nbsp;price)</span>
 </section>
 </li>
 <li>
-<section class="detail" id="updateParameters(int,by.rozmysl.bookingServlet.entity.hotel.Room)">
+<section class="detail" id="updateParameters(int,by.rozmysl.bookingServlet.model.entity.hotel.Room)">
 <h3>updateParameters</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">updateParameters</span>&#8203;(<span class="parameters">int&nbsp;roomNumber,
-<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&nbsp;param)</span>
+<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&nbsp;param)</span>
                       throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Changes the parameters of the Room in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#updateParameters(int,by.rozmysl.bookingServlet.entity.hotel.Room)">updateParameters</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#updateParameters(int,by.rozmysl.bookingServlet.model.entity.hotel.Room)">updateParameters</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>roomNumber</code> - id of the Room</dd>
 <dd><code>param</code> - Room object</dd>
@@ -424,7 +424,7 @@ java.math.BigDecimal&nbsp;price)</span>
 <div class="block">Deletes the Room in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../Dao.html#delete(Id)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
+<dd><code><a href="../Dao.html#delete(Id)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="../Dao.html" title="interface in by.rozmysl.bookingServlet.model.dao">Dao</a>&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>,&#8203;java.lang.Integer&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>roomNumber</code> - id of the Room</dd>
 <dt>Throws:</dt>
@@ -435,12 +435,12 @@ java.math.BigDecimal&nbsp;price)</span>
 <li>
 <section class="detail" id="findAllTypesRooms()">
 <h3>findAllTypesRooms</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesRooms</span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesRooms</span>()
                                        throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all Room types in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllTypesRooms()">findAllTypesRooms</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllTypesRooms()">findAllTypesRooms</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Returns:</dt>
 <dd>list of Room objects</dd>
 <dt>Throws:</dt>
@@ -451,12 +451,12 @@ java.math.BigDecimal&nbsp;price)</span>
 <li>
 <section class="detail" id="findAllRoomsByTypesAndSleeps()">
 <h3>findAllRoomsByTypesAndSleeps</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllRoomsByTypesAndSleeps</span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllRoomsByTypesAndSleeps</span>()
                                                   throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all Rooms by type and sleeps in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllRoomsByTypesAndSleeps()">findAllRoomsByTypesAndSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllRoomsByTypesAndSleeps()">findAllRoomsByTypesAndSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Returns:</dt>
 <dd>list of Room objects</dd>
 <dt>Throws:</dt>
@@ -467,13 +467,13 @@ java.math.BigDecimal&nbsp;price)</span>
 <li>
 <section class="detail" id="findRoomByTypeAndSleeping(java.lang.String,int)">
 <h3>findRoomByTypeAndSleeping</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a></span>&nbsp;<span class="member-name">findRoomByTypeAndSleeping</span>&#8203;(<span class="parameters">java.lang.String&nbsp;type,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a></span>&nbsp;<span class="member-name">findRoomByTypeAndSleeping</span>&#8203;(<span class="parameters">java.lang.String&nbsp;type,
 int&nbsp;sleeps)</span>
                                throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for the Room by type and sleeps in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findRoomByTypeAndSleeping(java.lang.String,int)">findRoomByTypeAndSleeping</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findRoomByTypeAndSleeping(java.lang.String,int)">findRoomByTypeAndSleeping</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>type</code> - of the Room</dd>
 <dd><code>sleeps</code> - in the Room</dd>
@@ -487,13 +487,13 @@ int&nbsp;sleeps)</span>
 <li>
 <section class="detail" id="findAllFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">
 <h3>findAllFreeRoomsBetweenTwoDates</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDates</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDates</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second)</span>
                                                      throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all free Rooms between two dates in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllFreeRoomsBetweenTwoDates</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllFreeRoomsBetweenTwoDates</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>first</code> - date</dd>
 <dd><code>second</code> - date</dd>
@@ -507,13 +507,13 @@ java.time.LocalDate&nbsp;second)</span>
 <li>
 <section class="detail" id="findAllTypesFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">
 <h3>findAllTypesFreeRoomsBetweenTwoDates</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesFreeRoomsBetweenTwoDates</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesFreeRoomsBetweenTwoDates</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second)</span>
                                                           throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all free Room types between two dates in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllTypesFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllTypesFreeRoomsBetweenTwoDates</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllTypesFreeRoomsBetweenTwoDates(java.time.LocalDate,java.time.LocalDate)">findAllTypesFreeRoomsBetweenTwoDates</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>first</code> - date</dd>
 <dd><code>second</code> - date</dd>
@@ -527,7 +527,7 @@ java.time.LocalDate&nbsp;second)</span>
 <li>
 <section class="detail" id="findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(java.time.LocalDate,java.time.LocalDate,java.lang.String,int)">
 <h3>findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 java.lang.String&nbsp;type,
 int&nbsp;sleeps)</span>
@@ -535,7 +535,7 @@ int&nbsp;sleeps)</span>
 <div class="block">Searches for all free Rooms between two dates by type and sleeps in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(java.time.LocalDate,java.time.LocalDate,java.lang.String,int)">findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(java.time.LocalDate,java.time.LocalDate,java.lang.String,int)">findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>first</code> - date</dd>
 <dd><code>second</code> - date</dd>
@@ -551,14 +551,14 @@ int&nbsp;sleeps)</span>
 <li>
 <section class="detail" id="findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">
 <h3>findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 int&nbsp;sleeps)</span>
                                                                                   throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all free Room types between two dates with greater or equal sleeps in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>first</code> - date</dd>
 <dd><code>second</code> - date</dd>
@@ -573,14 +573,14 @@ int&nbsp;sleeps)</span>
 <li>
 <section class="detail" id="findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">
 <h3>findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</span>&#8203;(<span class="parameters">java.time.LocalDate&nbsp;first,
 java.time.LocalDate&nbsp;second,
 int&nbsp;sleeps)</span>
                                                                              throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Searches for all free Rooms between two dates with greater or equal sleeps in the `ROOM` table</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.dao.hotel">RoomDao</a></code></dd>
+<dd><code><a href="RoomDao.html#findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps(java.time.LocalDate,java.time.LocalDate,int)">findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps</a></code>&nbsp;in interface&nbsp;<code><a href="RoomDao.html" title="interface in by.rozmysl.bookingServlet.model.dao.hotel">RoomDao</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>first</code> - date</dd>
 <dd><code>second</code> - date</dd>
@@ -595,7 +595,7 @@ int&nbsp;sleeps)</span>
 <li>
 <section class="detail" id="getResultSet(java.lang.String)">
 <h3>getResultSet</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">getResultSet</span>&#8203;(<span class="parameters">java.lang.String&nbsp;sql)</span>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../../entity/hotel/Room.html" title="class in by.rozmysl.bookingServlet.model.entity.hotel">Room</a>&gt;</span>&nbsp;<span class="member-name">getResultSet</span>&#8203;(<span class="parameters">java.lang.String&nbsp;sql)</span>
                                    throws <span class="exceptions">java.sql.SQLException</span></div>
 <div class="block">Get a list of query results from the 'ROOM' table</div>
 <dl class="notes">

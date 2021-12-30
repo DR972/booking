@@ -13,7 +13,7 @@
 
     <tag>
         <name>money</name>
-        <tag-class>by.rozmysl.bookingServlet.tag.MoneyTag</tag-class>
+        <tag-class>by.rozmysl.bookingServlet.controller.tag.MoneyTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>value</name>

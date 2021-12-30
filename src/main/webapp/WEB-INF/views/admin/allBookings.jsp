@@ -53,7 +53,7 @@
                     <td>${booking.room.roomNumber}</td>
                     <td align = "left">
                         <form action="allBookings" method="POST">
-                            <select id ="room" name ="roomId" required>
+                            <select id ="room" name ="roomNumber" required>
                                 <option value="">- Выбрать номер -</option>
                                 <c:forEach items="${availableRooms[booking.number]}" var="r">
                                     <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
@@ -61,7 +61,7 @@
                                 <input type="hidden" name="action" value="allBookings"/>
                                 <input type="hidden" name="page" value="${page}"/>
                                 <input type="hidden" name="rows" value="${rows}"/>
-                                <input type="hidden" name="bookingId" value="${booking.number}"/>
+                                <input type="hidden" name="bookingNumber" value="${booking.number}"/>
                                 <input type="hidden" name="changeRoom" value="changeRoom"/>
                                 <button type="submit">Подтвердить</button>
                             </select>
@@ -88,7 +88,7 @@
                                 <input type="hidden" name="action" value="allBookings"/>
                                 <input type="hidden" name="page" value="${page}"/>
                                 <input type="hidden" name="rows" value="${rows}"/>
-                                <input type="hidden" name="bookingId" value="${booking.number}"/>
+                                <input type="hidden" name="bookingNumber" value="${booking.number}"/>
                                 <input type="hidden" name="changeStatus" value="changeStatus"/>
                                 <button type="submit">Подтвердить</button>
                             </select>
@@ -99,7 +99,7 @@
                             <input type="hidden" name="action" value="allBookings"/>
                             <input type="hidden" name="page" value="${page}"/>
                             <input type="hidden" name="rows" value="${rows}"/>
-                            <input type="hidden" name="bookingId" value="${booking.number}"/>
+                            <input type="hidden" name="bookingNumber" value="${booking.number}"/>
                             <input type="hidden" name="delete" value="delete"/>
                             <button type="submit">Удалить</button>
                         </form>

@@ -118,7 +118,7 @@ extends javax.servlet.http.HttpServlet</pre>
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code>private java.util.Map&lt;java.lang.String,&#8203;<a href="../action/Action.html" title="interface in by.rozmysl.bookingServlet.action">Action</a>&gt;</code></td>
+<td class="col-first"><code>private java.util.Map&lt;java.lang.String,&#8203;<a href="../command/Action.html" title="interface in by.rozmysl.bookingServlet.controller.command">Action</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#actionMap">actionMap</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -234,7 +234,7 @@ javax.servlet.http.HttpServletResponse&nbsp;resp)</code></th>
 <li>
 <section class="detail" id="actionMap">
 <h3>actionMap</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">java.util.Map&lt;java.lang.String,&#8203;<a href="../action/Action.html" title="interface in by.rozmysl.bookingServlet.action">Action</a>&gt;</span>&nbsp;<span class="member-name">actionMap</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">java.util.Map&lt;java.lang.String,&#8203;<a href="../command/Action.html" title="interface in by.rozmysl.bookingServlet.controller.command">Action</a>&gt;</span>&nbsp;<span class="member-name">actionMap</span></div>
 </section>
 </li>
 </ul>
@@ -277,7 +277,7 @@ javax.servlet.http.HttpServletResponse&nbsp;resp)</code></th>
 javax.servlet.http.HttpServletResponse&nbsp;resp)</span>
                 throws <span class="exceptions">javax.servlet.ServletException,
 java.io.IOException</span></div>
-<div class="block">Process GET or POST request. Invoke action class.</div>
+<div class="block">Process GET or POST request. Invoke command class.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>service</code>&nbsp;in class&nbsp;<code>javax.servlet.http.HttpServlet</code></dd>
@@ -285,8 +285,8 @@ java.io.IOException</span></div>
 <dd><code>req</code> - request content</dd>
 <dd><code>resp</code> - response content</dd>
 <dt>Throws:</dt>
-<dd><code>javax.servlet.ServletException</code> - if action cannot execute</dd>
-<dd><code>java.io.IOException</code> - if action cannot execute</dd>
+<dd><code>javax.servlet.ServletException</code> - if command cannot execute</dd>
+<dd><code>java.io.IOException</code> - if command cannot execute</dd>
 </dl>
 </section>
 </li>
