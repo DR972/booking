@@ -1,13 +1,14 @@
 package by.rozmysl.bookingServlet.model.entity.user;
 
+import by.rozmysl.bookingServlet.model.entity.Entity;
+
 import java.util.*;
 
 /**
- * It is used to store User objects with the <b>username</b>, <b>lastname</b>, <b>firstname</b>, <b>password</b>,
+ * It is used to store User objects with the <b>lastname</b>, <b>firstname</b>, <b>password</b>,
  * <b>passwordConfirm</b>, <b>active</b>, <b>email</b>, <b>activationCode</b>, <b>roles</b> properties
  */
-public class User {
-    private String username;
+public class User extends Entity<String> {
     private String lastname;
     private String firstname;
     private String password;
@@ -15,25 +16,26 @@ public class User {
     private boolean active;
     private String email;
     private String activationCode;
+    private boolean banned = false;
     private Set<String> roles;
 
     /**
-     * The constructor creates a new object Booking without parameters
+     * The constructor creates a new object User without parameters
      */
     public User() {
     }
 
     /**
-     * The constructor creates a new object Booking with the <b>username</b> properties
+     * The constructor creates a new object User with the <b>username</b> properties
      *
      * @param username id of the User
      */
     public User(String username) {
-        this.username = username;
+        super(username);
     }
 
     /**
-     * The constructor creates a new object Booking with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
+     * The constructor creates a new object User with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
      * * <b>password</b>, <b>email</b> properties
      *
      * @param username  id of the User
@@ -43,7 +45,7 @@ public class User {
      * @param email     email
      */
     public User(String username, String lastname, String firstname, String password, String email) {
-        this.username = username;
+        super(username);
         this.lastname = lastname;
         this.firstname = firstname;
         this.password = password;
@@ -51,7 +53,7 @@ public class User {
     }
 
     /**
-     * The constructor creates a new object Booking with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
+     * The constructor creates a new object User with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
      * <b>password</b>, <b>passwordConfirm</b>, <b>email</b> properties
      *
      * @param username        id of the User
@@ -62,7 +64,7 @@ public class User {
      * @param email           email
      */
     public User(String username, String lastname, String firstname, String password, String passwordConfirm, String email) {
-        this.username = username;
+        super(username);
         this.lastname = lastname;
         this.firstname = firstname;
         this.password = password;
@@ -81,23 +83,21 @@ public class User {
      * @param active         active
      * @param email          email
      * @param activationCode activationCode
-     * @param role           role
      */
-    public User(String username, String lastname, String firstname, String password, boolean active, String email, String activationCode, String role) {
-        this.username = username;
+    public User(String username, String lastname, String firstname, String password, boolean active, String email, String activationCode, Set<String> roles) {
+        super(username);
         this.lastname = lastname;
         this.firstname = firstname;
         this.password = password;
         this.active = active;
         this.email = email;
         this.activationCode = activationCode;
-        roles = new HashSet<>();
-        roles.add(role);
+        this.roles = roles;
     }
 
     /**
      * The constructor creates a new object Booking with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
-     * <b>password</b>, <b>active</b>, <b>email</b>, <b>activationCode</b> properties
+     * <b>password</b>, <b>active</b>, <b>email</b>, <b>activationCode</b>,, <b>isBanned</b>, <b>roles</b> properties
      *
      * @param username       id of the User
      * @param lastname       lastname
@@ -107,14 +107,17 @@ public class User {
      * @param email          email
      * @param activationCode activationCode
      */
-    public User(String username, String lastname, String firstname, String password, boolean active, String email, String activationCode) {
-        this.username = username;
+    public User(String username, String lastname, String firstname, String password, boolean active, String email,
+                String activationCode, boolean banned, Set<String> roles) {
+        super(username);
         this.lastname = lastname;
         this.firstname = firstname;
         this.password = password;
         this.active = active;
         this.email = email;
         this.activationCode = activationCode;
+        this.banned = banned;
+        this.roles = roles;
     }
 
     /**
@@ -124,33 +127,6 @@ public class User {
      */
     public String getPassword() {
         return password;
-    }
-
-    /**
-     * Gets the value of the active property
-     *
-     * @return a value of the active
-     */
-    public boolean getActive() {
-        return active;
-    }
-
-    /**
-     * Gets the value of the username property
-     *
-     * @return a value of the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * The method sets the value of the username property
-     *
-     * @param username username
-     */
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     /**
@@ -217,6 +193,16 @@ public class User {
     }
 
     /**
+     * Gets the value of the isActive property
+     *
+     * @return <code>true</code> if user is active;
+     * <code>false</code> otherwise
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
      * The method sets the value of the active property
      *
      * @param active active
@@ -261,6 +247,21 @@ public class User {
         this.activationCode = activationCode;
     }
 
+
+    /**
+     * Gets the value of the isBanned property
+     *
+     * @return <code>true</code> if user is banned;
+     * <code>false</code> otherwise
+     */
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
     /**
      * Gets the value of the roles property
      *
@@ -280,9 +281,43 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        if (!super.equals(o)) return false;
+
+        User user = (User) o;
+
+        if (active != user.active) return false;
+        if (banned != user.banned) return false;
+        if (!Objects.equals(lastname, user.lastname)) return false;
+        if (!Objects.equals(firstname, user.firstname)) return false;
+        if (!Objects.equals(password, user.password)) return false;
+        if (!Objects.equals(passwordConfirm, user.passwordConfirm)) return false;
+        if (!Objects.equals(email, user.email)) return false;
+        if (!Objects.equals(activationCode, user.activationCode)) return false;
+        return Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (passwordConfirm != null ? passwordConfirm.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (activationCode != null ? activationCode.hashCode() : 0);
+        result = 31 * result + (banned ? 1 : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-                .add("username='" + username + "'")
+                .add("username=" + id)
                 .add("lastname='" + lastname + "'")
                 .add("firstname='" + firstname + "'")
                 .add("password='" + password + "'")
@@ -290,6 +325,7 @@ public class User {
                 .add("active=" + active)
                 .add("email='" + email + "'")
                 .add("activationCode='" + activationCode + "'")
+                .add("banned=" + banned)
                 .add("roles=" + roles)
                 .toString();
     }

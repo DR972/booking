@@ -24,14 +24,14 @@ public class UserValidator extends Validator {
      * Executes all user validate
      *
      * @param user user
-     *  @param userService UserService userService
+     *  @param userService UserService
      * @throws ServiceException if there was an error accessing the database
      */
     public String allValidate(User user, UserService userService) throws ServiceException {
         if (!validateSignUpParam(user)) {
             return getValidationMessage();
         }
-        if (userService.findById(user.getUsername()) != null) {
+        if (userService.findById(user.getId()) != null) {
             return REPEATING_NAME;
         }
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
@@ -47,7 +47,7 @@ public class UserValidator extends Validator {
      * @return validation result
      */
     public boolean validateSignUpParam(User user) {
-        return validate(user.getUsername(), USERNAME_PATTERN, USERNAME) &&
+        return validate(user.getId(), USERNAME_PATTERN, USERNAME) &&
                 validate(user.getPassword(), PASSWORD_PATTERN, PASSWORD) &&
                 validate(user.getLastname(), NAME_PATTERN, LASTNAME) &&
                 validate(user.getFirstname(), NAME_PATTERN, FIRSTNAME) &&

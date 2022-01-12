@@ -1,8 +1,7 @@
 package by.rozmysl.bookingServlet.model.service;
 
+import by.rozmysl.bookingServlet.exception.MailException;
 import by.rozmysl.bookingServlet.model.service.impl.*;
-
-import java.sql.Connection;
 
 public final class ServiceFactory {
     private static ServiceFactory service;
@@ -27,8 +26,8 @@ public final class ServiceFactory {
      *
      * @return the implementation of the AdditionalServicesService interface
      */
-    public AdditionalServicesService servicesService(Connection connection) {
-        return new AdditionalServicesServiceImpl(connection);
+    public AdditionalServicesService getServicesService() {
+        return new AdditionalServicesServiceImpl();
     }
 
     /**
@@ -36,43 +35,43 @@ public final class ServiceFactory {
      *
      * @return the implementation of the FoodService interface
      */
-    public FoodService foodService(Connection connection) {
-        return new FoodServiceImpl(connection);
+    public FoodService getFoodService() {
+        return new FoodServiceImpl();
     }
 
     /**
      * Provides access to the RoomService interface.
      *
-     * @return the implementation of the RoomDao interface
+     * @return the implementation of the RoomService interface
      */
-    public RoomService roomService(Connection connection) {
-        return new RoomServiceImpl(connection);
+    public RoomService getRoomService() {
+        return new RoomServiceImpl();
     }
 
     /**
      * Provides access to the BookingService interface.
      *
-     * @return the implementation of the BookingDao interface
+     * @return the implementation of the BookingService interface
      */
-    public BookingService bookingService(Connection connection) {
-        return new BookingServiceImpl(connection);
-    }
-
-    /**
-     * Provides access to the RoleService interface.
-     *
-     * @return the implementation of the RoleDao interface
-     */
-    public RoleService roleService(Connection connection) {
-        return new RoleServiceImpl(connection);
+    public BookingService getBookingService() {
+        return new BookingServiceImpl();
     }
 
     /**
      * Provides access to the UserService interface.
      *
-     * @return the implementation of the UserDao interface
+     * @return the implementation of the UserService interface
      */
-    public UserService userService(Connection connection) {
-        return new UserServiceImpl(connection);
+    public UserService getUserService() {
+        return new UserServiceImpl();
+    }
+
+    /**
+     * Provides access to the MailSender interface.
+     *
+     * @return the implementation of the MailSender interface
+     */
+    public MailSender getMailSender() throws MailException {
+        return new MailSenderImpl();
     }
 }

@@ -2,6 +2,10 @@ package by.rozmysl.bookingServlet.controller.command;
 
 public final class RequestAttribute {
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private RequestAttribute() {
     }
 
@@ -42,7 +46,7 @@ public final class RequestAttribute {
     public static final String STATUS = "status";
 
     public static final String ROWS = "rows";
-    public static final String PAGE = "page";
+    public static final String PAGE_NUMBER = "pageNumber";
     public static final String COUNT_PAGES = "countPages";
 
     public static final String CODE = "code";

@@ -1,5 +1,8 @@
 package by.rozmysl.bookingServlet.model.dao;
 
+/**
+ * Stores sql query.
+ */
 public final class SqlQuery {
 
     /**
@@ -9,84 +12,41 @@ public final class SqlQuery {
     private SqlQuery() {
     }
 
-    /*TABLE USER*/
-    public static final String USER_COLUMN_USERNAME = "USERNAME";
-    public static final String USER_COLUMN_LAST_NAME = "LASTNAME";
-    public static final String USER_COLUMN_FIRST_NAME = "FIRSTNAME";
-    public static final String USER_COLUMN_PASSWORD = "PASSWORD";
-    public static final String USER_COLUMN_ACTIVE = "ACTIVE";
-    public static final String USER_COLUMN_EMAIL = "EMAIL";
-    public static final String USER_COLUMN_ACTIVATIONCODE = "ACTIVATIONCODE";
-    public static final String USER_ROWS_COUNT = "COUNT";
-
-    /*TABLE ROLE*/
-    public static final String ROLE_COLUMN_NAME = "NAME";
-
-    /*TABLE USER_ROLE*/
-    public static final String USER_ROLE_COLUMN_USER = "USER";
-    public static final String USER_ROLE_COLUMN_ROLE = "ROLE";
-
-    /*TABLE BOOKING*/
-    public static final String BOOKING_COLUMN_NUMBER = "NUMBER";
-    public static final String BOOKING_COLUMN_USER = "USER";
-    public static final String BOOKING_COLUMN_ROOM = "ROOM";
-    public static final String BOOKING_COLUMN_PERSONS = "PERSONS";
-    public static final String BOOKING_COLUMN_ARRIVAL = "ARRIVAL";
-    public static final String BOOKING_COLUMN_DEPARTURE = "DEPARTURE";
-    public static final String BOOKING_COLUMN_FOOD = "FOOD";
-    public static final String BOOKING_COLUMN_DAYS = "DAYS";
-    public static final String BOOKING_COLUMN_SERVICES = "SERVICES";
-    public static final String BOOKING_COLUMN_AMOUNT = "AMOUNT";
-    public static final String BOOKING_COLUMN_STATUS = "STATUS";
-    public static final String BOOKING_ROWS_COUNT = "COUNT";
-
-    /*TABLE ROOM*/
-    public static final String ROOM_COLUMN_ROOMNUMBER = "ROOMNUMBER";
-    public static final String ROOM_COLUMN_TYPE = "TYPE";
-    public static final String ROOM_COLUMN_SLEEPS = "SLEEPS";
-    public static final String ROOM_COLUMN_PRICE = "PRICE";
-
-    /*TABLE FOOD*/
-    public static final String FOOD_COLUMN_TYPE = "TYPE";
-    public static final String FOOD_COLUMN_PRICE = "PRICE";
-
-    /*TABLE ADDITIONALSERVICES*/
-    public static final String ADDITIONALSERVICES_COLUMN_TYPE = "TYPE";
-    public static final String ADDITIONALSERVICES_COLUMN_PRICE = "PRICE";
-
-    /*Query to the USER table*/
+    /* Query to the USER table */
     public static final String USER_FIND_BY_ID =
-            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, ROLE.NAME from USER " +
-                    "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME where USERNAME = ?";
+            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED, GROUP_CONCAT (ROLE.NAME) as NAME from USER " +
+                    "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME where USERNAME = ? GROUP BY USERNAME";
     public static final String USER_FIND_ALL =
-            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, ROLE.NAME from USER " +
-                    "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME order by UPPER (USERNAME) " +
+            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED, GROUP_CONCAT (ROLE.NAME) as NAME from USER " +
+                    "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME GROUP BY USERNAME " +
                     "offset ? * ? ROWS fetch next ? ROWS only";
     public static final String USER_SAVE =
-            "insert into USER(USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            "insert into USER(USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String USER_ACTIVATE =
             "update USER set ACTIVE = 'true', ACTIVATIONCODE = 'null' where USERNAME = ?";
     public static final String USER_DELETE =
             "delete from USER where USERNAME  = ?";
     public static final String USER_FIND_BY_ACTIVATION_CODE =
-            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, ROLE.NAME  as role from USER " +
+            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED from USER " +
                     "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME where ACTIVATIONCODE = ?";
     public static final String USER_FIND_ROWS_COUNT =
             "select COUNT(*) as count from USER";
+    public static final String USER_CHANGE_ACCOUNT_LOCK =
+            "update USER set BANNED = ? where USERNAME = ?";
 
-    /*Query to the USER_ROLE table*/
-    public static final String USER_ROLE_FIND_BY_ROLE =
-            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = ?";
-    public static final String USER_ROLE_FIND_BY_USER =
-            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = ?";
-    public static final String USER_ROLE_FIND_ALL =
-            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME";
+    /* Query to the USER_ROLE table */
+//    public static final String USER_ROLE_FIND_BY_ID =
+//            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = ?";
+//    public static final String USER_ROLE_FIND_ALL =
+//            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME  offset ? * ? ROWS fetch next ? ROWS only";
     public static final String USER_ROLE_SAVE =
             "insert into USER_ROLE(USER, ROLE) VALUES(?, ?)";
     public static final String USER_ROLE_DELETE =
             "delete from USER_ROLE where USER  = ?";
+    public static final String USER_ROLE_DELETE_ADMIN =
+            "delete from USER_ROLE where USER  = ? and ROLE = 'ADMIN'";
 
-    /*Query to the BOOKING table*/
+    /* Query to the BOOKING table */
     public static final String BOOKING_FIND_BY_ID =
             "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS from BOOKING" +
                     " left join ROOM on ROOM = ROOMNUMBER where NUMBER = ?";
@@ -107,30 +67,30 @@ public final class SqlQuery {
             "update BOOKING set ROOM = ?, AMOUNT = ? where NUMBER = ?";
     public static final String BOOKING_CHANGE_BOOKING_STATUS =
             "update BOOKING set STATUS = ? where NUMBER = ?";
-    public static final String BOOKING_QUERY_FIND_ROWS_COUNT =
+    public static final String BOOKING_FIND_ROWS_COUNT =
             "select COUNT(*) as count from BOOKING";
 
-    /*Query to the ADDITIONALSERVICES table*/
+    /* Query to the ADDITIONALSERVICES table */
     public static final String ADDITIONALSERVICES_FIND_BY_ID =
             "select TYPE, PRICE from ADDITIONALSERVICES where TYPE = ?";
     public static final String ADDITIONALSERVICES_FIND_ALL =
-            "select TYPE, PRICE from ADDITIONALSERVICES";
+            "select TYPE, PRICE from ADDITIONALSERVICES  offset ? * ? ROWS fetch next ? ROWS only";
     public static final String ADDITIONALSERVICES_CHANGE_SERVICE_PRICE =
             "update ADDITIONALSERVICES set PRICE = ? where TYPE = ?";
 
-    /*Query to the FOOD table*/
+    /* Query to the FOOD table */
     public static final String FOOD_FIND_BY_ID =
             "select TYPE, PRICE from FOOD where TYPE = ?";
     public static final String FOOD_FIND_ALL =
-            "select TYPE, PRICE from FOOD";
+            "select TYPE, PRICE from FOOD  offset ? * ? ROWS fetch next ? ROWS only";
     public static final String FOOD_CHANGE_FOOD_PRICE =
             "update FOOD set PRICE = ? where TYPE = ?";
 
-    /*Query to the ROOM table*/
+    /* Query to the ROOM table */
     public static final String ROOM_FIND_BY_ID =
             "select ROOMNUMBER, TYPE, SLEEPS, PRICE from ROOM where ROOMNUMBER = ?";
     public static final String ROOM_FIND_ALL =
-            "select ROOMNUMBER, TYPE, SLEEPS, PRICE from ROOM";
+            "select ROOMNUMBER, TYPE, SLEEPS, PRICE from ROOM  offset ? * ? ROWS fetch next ? ROWS only";
     public static final String ROOM_SAVE =
             "insert into ROOM(ROOMNUMBER, TYPE, SLEEPS, PRICE) VALUES(?, ?, ?, ?)";
     public static final String ROOM_DELETE =

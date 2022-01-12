@@ -14,6 +14,8 @@ import java.util.Locale;
  */
 public class MoneyTag extends TagSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(MoneyTag.class);
+    private static final String BE = "be";
+    private static final String BY = "BY";
     private double value;
 
     /**
@@ -27,7 +29,7 @@ public class MoneyTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-        NumberFormat rubleFormat = NumberFormat.getCurrencyInstance(new Locale("be", "BY"));
+        NumberFormat rubleFormat = NumberFormat.getCurrencyInstance(new Locale(BE, BY));
         try {
             this.pageContext.getOut().print(rubleFormat.format(value));
         } catch (IOException e) {

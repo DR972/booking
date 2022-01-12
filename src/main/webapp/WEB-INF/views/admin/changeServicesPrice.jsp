@@ -23,12 +23,12 @@
             <c:forEach items="${allFood}" begin="1" var="food">
                 <div align="center">
                     <tr>
-                        <td>${food.type}</td>
+                        <td>${food.id}</td>
                         <td><ctg:money value="${food.price}"/></td>
                         <td>
                             <form action="changeServicesPrice" method="post">
-                                <input type="number" step="0.5" name="foodPrice" value="${food.price}"></input>
-                                <input type="hidden" name="foodType" value="${food.type}"/>
+                                <input type="number" step="0.5" name="foodPrice" value="${food.price}"/>
+                                <input type="hidden" name="foodType" value="${food.id}"/>
                                 <input type="hidden" name="changeFoodPrice" value="changeFoodPrice"/>
                                 <button type="submit">Изменить</button>
                             </form>
@@ -48,12 +48,12 @@
             <c:forEach items="${allServices}" begin="1" var="service">
                 <div align="center">
                     <tr>
-                        <td>${service.type}</td>
+                        <td>${service.id}</td>
                         <td><ctg:money value="${service.price}"/></td>
                         <td>
                             <form action="changeServicesPrice" method="post">
-                                <input type="number" step="0.5" name="servicePrice" value="${service.price}"></input>
-                                <input type="hidden" name="serviceType" value="${service.type}"/>
+                                <input type="number" step="0.5" name="servicePrice" value="${service.price}"/>
+                                <input type="hidden" name="serviceType" value="${service.id}"/>
                                 <input type="hidden" name="changeServicePrice" value="changeServicePrice"/>
                                 <button type="submit">Изменить</button>
                             </form>

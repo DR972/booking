@@ -26,7 +26,7 @@
             </thead>
             <c:forEach items="${allRooms}" var="room">
                 <tr>
-                    <td>${room.roomNumber}</td>
+                    <td>${room.id}</td>
                     <td>${room.type}</td>
                     <td>${room.sleeps}</td>
                     <td>
@@ -35,11 +35,11 @@
                                 <option value="">- Выбрать тип -</option>
                                 <c:forEach items="${allRoomsByTypesAndSleeps}" var="r">
                                     <c:if test = "${!(room.type==r.type && room.sleeps==r.sleeps)}">
-                                        <option value = "${r.roomNumber}">тип=${r.type}, мест=${r.sleeps},
+                                        <option value = "${r.id}">тип=${r.type}, мест=${r.sleeps},
                                         цена=<ctg:money value="${r.price}"/></option>
                                     </c:if>
                                 </c:forEach>
-                                <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
+                                <input type="hidden" name="roomNumber" value="${room.id}"/>
                                 <input type="hidden" name="changeParameters" value="changeParameters"/>
                                 <button type="submit">Изменить</button>
                             </select>
@@ -48,8 +48,8 @@
                     <td><ctg:money value="${room.price}"/></td>
                     <td>
                         <form action="changeRoomParameters" method="post">
-                            <input type="number" step="1" name="price" value="${room.price}"></input>
-                            <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
+                            <input type="number" step="1" name="price" value="${room.price}"/>
+                            <input type="hidden" name="roomNumber" value="${room.id}"/>
                             <input type="hidden" name="changePrice" value="changePrice"/>
                             <button type="submit">Изменить</button>
                         </form>

@@ -1,15 +1,19 @@
 package by.rozmysl.bookingServlet.controller.security;
 
-import by.rozmysl.bookingServlet.controller.util.UrlPatternUtils;
+import by.rozmysl.bookingServlet.controller.util.UrlPatternUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Checks the user's rights to access the page.
  */
-public final class SecurityUtils {
+public final class SecurityUtil {
 
-    private SecurityUtils() {
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
+    private SecurityUtil() {
     }
 
     /**
@@ -20,7 +24,7 @@ public final class SecurityUtils {
      */
     public static boolean isSecurityPage(HttpServletRequest req) {
         return SecurityConfig.getAllAppRoles().stream()
-                .anyMatch(r -> SecurityConfig.getUrlPatternsForRole(r).contains(UrlPatternUtils.getUrlPattern(req)));
+                .anyMatch(r -> SecurityConfig.getUrlPatternsForRole(r).contains(UrlPatternUtil.getUrlPattern(req)));
     }
 
     /**
@@ -31,6 +35,6 @@ public final class SecurityUtils {
      */
     public static boolean hasPermission(HttpServletRequest req) {
         return SecurityConfig.getAllAppRoles().stream().filter(req::isUserInRole)
-                .anyMatch(r -> SecurityConfig.getUrlPatternsForRole(r).contains(UrlPatternUtils.getUrlPattern(req)));
+                .anyMatch(r -> SecurityConfig.getUrlPatternsForRole(r).contains(UrlPatternUtil.getUrlPattern(req)));
     }
 }

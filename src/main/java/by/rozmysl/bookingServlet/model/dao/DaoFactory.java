@@ -1,15 +1,17 @@
 package by.rozmysl.bookingServlet.model.dao;
 
-import by.rozmysl.bookingServlet.model.dao.Impl.*;
-
-import java.sql.Connection;
+import by.rozmysl.bookingServlet.model.dao.impl.*;
 
 /**
  * Provides class DaoFactory.
  */
 public final class DaoFactory {
-    private static DaoFactory dao;
+    private static DaoFactory daoFactory;
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private DaoFactory() {
     }
 
@@ -19,10 +21,10 @@ public final class DaoFactory {
      * @return dao
      */
     public static DaoFactory getInstance() {
-        if (dao == null) {
-            dao = new DaoFactory();
+        if (daoFactory == null) {
+            daoFactory = new DaoFactory();
         }
-        return dao;
+        return daoFactory;
     }
 
     /**
@@ -30,8 +32,8 @@ public final class DaoFactory {
      *
      * @return the implementation of the AdditionalServicesDao interface
      */
-    public AdditionalServicesDao servicesDao(Connection connection) {
-        return new AdditionalServicesDaoImpl(connection);
+    public AdditionalServicesDao getServicesDao() {
+        return new AdditionalServicesDaoImpl();
     }
 
     /**
@@ -39,8 +41,8 @@ public final class DaoFactory {
      *
      * @return the implementation of the FoodDao interface
      */
-    public FoodDao foodDao(Connection connection) {
-        return new FoodDaoImpl(connection);
+    public FoodDao getFoodDao() {
+        return new FoodDaoImpl();
     }
 
     /**
@@ -48,8 +50,8 @@ public final class DaoFactory {
      *
      * @return the implementation of the RoomDao interface
      */
-    public RoomDao roomDao(Connection connection) {
-        return new RoomDaoImpl(connection);
+    public RoomDao getRoomDao() {
+        return new RoomDaoImpl();
     }
 
     /**
@@ -57,8 +59,8 @@ public final class DaoFactory {
      *
      * @return the implementation of the BookingDao interface
      */
-    public BookingDao bookingDao(Connection connection) {
-        return new BookingDaoImpl(connection);
+    public BookingDao getBookingDao() {
+        return new BookingDaoImpl();
     }
 
     /**
@@ -66,8 +68,8 @@ public final class DaoFactory {
      *
      * @return the implementation of the RoleDao interface
      */
-    public RoleDao roleDao(Connection connection) {
-        return new RoleDaoImpl(connection);
+    public RoleDao getRoleDao() {
+        return new RoleDaoImpl();
     }
 
     /**
@@ -75,7 +77,7 @@ public final class DaoFactory {
      *
      * @return the implementation of the UserDao interface
      */
-    public UserDao userDao(Connection connection) {
-        return new UserDaoImpl(connection);
+    public UserDao getUserDao() {
+        return new UserDaoImpl();
     }
 }

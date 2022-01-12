@@ -5,8 +5,11 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
+
+<fmt:message bundle="${msg}" key="page.logIn" var="logIn"/>
 <fmt:message bundle="${msg}" key="form.username" var="username"/>
 <fmt:message bundle="${msg}" key="form.password" var="password"/>
+<fmt:message bundle="${msg}" key="button.logon" var="logon"/>
 
 <!DOCTYPE html>
 <html lang="${language}">
@@ -19,7 +22,7 @@
 <body>
     <jsp:include page="menu.jsp"></jsp:include>
     <div id="content">
-        <h2><fmt:message bundle="${msg}" key="page.logIn"/></h2>
+        <h2>${logIn}</h2>
         <c:if test="${loginError != null}">
             <h3 style="color: red;"><fmt:message bundle="${msg}" key="${loginError}"/></h3>
         </c:if>
@@ -30,9 +33,9 @@
         <form method="POST" action="login">
             <input type="hidden" name="action" value="login"/>
             <input type="hidden" name="redirectId" value="${param.redirectId}"/>
-            <input type="text" name="username" placeholder="${username}" autofocus="true" required/>
-            <input type="password" name="password" placeholder="${password}" autofocus="true" required/>
-            <button type="submit"><fmt:message bundle="${msg}" key="button.logon"/></button>
+            <input type="text" name="username" placeholder="${username}" autofocus="true" required pattern="[A-Za-z][A-Za-z0-9.\-]{4,20}"/>
+            <input type="password" name="password" placeholder="${password}" autofocus="true" required pattern="[0-9]{5,}"/>
+            <button type="submit">${logon}</button>
         </form>
     </div>
 </body>

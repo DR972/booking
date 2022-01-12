@@ -6,6 +6,9 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.userPage" var="userPage"/>
+<fmt:message bundle="${msg}" key="message.welcome" var="message"/>
+
 <!DOCTYPE HTML>
 <html lang="${language}">
 <head>
@@ -16,8 +19,8 @@
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
     <div id="content">
-        <h3><fmt:message bundle="${msg}" key="page.userPage"/></h3>
-        <h3><fmt:message bundle="${msg}" key="message.welcome"/> ${loggedUser.username}</h3>
+        <h3>${userPage}</h3>
+        <h3>${message} ${loggedUser.id}</h3>
     </div>
 </body>
 </html>

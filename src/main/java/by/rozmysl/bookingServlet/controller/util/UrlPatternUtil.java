@@ -5,12 +5,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 
+import static by.rozmysl.bookingServlet.controller.command.PageAddress.MAIN;
+
 /**
  * Provides a service for working with URLs.
  */
-public final class UrlPatternUtils {
+public final class UrlPatternUtil {
+    private static final String PATH = "/*";
 
-    private UrlPatternUtils() {
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
+    private UrlPatternUtil() {
     }
 
     /**
@@ -35,7 +42,7 @@ public final class UrlPatternUtils {
         ServletContext servletContext = req.getServletContext();
         String servletPath = req.getServletPath();
 
-        if (req.getPathInfo() != null) return servletPath + "/*";
+        if (req.getPathInfo() != null) return servletPath + PATH;
         if (hasUrlPattern(servletContext, servletPath)) return servletPath;
 
         int i = servletPath.lastIndexOf('.');
@@ -43,6 +50,6 @@ public final class UrlPatternUtils {
             String urlPattern = "*." + servletPath.substring(i + 1);
             if (hasUrlPattern(servletContext, urlPattern)) return urlPattern;
         }
-        return "/";
+        return MAIN;
     }
 }

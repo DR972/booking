@@ -19,7 +19,7 @@
                     <td>Номер комнаты: </td>
                     <td align = "center">${roomNumber}
                         <c:if test = "${roomNumber == null}">
-                            <input type="number" name="roomNumber" min="1" required style="width:87px"></input>
+                            <input type="number" name="roomNumber" min="1" required style="width:87px"/>
                         </c:if>
                     </td>
                 </tr>
@@ -40,14 +40,14 @@
                     <td>Кол-во мест: </td>
                     <td align = "center">${sleeps}
                         <c:if test = "${sleeps == null}">
-                            <input type="number" name="sleeps" min="1" required style="width:87px"></input>
+                            <input type="number" name="sleeps" min="1" required style="width:87px"/>
                         </c:if>
                     </td>
                 </tr>
                 <c:if test = "${type!=null && newRoom == null}">
                     <tr>
                         <td>Цена: </td>
-                        <td align = "center"><input type="number" name="price" min="1" required style="width:87px"></input></td>
+                        <td align = "center"><input type="number" name="price" min="1" required style="width:87px"/></td>
                     </tr>
                 </c:if>
             </table><br/>

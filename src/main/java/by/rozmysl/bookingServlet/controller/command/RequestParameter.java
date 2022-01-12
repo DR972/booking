@@ -2,6 +2,10 @@ package by.rozmysl.bookingServlet.controller.command;
 
 public final class RequestParameter {
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private RequestParameter() {
     }
 
@@ -26,7 +30,7 @@ public final class RequestParameter {
     public static final String ACTION = "action";
     public static final String DELETE = "delete";
     public static final String ROWS = "rows";
-    public static final String PAGE = "page";
+    public static final String PAGE_NUMBER = "pageNumber";
     public static final String REDIRECT_ID = "redirectId";
 
     public static final String BOOKING_NUMBER = "bookingNumber";
@@ -45,6 +49,9 @@ public final class RequestParameter {
     public static final String PASSWORD_CONFIRM = "passwordConfirm";
     public static final String EMAIL = "email";
     public static final String LANGUAGE = "language";
+    public static final String CHANGE_ROLE_LIST = "changeRoleList";
+    public static final String CHANGE_ACCOUNT_LOCK = "changeAccountLock";
+
 
     public static final String JAVAX_SERVLET_ERROR_EXCEPTION = "javax.servlet.error.exception";
     public static final String JAVAX_SERVLET_ERROR_STATUS_CODE = "javax.servlet.error.status_code";

@@ -21,7 +21,7 @@
 			    <td><a href="/admin/changeRoomParameters">Изменить параметры номеров</a></td>
 			    <td><a href="/admin/changeServicesPrice">Изменить цены сервисов</a></td>
                 <td><a href="/admin/addRoom">Добавить номер</a></td>
-			    <td><a style="color:red">${loggedUser.username}</a></td>
+			    <td><a style="color:red">${loggedUser.id}</a></td>
 		    </tr>
 	    </table>
     </div>

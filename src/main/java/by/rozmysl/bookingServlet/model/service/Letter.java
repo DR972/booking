@@ -1,4 +1,4 @@
-package by.rozmysl.bookingServlet.model.service.mail;
+package by.rozmysl.bookingServlet.model.service;
 
 import by.rozmysl.bookingServlet.exception.MailException;
 import by.rozmysl.bookingServlet.model.entity.user.Booking;
@@ -35,11 +35,11 @@ public class Letter {
         if (language.equals("en")) {
             return String.format("Hello, %s! \n" + "We are glad to see you on the website of our hotel. To activate " +
                             "your account, please follow the link: http://localhost:8080/anonymous/activation%s",
-                    user.getUsername(), user.getActivationCode());
+                    user.getId(), user.getActivationCode());
         } else {
             return String.format("Привет, %s! \n" + "Рады Вас видеть на сайте нашей гостиницы. Для активации учетной " +
                             "записи перейдите, пожалуйста, по ссылке: http://localhost:8080/anonymous/activation%s",
-                    user.getUsername(), user.getActivationCode());
+                    user.getId(), user.getActivationCode());
         }
     }
 
@@ -83,7 +83,7 @@ public class Letter {
 
         table.addCell(new Cell().add("2"));
         table.addCell(new Cell().add("Питание"));
-        table.addCell(new Cell().add(String.valueOf(booking.getFood().getType())));
+        table.addCell(new Cell().add(String.valueOf(booking.getFood().getId())));
         table.addCell(new Cell().add(String.valueOf(booking.getDays() * booking.getPersons())));
         table.addCell(new Cell().add(String.valueOf(booking.getFood().getPrice())));
         table.addCell(new Cell().add(String.valueOf(booking.getFood().getPrice().multiply(
@@ -91,10 +91,10 @@ public class Letter {
 
         table.addCell(new Cell().add("3"));
         table.addCell(new Cell().add("Дополнительные услуги"));
-        table.addCell(new Cell().add(booking.getServices().getType()));
+        table.addCell(new Cell().add(booking.getServices().getId()));
         int quantity = 0;
-        if (booking.getServices().getType().equals("стоянка")) quantity = booking.getDays();
-        if (booking.getServices().getType().equals("трансфер")) quantity = 1;
+        if (booking.getServices().getId().equals("стоянка")) quantity = booking.getDays();
+        if (booking.getServices().getId().equals("трансфер")) quantity = 1;
         table.addCell(new Cell().add(String.valueOf(quantity)));
         table.addCell(new Cell().add(String.valueOf(booking.getServices().getPrice())));
         table.addCell(new Cell().add(String.valueOf(booking.getServices().getPrice().multiply(new BigDecimal(quantity)))));
@@ -106,8 +106,8 @@ public class Letter {
                 "Количество дней: " + booking.getDays() + "\n" +
                 "Тип номера: " + booking.getRoom().getType() + "\n" +
                 "Количество гостей: " + booking.getPersons() + "\n" +
-                "Тип питания: " + booking.getFood().getType() + "\n" +
-                "Дополнительные услуги: " + booking.getServices().getType() + "\n" +
+                "Тип питания: " + booking.getFood().getId() + "\n" +
+                "Дополнительные услуги: " + booking.getServices().getId() + "\n" +
                 "Стоимость: " + booking.getAmount() + "\n"));
         doc.close();
     }

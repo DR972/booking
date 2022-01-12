@@ -13,19 +13,9 @@
     <jsp:include page="adminMenu.jsp"></jsp:include>
     <div id="content" align="center">
         <h3>Все бронирования</h3>
+        <c:set var="action" scope="request" value="allBookings"/>
         <c:if test = "${countPages>1}">
-            <div align = "right">
-                <a>Количество строк на странице:</a>
-                <c:forEach var="r" begin="5" end="20" step="5">
-                    <form action="allBookings" method="post">
-                        <span>
-                            <input type="hidden" name="page" value="0"/>
-                            <input type="hidden" name="rows" value="${r}"/>
-                            <button type="submit" id="btn" style="color: #D72020;"/> ${r}
-                        </span>
-                    </form>
-                </c:forEach>
-            </div>
+            <jsp:include page="selectNumberRows.jsp"></jsp:include>
         </c:if>
 
         <table id="content" align="center">
@@ -49,19 +39,18 @@
             </thead>
             <c:forEach items="${allBookings}" var="booking">
                 <tr>
-                    <td>${booking.number}</td>
-                    <td>${booking.room.roomNumber}</td>
+                    <td>${booking.id}</td>
+                    <td>${booking.room.id}</td>
                     <td align = "left">
                         <form action="allBookings" method="POST">
                             <select id ="room" name ="roomNumber" required>
                                 <option value="">- Выбрать номер -</option>
-                                <c:forEach items="${availableRooms[booking.number]}" var="r">
-                                    <option value = "${r.roomNumber}">№${r.roomNumber}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
+                                <c:forEach items="${availableRooms[booking.id]}" var="r">
+                                    <option value = "${r.id}">№${r.id}, ${r.type}-${r.sleeps}, <ctg:money value="${r.price}"/></option>
                                 </c:forEach>
-                                <input type="hidden" name="action" value="allBookings"/>
-                                <input type="hidden" name="page" value="${page}"/>
                                 <input type="hidden" name="rows" value="${rows}"/>
-                                <input type="hidden" name="bookingNumber" value="${booking.number}"/>
+                                <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                                <input type="hidden" name="bookingNumber" value="${booking.id}"/>
                                 <input type="hidden" name="changeRoom" value="changeRoom"/>
                                 <button type="submit">Подтвердить</button>
                             </select>
@@ -73,10 +62,10 @@
                     <td>${booking.arrival}</td>
                     <td>${booking.departure}</td>
                     <td>${booking.days}</td>
-                    <td>${booking.food.type}</td>
-                    <td>${booking.services.type}</td>
+                    <td>${booking.food.id}</td>
+                    <td>${booking.services.id}</td>
                     <td><ctg:money value="${booking.amount}"/></td>
-                    <td>${booking.user.username}</td>
+                    <td>${booking.user.id}</td>
                     <td>${booking.status}</td>
                     <td>
                         <form action="allBookings" method="POST">
@@ -85,10 +74,9 @@
                                 <c:forEach items="${status}" var="st">
                                     <option value = "${st.status}">${st.status}</option>
                                 </c:forEach>
-                                <input type="hidden" name="action" value="allBookings"/>
-                                <input type="hidden" name="page" value="${page}"/>
                                 <input type="hidden" name="rows" value="${rows}"/>
-                                <input type="hidden" name="bookingNumber" value="${booking.number}"/>
+                                <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                                <input type="hidden" name="bookingNumber" value="${booking.id}"/>
                                 <input type="hidden" name="changeStatus" value="changeStatus"/>
                                 <button type="submit">Подтвердить</button>
                             </select>
@@ -96,10 +84,9 @@
                     </td>
                     <td>
                         <form action="allBookings" method="POST">
-                            <input type="hidden" name="action" value="allBookings"/>
-                            <input type="hidden" name="page" value="${page}"/>
                             <input type="hidden" name="rows" value="${rows}"/>
-                            <input type="hidden" name="bookingNumber" value="${booking.number}"/>
+                            <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                            <input type="hidden" name="bookingNumber" value="${booking.id}"/>
                             <input type="hidden" name="delete" value="delete"/>
                             <button type="submit">Удалить</button>
                         </form>
@@ -107,27 +94,8 @@
                 </tr>
             </c:forEach>
         </table><br/>
-
         <c:if test = "${countPages>1}">
-            <div>
-                <c:forEach var="p" begin="0" end="${countPages-1}">
-                    <form action="allBookings" method="post">
-                        <span>
-                            <c:choose>
-                                <c:when test="${page == p}">
-                                     <button type="submit" id="btn"/>...
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="hidden" name="action" value="allBookings"/>
-                                    <input type="hidden" name="rows" value="${rows}"/>
-                                    <input type="hidden" name="page" value="${p}"/>
-                                    <button type="submit" style="margin-left: 10px;"/>${p+1}
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                    </form>
-                </c:forEach>
-            </div>
+            <jsp:include page="selectPageNumber.jsp"></jsp:include>
         </c:if>
     </div>
 </body>

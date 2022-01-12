@@ -7,7 +7,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface FoodService {
+
     Food findById(String type) throws ServiceException;
-    List<Food> findAll(int page, int rows) throws ServiceException;
+
+    List<Food> findAll(int pageNumber, int rows) throws ServiceException;
+
     void changeFoodPrice(String type, BigDecimal price) throws ServiceException;
 }

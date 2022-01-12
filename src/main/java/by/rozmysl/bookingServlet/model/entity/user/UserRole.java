@@ -1,18 +1,21 @@
 package by.rozmysl.bookingServlet.model.entity.user;
 
+import by.rozmysl.bookingServlet.model.entity.Entity;
+
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
  * It is used to store UserRole objects with the <b>username</b>, <b>role</b> properties
  */
-public class UserRole {
+public class UserRole extends Entity<String> {
     private String username;
     private String role;
 
     /**
      * The constructor creates a new object UserRole with the <b>username</b>, <b>role</b> properties
      *
-     * @param username role id
+     * @param username User id
      * @param role     role
      */
     public UserRole(String username, String role) {
@@ -54,6 +57,24 @@ public class UserRole {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserRole)) return false;
+
+        UserRole userRole = (UserRole) o;
+
+        if (!Objects.equals(username, userRole.username)) return false;
+        return Objects.equals(role, userRole.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
     }
 
     @Override

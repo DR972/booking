@@ -1,22 +1,24 @@
 package by.rozmysl.bookingServlet.model.entity.hotel;
 
+import by.rozmysl.bookingServlet.model.entity.Entity;
+
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * It is used to store Food objects with the <b>type</b> and <b>price</b> properties.
+ * It is used to store Food objects with the property <b>price</b>.
  */
-public class Food {
-    private String type;
+public class Food extends Entity<String> {
     private BigDecimal price;
 
     /**
-     * The constructor creates a new object Food with the <b>type</b> properties
+     * The constructor creates a new object Food with the <b>type</b> property
      *
      * @param type id of the Food
      */
     public Food(String type) {
-        this.type = type;
+        super(type);
     }
 
     /**
@@ -26,26 +28,8 @@ public class Food {
      * @param price price
      */
     public Food(String type, BigDecimal price) {
-        this.type = type;
+        super(type);
         this.price = price;
-    }
-
-    /**
-     * Gets the value of the type property
-     *
-     * @return a value of the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * The method sets the value of the type property
-     *
-     * @param type type
-     */
-    public void setType(String type) {
-        this.type = type;
     }
 
     /**
@@ -67,9 +51,27 @@ public class Food {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Food)) return false;
+        if (!super.equals(o)) return false;
+
+        Food food = (Food) o;
+
+        return Objects.equals(price, food.price);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (price != null ? price.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", Food.class.getSimpleName() + "[", "]")
-                .add("type='" + type + "'")
+                .add("type=" + id)
                 .add("price=" + price)
                 .toString();
     }

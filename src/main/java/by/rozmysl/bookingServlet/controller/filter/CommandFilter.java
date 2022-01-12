@@ -20,7 +20,8 @@ public class CommandFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         if (request.getPathInfo() != null) {
-            if (!Arrays.asList(CommandType.values()).toString().contains(CommandType.convert(request.getPathInfo()))) {
+            String commandType = CommandType.convert(request.getPathInfo());
+            if (!Arrays.asList(CommandType.values()).toString().contains(commandType)) {
                 request.getServletContext().getRequestDispatcher(PageAddress.PAGE_DOES_NOT_EXIST).forward(request, resp);
                 return;
             }

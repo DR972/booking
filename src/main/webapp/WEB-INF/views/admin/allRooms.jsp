@@ -27,14 +27,14 @@
             <form action="allRooms" method="POST">
                 <c:forEach items="${allRooms}" var="room">
                     <tr>
-                        <td>${room.roomNumber}</td>
+                        <td>${room.id}</td>
                         <td>${room.type}</td>
                         <td>${room.sleeps}</td>
                         <td><ctg:money value="${room.price}"/></td>
                         <td>
                             <form action="allRooms" method="POST">
-                                <input type="number" step="1" name="price" value="${room.price}"></input>
-                                <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
+                                <input type="number" step="1" name="price" value="${room.price}"/>
+                                <input type="hidden" name="roomNumber" value="${room.id}"/>
                                 <input type="hidden" name="changePrice" value="changePrice"/>
                                 <button type="submit">Изменить</button>
                             </form>
@@ -42,7 +42,7 @@
                         <td>
                             <form action="allRooms" method="POST">
                                 <input type="hidden" name="action" value="allRooms"/>
-                                <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
+                                <input type="hidden" name="roomNumber" value="${room.id}"/>
                                 <input type="hidden" name="delete" value="delete"/>
                                 <button type="submit">Удалить</button>
                             </form>

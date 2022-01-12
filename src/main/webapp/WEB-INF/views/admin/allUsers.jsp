@@ -14,19 +14,9 @@
     <div id="content" align="center">
         <h3>Все пользователи</h3>
         <h4 style="color: red;">${errorDeleteUser}</h4>
+        <c:set var="action" scope="request" value="allUsers"/>
         <c:if test = "${countPages>1}">
-            <div align = "right">
-                <a>Количество строк на странице:</a>
-                <c:forEach var="r" begin="5" end="20" step="5">
-                    <form action="allUsers" method="post">
-                        <span>
-                            <input type="hidden" name="page" value="0"/>
-                            <input type="hidden" name="rows" value="${r}"/>
-                            <button type="submit" id="btn" style="color: #D72020;"/> ${r}
-                        </span>
-                    </form>
-                </c:forEach>
-            </div>
+            <jsp:include page="selectNumberRows.jsp"></jsp:include>
         </c:if>
 
         <table style="width: 98%;" align="center">
@@ -37,51 +27,62 @@
                 <th>Активация</th>
                 <th>Почта</th>
                 <th>Код активации</th>
+                <th>Блокировка</th>
+                <th>Изменить блокировку</th>
                 <th>Роли</th>
+                <th>Добавить/удалить роль ADMIN</th>
                 <th>Удалить</th>
             </thead>
             <c:forEach items="${allUsers}" var="user">
                 <tr align = "center">
-                    <td>${user.username}</td>
+                    <td>${user.id}</td>
                     <td>${user.lastname}</td>
                     <td>${user.firstname}</td>
                     <td>${user.active}</td>
                     <td>${user.email}</td>
                     <td>${user.activationCode}</td>
+                    <td>${user.banned}</td>
+                    <td>
+                        <c:if test = "${user.id != 'ADMIN'}">
+                            <form action="allUsers" method="post">
+                                <input type="hidden" name="rows" value="${rows}"/>
+                                <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                                <input type="hidden" name="username" value="${user.id}"/>
+                                <input type="hidden" name="changeAccountLock" value="changeAccountLock"/>
+                                <button type="submit">Изменить</button>
+                            </form>
+                        </c:if>
+                    </td>
                     <td>
                         <c:forEach items="${user.roles}" var="role">${role}; </c:forEach>
                     </td>
                     <td>
-                        <form action="allUsers" method="post">
-                            <input type="hidden" name="rows" value="${rows}"/>
-                            <input type="hidden" name="page" value="${page}"/>
-                            <input type="hidden" name="username" value="${user.username}"/>
-                            <input type="hidden" name="delete" value="delete"/>
-                            <button type="submit">Удалить</button>
-                        </form>
+                        <c:if test = "${user.id != 'ADMIN'}">
+                            <form action="allUsers" method="post">
+                                <input type="hidden" name="rows" value="${rows}"/>
+                                <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                                <input type="hidden" name="username" value="${user.id}"/>
+                                <input type="hidden" name="changeRoleList" value="changeRoleList"/>
+                                <button type="submit">Изменить</button>
+                            </form>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test = "${user.id != 'ADMIN'}">
+                            <form action="allUsers" method="post">
+                                <input type="hidden" name="rows" value="${rows}"/>
+                                <input type="hidden" name="pageNumber" value="${pageNumber}"/>
+                                <input type="hidden" name="username" value="${user.id}"/>
+                                <input type="hidden" name="delete" value="delete"/>
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
         </table><br/>
         <c:if test = "${countPages>1}">
-            <div>
-                <c:forEach var="p" begin="0" end="${countPages-1}">
-                    <form action="allUsers" method="post">
-                        <span>
-                            <c:choose>
-                                <c:when test="${page == p}">
-                                     <button type="submit" id="btn"/>...
-                                </c:when>
-                                <c:otherwise>
-                                    <input type="hidden" name="rows" value="${rows}"/>
-                                    <input type="hidden" name="page" value="${p}"/>
-                                    <button type="submit" style="margin-left: 10px;"/>${p+1}
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                    </form>
-                </c:forEach>
-            </div>
+            <jsp:include page="selectPageNumber.jsp"></jsp:include>
         </c:if>
     </div>
 </body>

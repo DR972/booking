@@ -8,6 +8,14 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.available" var="available"/>
+<fmt:message bundle="${msg}" key="book.days" var="days"/>
+<fmt:message bundle="${msg}" key="book.persons" var="persons"/>
+<fmt:message bundle="${msg}" key="book.room.type" var="room"/>
+<fmt:message bundle="${msg}" key="book.sleeps" var="sleeps"/>
+<fmt:message bundle="${msg}" key="book.price" var="price"/>
+<fmt:message bundle="${msg}" key="button.choose" var="choose"/>
+
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -18,17 +26,16 @@
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
 	<div id="content" align="center">
-        <h2><fmt:message bundle="${msg}" key="page.available"/></h2>
+        <h2>${available}</h2>
         <form action="booking" method="POST">
-            <h3>${booking.arrival} - ${booking.departure}, <fmt:message bundle="${msg}" key="book.days"/>: ${booking.days},
-            <fmt:message bundle="${msg}" key="book.persons"/>: ${booking.persons}</h3><br/>
+            <h3>${booking.arrival} - ${booking.departure}, ${days}: ${booking.days}, ${persons}: ${booking.persons}</h3><br/>
         </form>
 	    <table>
             <thead>
-                <th><fmt:message bundle="${msg}" key="book.room.type"/></th>
-                <th><fmt:message bundle="${msg}" key="book.sleeps"/></th>
-                <th><fmt:message bundle="${msg}" key="book.price"/></th>
-                <th><fmt:message bundle="${msg}" key="button.choose"/></th>
+                <th>${room}</th>
+                <th>${sleeps}</th>
+                <th>${price}</th>
+                <th>${choose}</th>
             </thead>
             <c:if test="${noAvailable != null}">
                 <h3 style="color: red;"><fmt:message bundle="${msg}" key="${noAvailable}" /></h3><br/>
@@ -43,10 +50,10 @@
                             <input type="hidden" name="arrival" value= "${booking.arrival}"/>
                             <input type="hidden" name="days" value= "${booking.days}"/>
                             <input type="hidden" name="persons" value= "${booking.persons}"/>
-                            <input type="hidden" name="food" value="${booking.food.type}"/>
-                            <input type="hidden" name="service" value="${booking.services.type}"/>
-                            <input type="hidden" name="roomNumber" value="${room.roomNumber}"/>
-                            <button type="submit"><fmt:message bundle="${msg}" key="button.choose"/></button>
+                            <input type="hidden" name="food" value="${booking.food.id}"/>
+                            <input type="hidden" name="service" value="${booking.services.id}"/>
+                            <input type="hidden" name="roomNumber" value="${room.id}"/>
+                            <button type="submit">${choose}</button>
                         </form>
                     </td>
                 </tr>

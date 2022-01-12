@@ -1,13 +1,10 @@
 package by.rozmysl.bookingServlet.controller.command.impl.login;
 
 import by.rozmysl.bookingServlet.controller.command.*;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
-
-import java.sql.Connection;
 
 import static by.rozmysl.bookingServlet.controller.command.RequestAttribute.*;
 
@@ -25,16 +22,16 @@ public class ActivationAccountCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws ServiceException {
-        final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
         try {
-            if (ServiceFactory.getInstance().userService(connection).activateUser(req.getPathInfo().substring(11))) {
+            if (ServiceFactory.getInstance().getUserService().activateUser(req.getPathInfo().substring(11))) {
                 req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_TRUE);
             } else {
                 req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_ERROR);
             }
-        } finally {
-            ConnectionPool.getInstance().returnConnectionToPool(connection);
+        } catch (ServiceException e) {
+            req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_ERROR);
+            throw new ServiceException("'ActivateUser' query has been failed", e);
         }
-        return new PageGuide(PageAddress.LOGIN,TransferMethod.FORWARD);
+        return new PageGuide(PageAddress.LOGIN, TransferMethod.FORWARD);
     }
 }

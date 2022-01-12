@@ -1,7 +1,6 @@
 package by.rozmysl.bookingServlet.controller.command.impl.admin;
 
 import by.rozmysl.bookingServlet.controller.command.*;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
 import by.rozmysl.bookingServlet.model.service.UserService;
@@ -9,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-
-import java.sql.Connection;
 
 import static by.rozmysl.bookingServlet.controller.command.RequestAttribute.*;
 import static by.rozmysl.bookingServlet.controller.command.RequestParameter.*;
@@ -31,34 +28,30 @@ public class GetAllUsersCommand implements Command {
     @Override
     public PageGuide execute(HttpServletRequest req) throws ServiceException {
         ServiceFactory service = ServiceFactory.getInstance();
-        final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
-        try {
-            UserService userService = service.userService(connection);
-            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
-                String username = req.getParameter(USERNAME);
-                if (!service.bookingService(connection).findAllBookingsByUser(username).isEmpty()) {
-                    req.setAttribute(ERROR_DELETE_USER, ERROR_DELETE_USER_RU);
-                } else {
-                    service.roleService(connection).delete(username);
-                    userService.delete(username);
-                    LOGGER.info("The user '" + username + "' was deleted by the admin " + req.getUserPrincipal().getName());
-                }
-            }
-            int page = 0;
-            int rows = 10;
-            if (req.getParameter(RequestParameter.ROWS) != null) {
-                rows = Integer.parseInt(req.getParameter(RequestParameter.ROWS));
-            }
-            if (req.getParameter(RequestParameter.PAGE) != null) {
-                page = Integer.parseInt(req.getParameter(RequestParameter.PAGE));
-            }
-            req.setAttribute(RequestAttribute.ROWS, rows);
-            req.setAttribute(RequestAttribute.PAGE, page);
-            req.setAttribute(COUNT_PAGES, userService.countUsersPages(rows));
-            req.setAttribute(ALL_USERS, userService.findAll(page, rows));
-        } finally {
-            ConnectionPool.getInstance().returnConnectionToPool(connection);
+        UserService userService = ServiceFactory.getInstance().getUserService();
+
+        if (req.getParameter(CHANGE_ACCOUNT_LOCK) != null && req.getParameter(CHANGE_ACCOUNT_LOCK).equals(CHANGE_ACCOUNT_LOCK)) {
+            userService.changeAccountLock(req.getParameter(USERNAME));
         }
+
+        if (req.getParameter(CHANGE_ROLE_LIST) != null && req.getParameter(CHANGE_ROLE_LIST).equals(CHANGE_ROLE_LIST)) {
+            userService.changeListUserRoles(req.getParameter(USERNAME));
+        }
+
+        if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+            String username = req.getParameter(USERNAME);
+            if (!service.getBookingService().findAllBookingsByUser(username).isEmpty()) {
+                req.setAttribute(ERROR_DELETE_USER, ERROR_DELETE_USER_RU);
+            } else {
+                userService.delete(username);
+                LOGGER.info("The user '" + username + "' was deleted by the admin " + req.getUserPrincipal().getName());
+            }
+        }
+
+        int pageNumber = PageSelection.getPageNumber(req);
+        int rows = PageSelection.getRows(req);
+        req.setAttribute(COUNT_PAGES, userService.countUsersPages(rows));
+        req.setAttribute(ALL_USERS, userService.findAll(pageNumber, rows));
         return new PageGuide(PageAddress.ALL_USERS, TransferMethod.FORWARD);
     }
 }

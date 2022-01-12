@@ -1,6 +1,7 @@
-package by.rozmysl.bookingServlet.model.service.mail;
+package by.rozmysl.bookingServlet.model.service.impl;
 
 import by.rozmysl.bookingServlet.exception.MailException;
+import by.rozmysl.bookingServlet.model.service.MailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,21 +17,19 @@ import java.util.Properties;
 /**
  * The class is responsible for sending mail with the <b>config</b> properties.
  */
-public class MailSender {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailSender.class);
+public class MailSenderImpl implements MailSender {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailSenderImpl.class);
     private static final String MAIL_PATH = "mail/mail.properties";
-    private static final String MAIL_NAME = "mail.name";
-    private static final String MAIL_PASSWORD = "mail.password";
+    private static final String MAIL_NAME = "hotelproject111@gmail.com";
+    private static final String MAIL_PASSWORD = "rfirxylirqzomixp";
 
-    private static Session session;
+    private final Session session;
     private static final Properties properties = new Properties();
-    private static MailSender instance;
 
-    private MailSender() throws MailException {
-        try (InputStream inputStream = MailSender.class.getClassLoader().getResourceAsStream(MAIL_PATH)) {
+    public MailSenderImpl() throws MailException {
+        try (InputStream inputStream = MailSenderImpl.class.getClassLoader().getResourceAsStream(MAIL_PATH)) {
             properties.load(inputStream);
-            System.out.println(properties);
-            session = Session.getInstance(properties, new Authenticator() {
+            session = Session.getInstance(properties, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(MAIL_NAME, MAIL_PASSWORD);
                 }
@@ -41,14 +40,6 @@ public class MailSender {
         }
     }
 
-    public static MailSender getInstance() throws MailException {
-        if (instance == null) {
-            instance = new MailSender();
-        }
-        return instance;
-    }
-
-
     /**
      * Sends an email message
      *
@@ -57,13 +48,12 @@ public class MailSender {
      * @param text    message
      * @throws MailException if the message cannot be created
      */
+    @Override
     public void sendMail(String emailTo, String subject, String text) throws MailException {
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(MAIL_NAME));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
-//            message.setFrom(new InternetAddress(MAIL_NAME));
-//            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             message.setSubject(subject);
             message.setText(text);
             Transport.send(message);
@@ -82,11 +72,12 @@ public class MailSender {
      * @param attachment file path
      * @throws MailException if the message cannot be created
      */
+    @Override
     public void sendMailWithAttachment(String emailTo, String subject, String text, String attachment) throws MailException {
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(MAIL_NAME));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailTo));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
             message.setSubject(subject);
 
             BodyPart messageBodyPart = new MimeBodyPart();

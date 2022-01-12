@@ -9,6 +9,17 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.userBookings" var="userBookings"/>
+<fmt:message bundle="${msg}" key="book.room.type" var="room"/>
+<fmt:message bundle="${msg}" key="book.persons" var="persons"/>
+<fmt:message bundle="${msg}" key="book.arrival" var="arrival"/>
+<fmt:message bundle="${msg}" key="book.departure" var="departure"/>
+<fmt:message bundle="${msg}" key="book.days" var="days"/>
+<fmt:message bundle="${msg}" key="book.food" var="food"/>
+<fmt:message bundle="${msg}" key="book.service" var="service"/>
+<fmt:message bundle="${msg}" key="book.amount" var="amount"/>
+<fmt:message bundle="${msg}" key="button.cancel" var="cancel"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,18 +32,18 @@
      ${userBookings}
     <jsp:include page="menuUser.jsp"></jsp:include>
     <div id="content" align="center">
-        <h3><br/><fmt:message bundle="${msg}" key="page.userBookings"/></h3>
+        <h3><br/>${userBookings}</h3>
         <table style="width: 98%;" align="center">
             <thead>
-                <th><fmt:message bundle="${msg}" key="book.room.type"/></th>
-                <th><fmt:message bundle="${msg}" key="book.persons"/></th>
-                <th><fmt:message bundle="${msg}" key="book.arrival"/></th>
-                <th><fmt:message bundle="${msg}" key="book.departure"/></th>
-                <th><fmt:message bundle="${msg}" key="book.days"/></th>
-                <th><fmt:message bundle="${msg}" key="book.food"/></th>
-                <th><fmt:message bundle="${msg}" key="book.service"/></th>
-                <th><fmt:message bundle="${msg}" key="book.amount"/></th>
-                <th><fmt:message bundle="${msg}" key="button.cancel"/></th>
+                <th>${room}</th>
+                <th>${persons}</th>
+                <th>${arrival}</th>
+                <th>${departure}</th>
+                <th>${days}</th>
+                <th>${food}</th>
+                <th>${service}</th>
+                <th>${amount}</th>
+                <th>${cancel}</th>
             </thead>
             <c:forEach items="${userBooking}" var="booking">
                 <div>
@@ -42,15 +53,15 @@
                         <td>${booking.arrival}</td>
                         <td>${booking.departure}</td>
                         <td>${booking.days}</td>
-                        <td><fmt:message bundle="${msg}" key="db.${booking.food.type}"/></td>
-                        <td><fmt:message bundle="${msg}" key="db.${booking.services.type}"/></td>
+                        <td><fmt:message bundle="${msg}" key="db.${booking.food.id}"/></td>
+                        <td><fmt:message bundle="${msg}" key="db.${booking.services.id}"/></td>
                         <td><ctg:money value="${booking.amount}"/></td>
                         <td>
                             <c:if test = "${LocalDate.now().isBefore(booking.arrival)}">
                                 <form action="userBookings" method="POST">
-                                    <input type="hidden" name="bookingNumber" value="${booking.number}"/>
+                                    <input type="hidden" name="bookingNumber" value="${booking.id}"/>
                                     <input type="hidden" name="delete" value="delete"/>
-                                    <button type="submit"><fmt:message bundle="${msg}" key="button.cancel"/></button>
+                                    <button type="submit">${cancel}</button>
                                 </form>
                             </c:if>
                         </td>

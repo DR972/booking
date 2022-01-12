@@ -11,7 +11,7 @@ public enum CommandType {
     LOGIN(new LoginCommand()),
     ACTIVATION(new ActivationAccountCommand()),
     LOGOUT(new LogoutCommand()),
-    REGISTRATION(new Registration()),
+    REGISTRATION(new RegistrationCommand()),
     USER(new ToUserPageCommand()),
     PRICE(new ToPriceCommand()),
     BOOKING_DETAILS(new GetBookingDetailsCommand()),
@@ -27,17 +27,17 @@ public enum CommandType {
     CHANGE_SERVICES_PRICE(new ChangeServicesPriceCommand());
 
     private Command command;
+    private static final String REGEX_PATTERN = "([a-z])([A-Z]+)";
+    private static final String REPLACEMENT = "$1_$2";
+    private static final String ACTIVATION_PATH = "/activation";
 
     CommandType(Command command) {
         this.command = command;
     }
 
-    public static CommandType chooseCommandType(String str) {
-        return str.startsWith("/activation") ? CommandType.ACTIVATION : CommandType.valueOf(convert(str));
-    }
-
     public static String convert(String str) {
-        return str.replace("/", "").replaceAll("([a-z])([A-Z]+)", "$1_$2").toUpperCase();
+        return str.startsWith(ACTIVATION_PATH) ? String.valueOf(CommandType.ACTIVATION)
+                : str.replace("/", "").replaceAll(REGEX_PATTERN, REPLACEMENT).toUpperCase();
     }
 
     public Command getAction() {

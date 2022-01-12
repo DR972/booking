@@ -6,6 +6,16 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="message.thanks" var="message"/>
+<fmt:message bundle="${msg}" key="book.client" var="client"/>
+<fmt:message bundle="${msg}" key="book.arrival" var="arrival"/>
+<fmt:message bundle="${msg}" key="book.departure" var="departure"/>
+<fmt:message bundle="${msg}" key="book.room.type" var="room"/>
+<fmt:message bundle="${msg}" key="book.persons" var="persons"/>
+<fmt:message bundle="${msg}" key="book.food" var="food"/>
+<fmt:message bundle="${msg}" key="book.service" var="service"/>
+<fmt:message bundle="${msg}" key="book.amount" var="amount"/>
+
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -16,15 +26,15 @@
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
 	<div id="content" align="center">
-        <h2><fmt:message bundle="${msg}" key="message.thanks"/></h2>
-        <h3><fmt:message bundle="${msg}" key="book.client"/>: ${pageContext.request.userPrincipal.name}</h3>
-        <h3><fmt:message bundle="${msg}" key="book.arrival"/>: ${booking.arrival}</h3>
-        <h3><fmt:message bundle="${msg}" key="book.departure"/>: ${booking.departure}</h3>
-        <h3><fmt:message bundle="${msg}" key="book.room.type"/>: <fmt:message bundle="${msg}" key="db.${booking.room.type}"/></h3>
-        <h3><fmt:message bundle="${msg}" key="book.persons"/>: ${booking.persons}</h3>
-        <h3><fmt:message bundle="${msg}" key="book.food"/>: <fmt:message bundle="${msg}" key="db.${booking.food.type}"/></h3>
-        <h3><fmt:message bundle="${msg}" key="book.service"/>: <fmt:message bundle="${msg}" key="db.${booking.services.type}"/></h3>
-        <h3><fmt:message bundle="${msg}" key="book.amount"/>: <ctg:money value="${booking.amount}"/></h3>
+        <h2>${message}</h2>
+        <h3>${client}: ${pageContext.request.userPrincipal.name}</h3>
+        <h3>${arrival}: ${booking.arrival}</h3>
+        <h3>${departure}: ${booking.departure}</h3>
+        <h3>${room}: <fmt:message bundle="${msg}" key="db.${booking.room.type}"/></h3>
+        <h3>${persons}: ${booking.persons}</h3>
+        <h3>${food}: <fmt:message bundle="${msg}" key="db.${booking.food.id}"/></h3>
+        <h3>${service}: <fmt:message bundle="${msg}" key="db.${booking.services.id}"/></h3>
+        <h3>${amount}: <ctg:money value="${booking.amount}"/></h3>
 	</div>
 </body>
 </html>

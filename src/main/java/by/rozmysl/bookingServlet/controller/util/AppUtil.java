@@ -9,12 +9,17 @@ import java.util.Map;
 /**
  * Provides a service for working with the session.
  */
-public final class AppUtils {
+public final class AppUtil {
     private static int REDIRECT_ID = 0;
     private static final Map<Integer, String> ID_URI = new HashMap<>();
     private static final Map<String, Integer> URI_ID = new HashMap<>();
+    private static final String LOGGED_USER = "loggedUser";
 
-    private AppUtils() {
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
+    private AppUtil() {
     }
 
     /**
@@ -24,7 +29,7 @@ public final class AppUtils {
      * @param loggedUser loggedUser
      */
     public static void saveLoggedUser(HttpSession session, User loggedUser) {
-        session.setAttribute("loggedUser", loggedUser);
+        session.setAttribute(LOGGED_USER, loggedUser);
     }
 
     /**
@@ -34,7 +39,7 @@ public final class AppUtils {
      * @return User
      */
     public static User getLoggedUser(HttpSession session) {
-        return (User) session.getAttribute("loggedUser");
+        return (User) session.getAttribute(LOGGED_USER);
     }
 
     /**

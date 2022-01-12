@@ -1,5 +1,6 @@
 package by.rozmysl.bookingServlet.model.entity.user;
 
+import by.rozmysl.bookingServlet.model.entity.Entity;
 import by.rozmysl.bookingServlet.model.entity.hotel.AdditionalServices;
 import by.rozmysl.bookingServlet.model.entity.hotel.Food;
 import by.rozmysl.bookingServlet.model.entity.hotel.Room;
@@ -7,14 +8,14 @@ import by.rozmysl.bookingServlet.model.entity.hotel.StatusReservation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**
- * It is used to store Booking objects with the <b>number</b>, <b>user</b>, <b>room</b>, <b>persons</b>,
+ * It is used to store Booking objects with the <b>user</b>, <b>room</b>, <b>persons</b>,
  * <b>arrival</b>, <b>departure</b>, <b>days</b>, <b>food</b>, <b>services</b>, <b>amount</b>, <b>status</b> properties.
  */
-public class Booking {
-    private long number;
+public class Booking extends Entity<Long> {
     private User user;
     private Room room;
     private int persons;
@@ -110,7 +111,7 @@ public class Booking {
      */
     public Booking(long number, User user, Room room, int persons, LocalDate arrival, LocalDate departure, int days,
                    Food food, AdditionalServices services, BigDecimal amount, String status) {
-        this.number = number;
+        super(number);
         this.user = user;
         this.room = room;
         this.persons = persons;
@@ -121,24 +122,6 @@ public class Booking {
         this.services = services;
         this.amount = amount;
         this.status = status;
-    }
-
-    /**
-     * Gets the value of the number property
-     *
-     * @return a value of the number
-     */
-    public long getNumber() {
-        return number;
-    }
-
-    /**
-     * The method sets the value of the number property
-     *
-     * @param number number
-     */
-    public void setNumber(long number) {
-        this.number = number;
     }
 
     /**
@@ -322,9 +305,45 @@ public class Booking {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking)) return false;
+        if (!super.equals(o)) return false;
+
+        Booking booking = (Booking) o;
+
+        if (persons != booking.persons) return false;
+        if (days != booking.days) return false;
+        if (!Objects.equals(user, booking.user)) return false;
+        if (!Objects.equals(room, booking.room)) return false;
+        if (!Objects.equals(arrival, booking.arrival)) return false;
+        if (!Objects.equals(departure, booking.departure)) return false;
+        if (!Objects.equals(food, booking.food)) return false;
+        if (!Objects.equals(services, booking.services)) return false;
+        if (!Objects.equals(amount, booking.amount)) return false;
+        return Objects.equals(status, booking.status);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (room != null ? room.hashCode() : 0);
+        result = 31 * result + persons;
+        result = 31 * result + (arrival != null ? arrival.hashCode() : 0);
+        result = 31 * result + (departure != null ? departure.hashCode() : 0);
+        result = 31 * result + days;
+        result = 31 * result + (food != null ? food.hashCode() : 0);
+        result = 31 * result + (services != null ? services.hashCode() : 0);
+        result = 31 * result + (amount != null ? amount.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return new StringJoiner(", ", Booking.class.getSimpleName() + "[", "]")
-                .add("number=" + number)
+                .add("number=" + id)
                 .add("user=" + user)
                 .add("room=" + room)
                 .add("persons=" + persons)

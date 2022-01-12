@@ -1,8 +1,8 @@
 package by.rozmysl.bookingServlet.controller.filter;
 
+import by.rozmysl.bookingServlet.controller.security.SecurityUtil;
 import by.rozmysl.bookingServlet.model.entity.user.User;
-import by.rozmysl.bookingServlet.controller.util.AppUtils;
-import by.rozmysl.bookingServlet.controller.security.SecurityUtils;
+import by.rozmysl.bookingServlet.controller.util.AppUtil;
 import by.rozmysl.bookingServlet.controller.security.UserRoleRequestWrapper;
 
 import java.io.IOException;
@@ -24,6 +24,8 @@ import static by.rozmysl.bookingServlet.controller.command.PageAddress.ACCESS_DE
  */
 @WebFilter(urlPatterns = {"/*"})
 public class SecurityFilter implements Filter {
+    private static final String LOGIN = "/login";
+    private static final String PAGE_REDIRECT = "/anonymous/login?redirectId=";
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -34,22 +36,24 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        User loggedUser = AppUtils.getLoggedUser(request.getSession());
-        if (request.getServletPath().equals("/login") && loggedUser == null) {
+        User loggedUser = AppUtil.getLoggedUser(request.getSession());
+        if (request.getServletPath().equals(LOGIN) && loggedUser == null) {
             chain.doFilter(request, response);
             return;
         }
+
         HttpServletRequest wrapRequest = request;
         if (loggedUser != null) {
-            wrapRequest = new UserRoleRequestWrapper(loggedUser.getUsername(), loggedUser.getRoles(), request);
+            wrapRequest = new UserRoleRequestWrapper(loggedUser.getId(), loggedUser.getRoles(), request);
         }
-        if (SecurityUtils.isSecurityPage(request)) {
+
+        if (SecurityUtil.isSecurityPage(request)) {
             if (loggedUser == null) {
-                int redirectId = AppUtils.saveRedirectAfterLoginUrl(request.getRequestURI());
-                response.sendRedirect(wrapRequest.getContextPath() + "/anonymous/login?redirectId=" + redirectId);
+                int redirectId = AppUtil.saveRedirectAfterLoginUrl(request.getRequestURI());
+                response.sendRedirect(wrapRequest.getContextPath() + PAGE_REDIRECT + redirectId);
                 return;
             }
-            if (!SecurityUtils.hasPermission(wrapRequest)) {
+            if (!SecurityUtil.hasPermission(wrapRequest)) {
                 request.getServletContext().getRequestDispatcher(ACCESS_DENIED).forward(request, response);
                 return;
             }

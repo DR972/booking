@@ -20,20 +20,29 @@ public class MainController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Process GET or POST request. Invoke action class.
-     *
-     * @param req  request content
-     * @param resp response content
-     * @throws ServletException if action cannot execute
-     * @throws IOException      if action cannot execute
-     */
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Command command = CommandType.chooseCommandType(req.getPathInfo()).getAction();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
+
+    /**
+     * Process GET or POST request. Invoke command.
+     *
+     * @param req  request
+     * @param resp response
+     * @throws ServletException if servlet exception occurred
+     * @throws IOException      if IO exception occurred
+     */
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Command command = CommandType.valueOf(CommandType.convert(req.getPathInfo())).getAction();
         try {
             PageGuide pageGuide = command.execute(req);
-            if (TransferMethod.FORWARD.equals(pageGuide.getTransferMethod())) {
+            if (TransferMethod.FORWARD == pageGuide.getTransferMethod()) {
                 req.getRequestDispatcher(pageGuide.getPageAddress()).forward(req, resp);
             } else {
                 resp.sendRedirect(pageGuide.getPageAddress());

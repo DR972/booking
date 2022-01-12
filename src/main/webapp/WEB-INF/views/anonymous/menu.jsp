@@ -6,6 +6,17 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.mainPage" var="mainPage"/>
+<fmt:message bundle="${msg}" key="page.book" var="book"/>
+<fmt:message bundle="${msg}" key="page.prices" var="prices"/>
+<fmt:message bundle="${msg}" key="page.adminPage" var="adminPage"/>
+<fmt:message bundle="${msg}" key="page.userPage" var="userPage"/>
+<fmt:message bundle="${msg}" key="page.photo" var="photo"/>
+<fmt:message bundle="${msg}" key="page.contacts" var="contacts"/>
+<fmt:message bundle="${msg}" key="page.logIn" var="logIn"/>
+<fmt:message bundle="${msg}" key="page.registration" var="registration"/>
+<fmt:message bundle="${msg}" key="page.logOut" var="logOut"/>
+
 <!DOCTYPE HTML>
 <html lang="${language}">
 <head>
@@ -17,26 +28,26 @@
     <div class="menu" id="menu">
 	    <table style="width: 100%;">
 		    <tr align = "center">
-			    <td><a href="/"><fmt:message bundle="${msg}" key="page.mainPage"/></a></td>
-			    <td><a href="/user/bookingDetails"><fmt:message bundle="${msg}" key="page.book"/></a></td>
-			    <td><a href="/anonymous/price"><fmt:message bundle="${msg}" key="page.prices"/></a></td>
+			    <td><a href="/">${mainPage}</a></td>
+			    <td><a href="/user/bookingDetails">${book}</a></td>
+			    <td><a href="/anonymous/price">${prices}</a></td>
 			    <c:if test = "${pageContext.request.isUserInRole('ADMIN')}">
-                    <td><a href="/admin/admin"><fmt:message bundle="${msg}" key="page.adminPage"/></a></td>
+                    <td><a href="/admin/admin">${adminPage}</a></td>
                 </c:if>
                 <c:if test = "${pageContext.request.isUserInRole('USER')}">
-                    <td><a href="/user/user"><fmt:message bundle="${msg}" key="page.userPage"/></a></td>
+                    <td><a href="/user/user">${userPage}</a></td>
                 </c:if>
-			    <td><a href="#"><fmt:message bundle="${msg}" key="page.photo"/></a></td>
-			    <td><a href="#"><fmt:message bundle="${msg}" key="page.contacts"/></a></td>
-			    <c:if test = "${loggedUser.username == null}">
-                    <td><a href="/anonymous/login"><fmt:message bundle="${msg}" key="page.logIn"/></a></td>
-                    <td><a href="/anonymous/registration"><fmt:message bundle="${msg}" key="page.registration"/></a></td>
+			    <td><a href="#">${photo}</a></td>
+			    <td><a href="#">${contacts}</a></td>
+			    <c:if test = "${loggedUser.id == null}">
+                    <td><a href="/anonymous/login">${logIn}</a></td>
+                    <td><a href="/anonymous/registration">${registration}</a></td>
                 </c:if>
-			    <c:if test = "${loggedUser.username != null}">
-                    <td><a href="/anonymous/logout"><fmt:message bundle="${msg}" key="page.logOut"/></a></td>
+			    <c:if test = "${loggedUser.id != null}">
+                    <td><a href="/anonymous/logout">${logOut}</a></td>
                 </c:if>
                 <td><a href="?language=en">en</a><a href="?language=ru">ru</a></td>
-			    <td><a style="color:red">${loggedUser.username}</a></td>
+			    <td><a style="color:red">${loggedUser.id}</a></td>
 		    </tr>
 	    </table>
 </body>

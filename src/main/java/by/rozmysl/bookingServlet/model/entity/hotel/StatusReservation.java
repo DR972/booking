@@ -1,5 +1,7 @@
 package by.rozmysl.bookingServlet.model.entity.hotel;
 
+import java.util.StringJoiner;
+
 /**
  * It is used to store Status Booking objects with the <b>status</b> properties.
  */
@@ -36,5 +38,12 @@ public enum StatusReservation {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", StatusReservation.class.getSimpleName() + "[", "]")
+                .add("status='" + status + "'")
+                .toString();
     }
 }

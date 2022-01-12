@@ -21,13 +21,13 @@
                 <tr>
                     <td>С: </td>
                     <td align = "center"> ${from}
-                        <td align = "center"><input type="date" name="from" required></input></td>
+                        <td align = "center"><input type="date" name="from" required pattern = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"/></td>
                     </td>
                 </tr>
                 <tr>
                     <td>по: </td>
                     <td align = "center"> ${to}
-                        <td align = "center"><input type="date" name="to" required></input></td>
+                        <td align = "center"><input type="date" name="to" required pattern = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])"/></td>
                     </td>
                 </tr>
             </table><br/>
@@ -48,7 +48,7 @@
                 <form action="freeRooms" method="POST">
                     <c:forEach items="${freeRooms}" var="room">
                         <tr>
-                            <td>${room.roomNumber}</td>
+                            <td>${room.id}</td>
                             <td>${room.type}</td>
                             <td>${room.sleeps}</td>
                             <td><ctg:money value="${room.price}"/></td>

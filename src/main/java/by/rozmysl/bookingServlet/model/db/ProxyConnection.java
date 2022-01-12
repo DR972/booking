@@ -29,7 +29,7 @@ public class ProxyConnection implements Connection {
      *
      * @throws SQLException if can't close connection
      */
-    void trueClose() throws SQLException {
+    void reallyClose() throws SQLException {
         connection.close();
     }
 

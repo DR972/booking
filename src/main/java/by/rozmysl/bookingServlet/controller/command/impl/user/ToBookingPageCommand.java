@@ -1,7 +1,6 @@
 package by.rozmysl.bookingServlet.controller.command.impl.user;
 
 import by.rozmysl.bookingServlet.controller.command.*;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.entity.hotel.Room;
 import by.rozmysl.bookingServlet.model.entity.user.Booking;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,35 +34,35 @@ public class ToBookingPageCommand implements Command {
     @Override
     public PageGuide execute(HttpServletRequest req) throws ServiceException {
         ServiceFactory service = ServiceFactory.getInstance();
-        final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
-        try {
-            RoomService roomService = service.roomService(connection);
-            Booking booking = new Booking(Integer.parseInt(req.getParameter(RequestParameter.PERSONS)), LocalDate.parse(req.getParameter(ARRIVAL)),
-                    LocalDate.parse(req.getParameter(ARRIVAL)).plusDays(Integer.parseInt(req.getParameter(DAYS))),
-                    Integer.parseInt(req.getParameter(DAYS)), service.foodService(connection).findById(req.getParameter(FOOD)),
-                    service.servicesService(connection).findById(req.getParameter(SERVICE)));
-            Room room = roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER)));
-            List<Room> suitableRooms = roomService.findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(booking.getArrival(),
-                    booking.getDeparture(), room.getType(), room.getSleeps());
-            if (suitableRooms.size() == 0) {
-                req.setAttribute(BOOKING, booking);
-                req.setAttribute(MISSED, MESSAGE_MISSED);
-                if (roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                        (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
-                    req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
-                }
-                ConnectionPool.getInstance().returnConnectionToPool(connection);
-                return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
-            } else {
-                booking.setRoom(suitableRooms.get(0));
-                booking.setUser(service.userService(connection).findById(req.getUserPrincipal().getName()));
-                req.setAttribute(BOOKING, service.bookingService(connection).save(booking));
-                LOGGER.info("The booking was made by the user - " + booking.getUser().getUsername());
-                ConnectionPool.getInstance().returnConnectionToPool(connection);
-                return new PageGuide(PageAddress.CONFIRMATION, TransferMethod.FORWARD);
+        RoomService roomService = service.getRoomService();
+
+        int days = Integer.parseInt(req.getParameter(DAYS));
+        Booking booking = new Booking(
+                Integer.parseInt(req.getParameter(PERSONS)),
+                LocalDate.parse(req.getParameter(ARRIVAL)),
+                LocalDate.parse(req.getParameter(ARRIVAL)).plusDays(days),
+                days,
+                service.getFoodService().findById(req.getParameter(FOOD)),
+                service.getServicesService().findById(req.getParameter(SERVICE)));
+
+        Room room = roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER)));
+        List<Room> suitableRooms = roomService.findAllFreeRoomsBetweenTwoDatesByTypesAndSleeps(booking.getArrival(),
+                booking.getDeparture(), room.getType(), room.getSleeps());
+        if (suitableRooms.size() == 0) {
+            req.setAttribute(BOOKING, booking);
+            req.setAttribute(MISSED, MESSAGE_MISSED);
+            if (roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                    (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
+                req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
             }
-        } finally {
-            ConnectionPool.getInstance().returnConnectionToPool(connection);
+            return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
+        } else {
+            booking.setRoom(suitableRooms.get(0));
+            booking.setUser(service.getUserService().findById(req.getUserPrincipal().getName()));
+            service.getBookingService().save(booking);
+            req.setAttribute(BOOKING, booking);
+            LOGGER.info("The booking was made by the user - " + booking.getUser().getId());
+            return new PageGuide(PageAddress.CONFIRMATION, TransferMethod.FORWARD);
         }
     }
 }

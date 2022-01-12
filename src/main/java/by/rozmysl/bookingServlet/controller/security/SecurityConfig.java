@@ -10,14 +10,20 @@ import java.util.Set;
  * Defines the security configuration of the application.
  */
 public final class SecurityConfig {
-    public static final String ROLE_ADMIN = "ADMIN";
-    public static final String ROLE_USER = "USER";
+    private static final String ROLE_ADMIN = "ADMIN";
+    private static final String ROLE_USER = "USER";
+    private static final String PATTERNS_ADMIN = "/admin/*";
+    private static final String PATTERNS_USER = "/user/*";
     private static final Map<String, List<String>> mapConfig = new HashMap<>();
 
     static {
         init();
     }
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private SecurityConfig() {
     }
 
@@ -26,10 +32,10 @@ public final class SecurityConfig {
      */
     private static void init() {
         List<String> urlPatternsUSER = new ArrayList<>();
-        urlPatternsUSER.add("/user/*");
+        urlPatternsUSER.add(PATTERNS_USER);
         mapConfig.put(ROLE_USER, urlPatternsUSER);
         List<String> urlPatternsADMIN = new ArrayList<>();
-        urlPatternsADMIN.add("/admin/*");
+        urlPatternsADMIN.add(PATTERNS_ADMIN);
         mapConfig.put(ROLE_ADMIN, urlPatternsADMIN);
     }
 

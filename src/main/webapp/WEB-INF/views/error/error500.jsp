@@ -4,6 +4,7 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
+<fmt:message bundle="${msg}" key="error.error" var="error"/>
 
 <!DOCTYPE HTML>
 <html lang="${language}">
@@ -15,7 +16,7 @@
 <body>
     <jsp:include page="/WEB-INF/views/anonymous/menu.jsp"></jsp:include>
     <div id="content">
-        <h3><fmt:message bundle="${msg}" key="error.error"/></h3>
+        <h3>${error}</h3>
         <strong>Status Code</strong>: ${code}<br/>
         <strong>Servlet Name</strong>: ${servletName}<br/>
         <strong>Exception Name</strong>: ${name}<br/>

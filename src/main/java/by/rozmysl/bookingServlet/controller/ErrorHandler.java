@@ -45,10 +45,14 @@ public class ErrorHandler extends HttpServlet {
         Throwable throwable = (Throwable) req.getAttribute(JAVAX_SERVLET_ERROR_EXCEPTION);
         Integer statusCode = (Integer) req.getAttribute(JAVAX_SERVLET_ERROR_STATUS_CODE);
         String servletName = (String) req.getAttribute(JAVAX_SERVLET_ERROR_SERVLET_NAME);
-        if (servletName == null) servletName = UNKNOWN;
+
+        if (servletName == null) {
+            servletName = UNKNOWN;
+        }
         String requestUri = (String) req.getAttribute(JAVAX_SERVLET_ERROR_REQUEST_URI);
         req.setAttribute(CODE, statusCode);
         req.setAttribute(URI, requestUri);
+
         if (statusCode != 500) {
             LOGGER.error("Status: " + statusCode + ", uri: " + requestUri);
             getServletContext().getRequestDispatcher(PageAddress.ERROR).forward(req, resp);

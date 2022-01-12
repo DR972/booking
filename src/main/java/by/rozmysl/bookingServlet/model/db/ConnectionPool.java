@@ -132,6 +132,7 @@ public class ConnectionPool {
             try {
                 if (instance != null) {
                     clearConnectionQueue(availableConnections);
+                    clearConnectionQueue(busyConnections);
                     deregisterDriver();
                 } else {
                     LOGGER.error("Attempt to destroy not initialized connection pool instance.");
@@ -159,11 +160,14 @@ public class ConnectionPool {
         ProxyConnection connection;
         while ((connection = connectionQueue.poll()) != null) {
             if (!connection.isClosed()) {
-                connection.trueClose();
+                connection.reallyClose();
             }
         }
     }
 
+    /**
+     * Deregistering a Database Driver.
+     */
     private void deregisterDriver() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {

@@ -7,6 +7,13 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.prices" var="prices"/>
+<fmt:message bundle="${msg}" key="book.room.type" var="room"/>
+<fmt:message bundle="${msg}" key="book.sleeps" var="sleeps"/>
+<fmt:message bundle="${msg}" key="book.price" var="price"/>
+<fmt:message bundle="${msg}" key="book.food" var="food"/>
+<fmt:message bundle="${msg}" key="book.service" var="service"/>
+
 <!DOCTYPE html>
 <html lang="${language}">
 <head>
@@ -18,13 +25,13 @@
 <body>
     <jsp:include page="menu.jsp"></jsp:include>
     <div id="content">
-        <h3><fmt:message bundle="${msg}" key="page.prices"/></h3>
-        <h3><fmt:message bundle="${msg}" key="book.room.type"/></h3>
+        <h3>${prices}</h3>
+        <h3>${room}</h3>
         <table>
             <thead>
-                <th><fmt:message bundle="${msg}" key="book.room.type"/></th>
-                <th><fmt:message bundle="${msg}" key="book.sleeps"/></th>
-                <th><fmt:message bundle="${msg}" key="book.price"/></th>
+                <th>${room}</th>
+                <th>${sleeps}</th>
+                <th>${price}</th>
             </thead>
             <c:forEach items="${allRoomsByTypesAndSleeps}" var="room">
                 <tr>
@@ -34,28 +41,28 @@
                 </tr>
             </c:forEach>
         </table>
-        <h3><fmt:message bundle="${msg}" key="book.food"/></h3>
+        <h3>${food}</h3>
         <table>
             <thead>
-                <th><fmt:message bundle="${msg}" key="book.food"/></th>
-                <th><fmt:message bundle="${msg}" key="book.price"/></th>
+                <th>${food}</th>
+                <th>${price}</th>
             </thead>
             <c:forEach items="${allFood}" begin="1" var="food">
                 <tr>
-                    <td><fmt:message bundle="${msg}" key="db.${food.type}"/></td>
+                    <td><fmt:message bundle="${msg}" key="db.${food.id}"/></td>
                     <td><ctg:money value="${food.price}"/></td>
                 </tr>
             </c:forEach>
         </table>
-        <h3><fmt:message bundle="${msg}" key="book.service"/></h3>
+        <h3>${service}</h3>
         <table class="style" id="content">
             <thead>
-                <th><fmt:message bundle="${msg}" key="book.service"/></th>
-                <th><fmt:message bundle="${msg}" key="book.price"/></th>
+                <th>${service}</th>
+                <th>${price}</th>
             </thead>
             <c:forEach items="${allServices}" begin="1" var="service">
                 <tr>
-                    <td><fmt:message bundle="${msg}" key="db.${service.type}"/></td>
+                    <td><fmt:message bundle="${msg}" key="db.${service.id}"/></td>
                     <td><ctg:money value="${service.price}"/></td>
                 </tr>
             </c:forEach>

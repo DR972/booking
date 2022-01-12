@@ -10,7 +10,7 @@
 <body>
     <jsp:include page="adminMenu.jsp"></jsp:include>
     <div id="content" align="center">
-        <h3>Привет, ${loggedUser.username}<h3>
+        <h3>Привет, ${loggedUser.id}<h3>
     </div>
 </body>
 </html>

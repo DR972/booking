@@ -6,6 +6,16 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.mainPage" var="mainPage"/>
+<fmt:message bundle="${msg}" key="page.book" var="book"/>
+<fmt:message bundle="${msg}" key="page.userPage" var="userPage"/>
+<fmt:message bundle="${msg}" key="page.prices" var="prices"/>
+<fmt:message bundle="${msg}" key="page.userBookings" var="userBookings"/>
+<fmt:message bundle="${msg}" key="page.photo" var="photo"/>
+<fmt:message bundle="${msg}" key="page.prices" var="prices"/>
+<fmt:message bundle="${msg}" key="page.contacts" var="contacts"/>
+<fmt:message bundle="${msg}" key="page.logOut" var="logOut"/>
+
 <!DOCTYPE HTML>
 <html lang="${language}">
 <head>
@@ -17,16 +27,17 @@
     <div class="menu" id="menu">
 	    <table style="width: 100%;">
 		    <tr align = "center">
-			    <td><a href="/"><fmt:message bundle="${msg}" key="page.mainPage"/></a></td>
-			    <td><a href="/user/bookingDetails"><fmt:message bundle="${msg}" key="page.book"/></a></td>
-			    <td><a href="/anonymous/price"><fmt:message bundle="${msg}" key="page.prices"/></a></td>
-			    <td><a href="/user/user"><fmt:message bundle="${msg}" key="page.userPage"/></a></td>
-                <td><a href="/user/userBookings"><fmt:message bundle="${msg}" key="page.userBookings"/></a></td>
-			    <td><a href="#"><fmt:message bundle="${msg}" key="page.photo"/></a></td>
-			    <td><a href="#"><fmt:message bundle="${msg}" key="page.contacts"/></a></td>
-                <td><a href="/anonymous/logout"><fmt:message bundle="${msg}" key="page.logOut"/></a></td>
+			    <td><a href="/">${mainPage}</a></td>
+			    <td><a href="/user/bookingDetails">${book}</a></td>
+			    <td><a href="/anonymous/price">${prices}</a></td>
+			    <td><a href="/user/user">${userPage}</a></td>
+			    <td><a href="/anonymous/price">${prices}</a></td>
+                <td><a href="/user/userBookings">${userBookings}</a></td>
+			    <td><a href="#">${photo}</a></td>
+			    <td><a href="#">${contacts}</a></td>
+                <td><a href="/anonymous/logout">${logOut}</a></td>
                 <td><a href="?language=en">en</a><a href="?language=ru">ru</a></td>
-			    <td><a style="color:red">${loggedUser.username}</a></td>
+			    <td><a style="color:red">${loggedUser.id}</a></td>
 		    </tr>
 	    </table>
     </div>

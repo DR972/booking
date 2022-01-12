@@ -1,5 +1,8 @@
 package by.rozmysl.bookingServlet.controller.command;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
 /**
  * Represents a method for servlet to go to some page.
  */
@@ -8,7 +11,7 @@ public enum TransferMethod {
     /**
      * Says to use forward() method.
      *
-   //  * @see javax.servlet.RequestDispatcher#forward(ServletRequest, ServletResponse)
+     * @see javax.servlet.RequestDispatcher#forward(ServletRequest, ServletResponse)
      */
     FORWARD,
     /**
