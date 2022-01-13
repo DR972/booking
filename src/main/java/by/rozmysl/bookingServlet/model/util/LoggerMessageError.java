@@ -1,15 +1,15 @@
-package by.rozmysl.bookingServlet.model;
+package by.rozmysl.bookingServlet.model.util;
 
 /**
  * Stores logger message.
  */
-public final class LoggerMessage {
+public final class LoggerMessageError {
 
     /**
      * Private constructor without parameters.
      * Restrict instantiation of the class.
      */
-    private LoggerMessage() {
+    private LoggerMessageError() {
     }
 
     /* TABLE USER */
@@ -24,9 +24,6 @@ public final class LoggerMessage {
     public static final String MESSAGE_USER_CHANGE_ACCOUNT_LOCK = "'changeAccountLock' query has been failed";
 
     /* TABLE USER_ROLE */
-    //public static final String MESSAGE_USER_ROLE_FIND_BY_ID = "'UserRole findById' query has been failed";
-    //public static final String MESSAGE_USER_ROLE_FIND_BY_USER = "'FindUserRoleByUser' query has been failed";
-    //public static final String MESSAGE_USER_ROLE_FIND_ALL = "'UserRole findAll' query has been failed";
     public static final String MESSAGE_USER_ROLE_SAVE = "'UserRole save' query has been failed";
     public static final String MESSAGE_USER_ROLE_DELETE = "'UserRole delete' query has been failed";
     public static final String MESSAGE_USER_ROLE_DELETE_ADMIN = "'UserRole delete ADMIN' query has been failed";

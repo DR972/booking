@@ -3,7 +3,6 @@ package by.rozmysl.bookingServlet.model.dao;
 import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.Entity;
-import by.rozmysl.bookingServlet.model.entity.hotel.Room;
 
 import java.util.List;
 
@@ -19,51 +18,47 @@ public interface Dao<T extends Entity<ID>, ID> {
      *
      * @param connection connection
      */
-    void setConnection(ProxyConnection  connection);
+    void setConnection(ProxyConnection connection);
 
-    T findEntity(String sql, String message, Object ... params) throws DaoException;
+    /**
+     * Searches for the object T in the table 'T' by various parameters.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage errorMessage in case of an error
+     * @param params       Object parameters
+     * @return T object
+     * @throws DaoException if there was an error accessing the database
+     */
+    T findEntity(String sql, String errorMessage, Object... params) throws DaoException;
 
-    List<T> findListEntities(String sql, String message, Object ... params) throws DaoException;
+    /**
+     * Searches for all T objects in the `T` by various parameters.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage message in case of an error
+     * @param params       Object parameters
+     * @return list of T objects
+     * @throws DaoException if there was an error accessing the database
+     */
+    List<T> findListEntities(String sql, String errorMessage, Object... params) throws DaoException;
 
-    void updateEntity(String sql, String message, Object ... params) throws DaoException;
+    /**
+     * Performs various operations (save, update, delete) on the object T in the table 'T`.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage message in case of an error
+     * @param params       Object parameters
+     * @throws DaoException if there was an error accessing the database
+     */
+    void updateEntity(String sql, String errorMessage, Object... params) throws DaoException;
 
-    int countEntitiesRows(String sql, String message) throws DaoException;
-
-//
-//    /**
-//     * Searches for the T object in the `T` table by id
-//     *
-//     * @param id of the T object
-//     * @return T object
-//     * @throws DaoException if there was an error accessing the database
-//     */
-//    T findById(ID id) throws DaoException;
-
-//    /**
-//     * Searches for all T objects in the `T` table
-//     *
-//     * @param pageNumber number of the pageNumber to return
-//     * @param rows       number of rows per pageNumber
-//     * @return list of T objects
-//     * @throws DaoException if there was an error accessing the database
-//     */
-//    List<T> findAll(int pageNumber, int rows) throws DaoException;
-
-
-
-//    /**
-//     * Saves the T object in the `T` table
-//     *
-//     * @param t id of the T object
-//     * @throws DaoException if there was an error accessing the database
-//     */
-//    void save(T t) throws DaoException;
-//
-//    /**
-//     * Deletes the T object in the `T` table
-//     *
-//     * @param id id of the T object
-//     * @throws DaoException if there was an error accessing the database
-//     */
-//    void delete(ID id) throws DaoException;
+    /**
+     * Gets the number of rows in the database.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage message in case of an error
+     * @return number of rows
+     * @throws DaoException if there was an error accessing the database
+     */
+    int countNumberEntityRows(String sql, String errorMessage) throws DaoException;
 }

@@ -138,8 +138,8 @@ public class ConnectionPool {
                     LOGGER.error("Attempt to destroy not initialized connection pool instance.");
                 }
                 instance = null;
-                LOGGER.error("Connection pool destroyed successfully.");
-            } catch (SQLException e) {
+                LOGGER.info("Connection pool destroyed successfully.");
+            } catch (InterruptedException | SQLException e) {
                 LOGGER.error("Can't destroy connection pool.", e);
                 throw new RuntimeException();
             } finally {
@@ -154,15 +154,19 @@ public class ConnectionPool {
      * Clears connection queue and closes connections.
      *
      * @param connectionQueue connection queue
+     * @throws InterruptedException if can't close the connection
      * @throws SQLException if can't close the connection
      */
-    private void clearConnectionQueue(BlockingQueue<ProxyConnection> connectionQueue) throws SQLException {
-        ProxyConnection connection;
-        while ((connection = connectionQueue.poll()) != null) {
-            if (!connection.isClosed()) {
-                connection.reallyClose();
-            }
+    private void clearConnectionQueue(BlockingQueue<ProxyConnection> connectionQueue) throws SQLException, InterruptedException {
+        while (!connectionQueue.isEmpty()) {
+            connectionQueue.take().reallyClose();
         }
+//        ProxyConnection connection;
+//        while ((connection = connectionQueue.poll()) != null) {
+//            if (!connection.isClosed()) {
+//                connection.reallyClose();
+//            }
+//        }
     }
 
     /**

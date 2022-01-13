@@ -3,9 +3,16 @@ package by.rozmysl.bookingServlet.model.service;
 import by.rozmysl.bookingServlet.exception.MailException;
 import by.rozmysl.bookingServlet.model.service.impl.*;
 
+/**
+ * Provides class ServiceFactory.
+ */
 public final class ServiceFactory {
     private static ServiceFactory service;
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private ServiceFactory() {
     }
 

@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.controller.command.impl.admin;
 
 import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.RoomService;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
@@ -26,23 +27,28 @@ public class GetAllRoomsCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the service
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         RoomService roomService = ServiceFactory.getInstance().getRoomService();
 
-        if (req.getParameter(CHANGE_ROOM_PRICE) != null && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
-            roomService.updatePrice(roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER))), new BigDecimal(req.getParameter(PRICE)));
-            LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +
-                    req.getParameter(PRICE) + "' by admin " + req.getUserPrincipal().getName());
-        }
-        if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
-            roomService.delete(Integer.parseInt(req.getParameter(ROOM_NUMBER)));
-            LOGGER.info("Room # " + req.getParameter(ROOM_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
-        }
+        try {
+            if (req.getParameter(CHANGE_ROOM_PRICE) != null && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
+                roomService.updatePrice(roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER))), new BigDecimal(req.getParameter(PRICE)));
+                LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +
+                        req.getParameter(PRICE) + "' by admin " + req.getUserPrincipal().getName());
+            }
+            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+                roomService.delete(Integer.parseInt(req.getParameter(ROOM_NUMBER)));
+                LOGGER.info("Room # " + req.getParameter(ROOM_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
+            }
 
-        req.setAttribute(ALL_ROOMS, roomService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_ROOMS, roomService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
+        }
         return new PageGuide(PageAddress.ALL_ROOMS, TransferMethod.FORWARD);
     }
 }

@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.controller.command.impl.admin;
 
 import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.RoomService;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
@@ -28,30 +29,36 @@ public class ChangeRoomParametersCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the database
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         RoomService roomService = ServiceFactory.getInstance().getRoomService();
+        try {
+            if (req.getParameter(CHANGE_PARAMETERS) != null
+                    && req.getParameter(CHANGE_PARAMETERS).equals(CHANGE_PARAMETERS)) {
 
-        if (req.getParameter(CHANGE_PARAMETERS) != null
-                && req.getParameter(CHANGE_PARAMETERS).equals(CHANGE_PARAMETERS)) {
-            roomService.updateParameters(Integer.parseInt(req.getParameter(ROOM_NUMBER)),
-                    roomService.findById(Integer.parseInt(req.getParameter(PARAMETER))));
-            LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the parameters were changed to '" +
-                    req.getParameter(PARAMETER) + "' by admin " + req.getUserPrincipal().getName());
+                roomService.updateParameters(Integer.parseInt(req.getParameter(ROOM_NUMBER)),
+                        roomService.findById(Integer.parseInt(req.getParameter(PARAMETER))));
+
+                LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the parameters were changed to '" +
+                        req.getParameter(PARAMETER) + "' by admin " + req.getUserPrincipal().getName());
+            }
+
+            if (req.getParameter(CHANGE_ROOM_PRICE) != null
+                    && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
+                roomService.updatePrice(roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER))),
+                        new BigDecimal(req.getParameter(PRICE)));
+                LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +
+                        req.getParameter(PRICE) + "' by admin " + req.getUserPrincipal().getName());
+            }
+
+            req.setAttribute(ALL_ROOMS, roomService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_ROOMS_BY_TYPES_AND_SLEEPS, roomService.findAllRoomsByTypesAndSleeps());
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
         }
-
-        if (req.getParameter(CHANGE_ROOM_PRICE) != null
-                && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
-            roomService.updatePrice(roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER))),
-                    new BigDecimal(req.getParameter(PRICE)));
-            LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +
-                    req.getParameter(PRICE) + "' by admin " + req.getUserPrincipal().getName());
-        }
-
-        req.setAttribute(ALL_ROOMS, roomService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
-        req.setAttribute(ALL_ROOMS_BY_TYPES_AND_SLEEPS, roomService.findAllRoomsByTypesAndSleeps());
         return new PageGuide(PageAddress.CHANGE_ROOM_PARAMETERS, TransferMethod.FORWARD);
     }
 }

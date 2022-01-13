@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.controller.command.impl.admin;
 
 import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.AdditionalServicesService;
 import by.rozmysl.bookingServlet.model.service.FoodService;
@@ -27,30 +28,35 @@ public class ChangeServicesPriceCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the service
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         FoodService foodService = service.getFoodService();
         AdditionalServicesService servicesService = service.getServicesService();
 
-        if (req.getParameter(CHANGE_FOOD_PRICE) != null
-                && req.getParameter(CHANGE_FOOD_PRICE).equals(CHANGE_FOOD_PRICE)) {
-            foodService.changeFoodPrice(req.getParameter(FOOD_TYPE), new BigDecimal(req.getParameter(FOOD_PRICE)));
-            LOGGER.info("For food '" + req.getParameter(FOOD_TYPE) + "', the price was changed to '" +
-                    req.getParameter(FOOD_PRICE) + "' by admin " + req.getUserPrincipal().getName());
-        }
+        try {
+            if (req.getParameter(CHANGE_FOOD_PRICE) != null
+                    && req.getParameter(CHANGE_FOOD_PRICE).equals(CHANGE_FOOD_PRICE)) {
+                foodService.changeFoodPrice(req.getParameter(FOOD_TYPE), new BigDecimal(req.getParameter(FOOD_PRICE)));
+                LOGGER.info("For food '" + req.getParameter(FOOD_TYPE) + "', the price was changed to '" +
+                        req.getParameter(FOOD_PRICE) + "' by admin " + req.getUserPrincipal().getName());
+            }
 
-        if (req.getParameter(CHANGE_SERVICES_PRICE) != null
-                && req.getParameter(CHANGE_SERVICES_PRICE).equals(CHANGE_SERVICES_PRICE)) {
-            servicesService.changeServicePrice(req.getParameter(SERVICE_TYPE), new BigDecimal(req.getParameter(SERVICE_PRICE)));
-            LOGGER.info("For service '" + req.getParameter(SERVICE_TYPE) + "', the price was changed to '" +
-                    req.getParameter(SERVICE_PRICE) + "' by admin " + req.getUserPrincipal().getName());
-        }
+            if (req.getParameter(CHANGE_SERVICES_PRICE) != null
+                    && req.getParameter(CHANGE_SERVICES_PRICE).equals(CHANGE_SERVICES_PRICE)) {
+                servicesService.changeServicePrice(req.getParameter(SERVICE_TYPE), new BigDecimal(req.getParameter(SERVICE_PRICE)));
+                LOGGER.info("For service '" + req.getParameter(SERVICE_TYPE) + "', the price was changed to '" +
+                        req.getParameter(SERVICE_PRICE) + "' by admin " + req.getUserPrincipal().getName());
+            }
 
-        req.setAttribute(ALL_FOOD, foodService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
-        req.setAttribute(ALL_SERVICES, servicesService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_FOOD, foodService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_SERVICES, servicesService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
+        }
         return new PageGuide(PageAddress.CHANGE_SERVICES_PRICE, TransferMethod.FORWARD);
     }
 }

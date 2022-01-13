@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.controller.command.impl.admin;
 
 import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.entity.hotel.Room;
 import by.rozmysl.bookingServlet.model.entity.hotel.StatusReservation;
@@ -31,46 +32,51 @@ public class GetAllBookingsCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the service
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         BookingService bookingService = service.getBookingService();
         RoomService roomService = service.getRoomService();
 
-        if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
-            bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
-            LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
-        }
+        try {
+            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+                bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
+                LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
+            }
 
-        if (req.getParameter(CHANGE_ROOM) != null && req.getParameter(CHANGE_ROOM).equals(CHANGE_ROOM)) {
-            System.out.println(req.getParameter(BOOKING_NUMBER));
-            System.out.println(req.getParameter(ROOM_NUMBER));
-            bookingService.changeRoom(Long.parseLong(req.getParameter(BOOKING_NUMBER)), Integer.parseInt(req.getParameter(ROOM_NUMBER)), service);
-            LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the room number was changed to " +
-                    req.getParameter(ROOM_NUMBER) + " by the admin " + req.getUserPrincipal().getName());
-        }
+            if (req.getParameter(CHANGE_ROOM) != null && req.getParameter(CHANGE_ROOM).equals(CHANGE_ROOM)) {
+                System.out.println(req.getParameter(BOOKING_NUMBER));
+                System.out.println(req.getParameter(ROOM_NUMBER));
+                bookingService.changeRoom(Long.parseLong(req.getParameter(BOOKING_NUMBER)), Integer.parseInt(req.getParameter(ROOM_NUMBER)), service);
+                LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the room number was changed to " +
+                        req.getParameter(ROOM_NUMBER) + " by the admin " + req.getUserPrincipal().getName());
+            }
 
-        if (req.getParameter(CHANGE_STATUS) != null && req.getParameter(CHANGE_STATUS).equals(CHANGE_STATUS)) {
-            bookingService.changeBookingStatus(Long.parseLong(req.getParameter(BOOKING_NUMBER)), req.getParameter(RequestParameter.STATUS), service);
-            LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the status was changed to '" +
-                    req.getParameter(RequestParameter.STATUS) + "'  by the admin " + req.getUserPrincipal().getName());
-        }
+            if (req.getParameter(CHANGE_STATUS) != null && req.getParameter(CHANGE_STATUS).equals(CHANGE_STATUS)) {
+                bookingService.changeBookingStatus(Long.parseLong(req.getParameter(BOOKING_NUMBER)), req.getParameter(RequestParameter.STATUS), service);
+                LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the status was changed to '" +
+                        req.getParameter(RequestParameter.STATUS) + "'  by the admin " + req.getUserPrincipal().getName());
+            }
 
-        int pageNumber = PageSelection.getPageNumber(req);
-        int rows = PageSelection.getRows(req);
-        req.setAttribute(RequestAttribute.COUNT_PAGES, bookingService.countBookingsPages(rows));
+            int pageNumber = PageSelection.getPageNumber(req);
+            int rows = PageSelection.getRows(req);
+            req.setAttribute(RequestAttribute.COUNT_PAGES, bookingService.countNumberBookingPages(rows));
 
-        List<Booking> allBookings = bookingService.findAll(pageNumber, rows);
-        Map<Long, List<Room>> availableRooms = new HashMap<>();
-        for (Booking booking : allBookings) {
-            availableRooms.put(booking.getId(), roomService.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                    (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+            List<Booking> allBookings = bookingService.findAll(pageNumber, rows);
+            Map<Long, List<Room>> availableRooms = new HashMap<>();
+            for (Booking booking : allBookings) {
+                availableRooms.put(booking.getId(), roomService.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
+                        (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+            }
+            req.setAttribute(AVAILABLE_ROOMS, availableRooms);
+            req.setAttribute(ALL_BOOKINGS, allBookings);
+            req.setAttribute(RequestAttribute.STATUS, StatusReservation.values());
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
         }
-        req.setAttribute(AVAILABLE_ROOMS, availableRooms);
-        req.setAttribute(ALL_BOOKINGS, allBookings);
-        req.setAttribute(RequestAttribute.STATUS, StatusReservation.values());
         return new PageGuide(PageAddress.ALL_BOOKINGS, TransferMethod.FORWARD);
     }
 }

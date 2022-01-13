@@ -21,43 +21,68 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-import static by.rozmysl.bookingServlet.model.LoggerMessage.*;
-import static by.rozmysl.bookingServlet.model.dao.SqlQuery.*;
+import static by.rozmysl.bookingServlet.model.util.LoggerMessageError.*;
+import static by.rozmysl.bookingServlet.model.util.SqlQuery.*;
 
+/**
+ * Provides logic for working with data sent to the `Booking` table DAO.
+ */
 public class BookingServiceImpl implements BookingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingServiceImpl.class);
-    public static final String MAIL_MESSAGE = "Счет во вложении";
-    public static final String ADDITIONALSERVICES_TYPE_TRANSFER = "трансфер";
-    public static final String ADDITIONALSERVICES_TYPE_PARKING = "стоянка";
+    private static final String MAIL_MESSAGE = "Счет во вложении";
+    private static final String ADDITIONALSERVICES_TYPE_TRANSFER = "трансфер";
+    private static final String ADDITIONALSERVICES_TYPE_PARKING = "стоянка";
 
     private final BookingDao bookingDao;
 
+    /**
+     * The constructor creates a new object BookingServiceImpl without property.
+     */
     public BookingServiceImpl() {
         bookingDao = DaoFactory.getInstance().getBookingDao();
     }
 
+    /**
+     * Provides logic for searching for a Booking object by id
+     *
+     * @param number id of the Booking object
+     * @return Booking object
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public Booking findById(Long number) throws ServiceException {
         try {
             return bookingDao.findEntity(BOOKING_FIND_BY_ID, MESSAGE_BOOKING_FIND_BY_ID, number);
-//            return bookingDao.findById(number);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_FIND_BY_ID, e);
             throw new ServiceException(MESSAGE_BOOKING_FIND_BY_ID, e);
         }
     }
 
+    /**
+     * Provides logic for searching for all Booking objects.
+     *
+     * @param pageNumber number of the page to return
+     * @param rows       number of rows per page
+     * @return list of Booking objects
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public List<Booking> findAll(int pageNumber, int rows) throws ServiceException {
         try {
             return bookingDao.findListEntities(BOOKING_FIND_ALL, MESSAGE_BOOKING_FIND_ALL, rows, pageNumber, rows);
-//            return bookingDao.findAll(pageNumber, rows);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_FIND_ALL, e);
             throw new ServiceException(MESSAGE_BOOKING_FIND_ALL, e);
         }
     }
 
+    /**
+     * Provides logic for saving the Booking in the `BOOKING` table
+     *
+     * @param booking Booking
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public void save(Booking booking) throws ServiceException {
         booking.setAmount(calculateAmount(booking));
@@ -74,65 +99,102 @@ public class BookingServiceImpl implements BookingService {
                     booking.getServices().getId(),
                     booking.getAmount(),
                     booking.getStatus());
-//            bookingDao.save(booking);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_SAVE, e);
             throw new ServiceException(MESSAGE_BOOKING_SAVE, e);
         }
     }
 
+    /**
+     * Provides logic for deleting the Booking in the `BOOKING` table
+     *
+     * @param number id of the Booking object
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public void delete(Long number) throws ServiceException {
         try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
             bookingDao.setConnection(connection);
             new Letter().deleteInvoice("src/main/resources/static/" + number + ".pdf");
             bookingDao.updateEntity(BOOKING_DELETE, MESSAGE_BOOKING_DELETE, number);
-//            bookingDao.delete(number);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_DELETE, e);
             throw new ServiceException(MESSAGE_BOOKING_DELETE, e);
         }
     }
 
+    /**
+     * Provides logic for counting the number of pages of all Booking objects.
+     *
+     * @param rows number of rows per page
+     * @return number of pages
+     * @throws ServiceException if the operation failed
+     */
     @Override
-    public int countBookingsPages(int rows) throws ServiceException {
+    public int countNumberBookingPages(int rows) throws ServiceException {
         try {
-            return (int) Math.ceil((float) bookingDao.countEntitiesRows(BOOKING_FIND_ROWS_COUNT, MESSAGE_COUNT_BOOKINGS_ROWS) / rows);
-            //return bookingDao.countBookingsPages(rows);
+            return (int) Math.ceil((float) bookingDao.countNumberEntityRows(BOOKING_FIND_ROWS_COUNT, MESSAGE_COUNT_BOOKINGS_ROWS) / rows);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_COUNT_BOOKINGS_PAGES, e);
             throw new ServiceException(MESSAGE_COUNT_BOOKINGS_PAGES, e);
         }
     }
 
+    /**
+     * Provides booking validation.
+     *
+     * @param booking Booking booking
+     * @return validation result
+     */
     @Override
     public String validateBooking(Booking booking) {
         return new BookingValidator().allValidate(booking);
     }
 
+    /**
+     * Provides logic for searching for all Bookings between two dates.
+     *
+     * @param arrival   arrival date
+     * @param departure departure date
+     * @return list of Booking objects
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public List<Booking> findAllBookingsBetweenTwoDates(LocalDate arrival, LocalDate departure) throws ServiceException {
         try {
             return bookingDao.findListEntities(BOOKING_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES,
                     MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES, departure, arrival);
-//            return bookingDao.findAllBookingsBetweenTwoDates(arrival, departure);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES, e);
             throw new ServiceException(MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES, e);
         }
     }
 
+    /**
+     * Provides logic for searching for all Bookings made by the username.
+     *
+     * @param username id of the User
+     * @return list of Booking objects
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public List<Booking> findAllBookingsByUser(String username) throws ServiceException {
         try {
             return bookingDao.findListEntities(BOOKING_FIND_ALL_BOOKINGS_BY_USER, MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BY_USER, username);
-//            return bookingDao.findAllBookingsByUser(username);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BY_USER, e);
             throw new ServiceException(MESSAGE_BOOKING_FIND_ALL_BOOKINGS_BY_USER, e);
         }
     }
 
+    /**
+     * Provides logic for changing the Room in the User's Booking.
+     *
+     * @param number     id of the Booking
+     * @param roomNumber id of the Room
+     * @param service    ServiceFactory service
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public void changeRoom(long number, int roomNumber, ServiceFactory service) throws ServiceException {
         Booking booking = getAllBookingInfo(number, service);
@@ -143,13 +205,20 @@ public class BookingServiceImpl implements BookingService {
                     roomNumber,
                     calculateAmount(booking),
                     number);
-//            bookingDao.changeRoom(number, roomNumber, calculateAmount(booking));
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_CHANGE_ROOM, e);
             throw new ServiceException(MESSAGE_BOOKING_CHANGE_ROOM, e);
         }
     }
 
+    /**
+     * Provides logic for changing the Booking Status.
+     *
+     * @param number  id of the Booking
+     * @param status  Booking status
+     * @param service ServiceFactory service
+     * @throws ServiceException if the operation failed
+     */
     @Override
     public void changeBookingStatus(long number, String status, ServiceFactory service) throws ServiceException {
         Booking booking = getAllBookingInfo(number, service);
@@ -175,7 +244,6 @@ public class BookingServiceImpl implements BookingService {
             bookingDao.updateEntity(BOOKING_CHANGE_BOOKING_STATUS, MESSAGE_BOOKING_CHANGE_BOOKING_STATUS,
                     status,
                     number);
-//            bookingDao.changeBookingStatus(number, status);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_CHANGE_BOOKING_STATUS, e);
             throw new ServiceException(MESSAGE_BOOKING_CHANGE_BOOKING_STATUS, e);
@@ -183,7 +251,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     /**
-     * Calculates the booking amount
+     * Gets all booking information.
      *
      * @param number  id of the Booking
      * @param service ServiceFactory service

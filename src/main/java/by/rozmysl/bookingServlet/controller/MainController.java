@@ -1,7 +1,7 @@
 package by.rozmysl.bookingServlet.controller;
 
 import by.rozmysl.bookingServlet.controller.command.*;
-import by.rozmysl.bookingServlet.exception.ServiceException;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +47,7 @@ public class MainController extends HttpServlet {
             } else {
                 resp.sendRedirect(pageGuide.getPageAddress());
             }
-        } catch (ServiceException e) {
+        } catch (CommandException e) {
             LOGGER.error(String.valueOf(e));
             throw new ServletException(e);
         }

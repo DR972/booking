@@ -1,6 +1,7 @@
 package by.rozmysl.bookingServlet.controller.command.impl.user;
 
 import by.rozmysl.bookingServlet.controller.command.*;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.service.BookingService;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
@@ -23,16 +24,21 @@ public class GetUserBookingsCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the service
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         BookingService bookingService = ServiceFactory.getInstance().getBookingService();
-        if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
-            bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
-            LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was canceled by the user.");
+        try {
+            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+                bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
+                LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was canceled by the user.");
+            }
+            req.setAttribute(USER_BOOKING, bookingService.findAllBookingsByUser(req.getUserPrincipal().getName()));
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
         }
-        req.setAttribute(USER_BOOKING, bookingService.findAllBookingsByUser(req.getUserPrincipal().getName()));
         return new PageGuide(PageAddress.USER_BOOKINGS, TransferMethod.FORWARD);
     }
 }

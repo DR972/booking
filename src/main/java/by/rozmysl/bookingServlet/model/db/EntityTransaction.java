@@ -74,7 +74,7 @@ public class EntityTransaction implements AutoCloseable {
      * Sets connection to all dao.
      *
      * @param dao       dao
-     * @param otherDaos other dao (optional)
+     * @param otherDaos other dao
      * @see Dao#setConnection(ProxyConnection)
      */
     private void setConnection(Dao<?, ?> dao, Dao<?, ?>[] otherDaos) {

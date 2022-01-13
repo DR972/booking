@@ -1,4 +1,4 @@
-package by.rozmysl.bookingServlet.model.dao;
+package by.rozmysl.bookingServlet.model.util;
 
 /**
  * Stores sql query.
@@ -35,10 +35,6 @@ public final class SqlQuery {
             "update USER set BANNED = ? where USERNAME = ?";
 
     /* Query to the USER_ROLE table */
-//    public static final String USER_ROLE_FIND_BY_ID =
-//            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME where USER = ?";
-//    public static final String USER_ROLE_FIND_ALL =
-//            "select USER, ROLE from USER_ROLE left join ROLE on ROLE = ROLE.NAME  offset ? * ? ROWS fetch next ? ROWS only";
     public static final String USER_ROLE_SAVE =
             "insert into USER_ROLE(USER, ROLE) VALUES(?, ?)";
     public static final String USER_ROLE_DELETE =

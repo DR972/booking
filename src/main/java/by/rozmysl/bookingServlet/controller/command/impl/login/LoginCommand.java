@@ -2,6 +2,7 @@ package by.rozmysl.bookingServlet.controller.command.impl.login;
 
 import by.rozmysl.bookingServlet.controller.command.*;
 import by.rozmysl.bookingServlet.controller.util.AppUtil;
+import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.entity.user.User;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
@@ -27,16 +28,22 @@ public class LoginCommand implements Command {
      *
      * @param req request content
      * @return page to go
-     * @throws ServiceException if there was an error accessing the service
+     * @throws CommandException if the operation failed
      */
     @Override
-    public PageGuide execute(HttpServletRequest req) throws ServiceException {
+    public PageGuide execute(HttpServletRequest req) throws CommandException {
         if (req.getParameter(ACTION) == null) {
             return new PageGuide(PageAddress.LOGIN, TransferMethod.FORWARD);
         }
 
         UserService userService = ServiceFactory.getInstance().getUserService();
-        User user = userService.findById(req.getParameter(USERNAME));
+        User user;
+        try {
+            user = userService.findById(req.getParameter(USERNAME));
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
+        }
         String authentication = userService.authenticateUser(user, req.getParameter(PASSWORD));
         if (authentication != null) {
             req.setAttribute(LOGIN_ERROR, authentication);
@@ -45,6 +52,7 @@ public class LoginCommand implements Command {
 
         AppUtil.saveLoggedUser(req.getSession(), user);
         LOGGER.info("The user '" + user.getId() + "' is logged in.");
+
         int redirectId = -1;
         if (!req.getParameter(REDIRECT_ID).isEmpty()) {
             redirectId = Integer.parseInt(req.getParameter(REDIRECT_ID));
