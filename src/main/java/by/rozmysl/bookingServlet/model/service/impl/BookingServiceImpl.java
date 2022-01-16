@@ -3,8 +3,6 @@ package by.rozmysl.bookingServlet.model.service.impl;
 import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.exception.MailException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.service.Letter;
 import by.rozmysl.bookingServlet.model.dao.BookingDao;
 import by.rozmysl.bookingServlet.model.dao.DaoFactory;
@@ -86,8 +84,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void save(Booking booking) throws ServiceException {
         booking.setAmount(calculateAmount(booking));
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            bookingDao.setConnection(connection);
+        try  {
             bookingDao.saveWithGeneratedKeys(BOOKING_SAVE, MESSAGE_BOOKING_SAVE,
                     booking.getUser().getId(),
                     booking.getRoom().getId(),
@@ -113,8 +110,7 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public void delete(Long number) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            bookingDao.setConnection(connection);
+        try  {
             new Letter().deleteInvoice("src/main/resources/static/" + number + ".pdf");
             bookingDao.updateEntity(BOOKING_DELETE, MESSAGE_BOOKING_DELETE, number);
         } catch (DaoException e) {
@@ -199,8 +195,7 @@ public class BookingServiceImpl implements BookingService {
     public void changeRoom(long number, int roomNumber, ServiceFactory service) throws ServiceException {
         Booking booking = getAllBookingInfo(number, service);
         booking.setRoom(service.getRoomService().findById(roomNumber));
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            bookingDao.setConnection(connection);
+        try  {
             bookingDao.updateEntity(BOOKING_CHANGE_ROOM, MESSAGE_BOOKING_CHANGE_ROOM,
                     roomNumber,
                     calculateAmount(booking),
@@ -239,8 +234,7 @@ public class BookingServiceImpl implements BookingService {
             new Letter().deleteInvoice(filePath);
         }
 
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            bookingDao.setConnection(connection);
+        try  {
             bookingDao.updateEntity(BOOKING_CHANGE_BOOKING_STATUS, MESSAGE_BOOKING_CHANGE_BOOKING_STATUS,
                     status,
                     number);

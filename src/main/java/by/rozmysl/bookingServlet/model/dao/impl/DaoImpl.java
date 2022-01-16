@@ -4,7 +4,6 @@ import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.model.dao.Dao;
 import by.rozmysl.bookingServlet.model.dao.StatementConsumer;
 import by.rozmysl.bookingServlet.model.db.ConnectionPool;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import static by.rozmysl.bookingServlet.model.dao.ColumnName.*;
  */
 public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
     private static final Logger LOGGER = LoggerFactory.getLogger(DaoImpl.class);
-    protected ProxyConnection connection;
+    protected Connection connection;
 
     /**
      * Sets connection to DAO.
@@ -27,7 +26,7 @@ public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
      * @param connection connection
      */
     @Override
-    public void setConnection(ProxyConnection connection) {
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
@@ -70,6 +69,26 @@ public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
      */
     @Override
     public void updateEntity(String sql, String errorMessage, Object... params) throws DaoException {
+        try (final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            setStatement(statement, params);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(errorMessage, e);
+            throw new DaoException(errorMessage, e);
+        }
+    }
+
+    /**
+     * Performs various operations (save, update, delete) on the object T in the table 'T` using a transaction.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage message in case of an error
+     * @param params       Object parameters
+     * @throws DaoException if there was an error accessing the database
+     */
+    @Override
+    public void updateEntityUsingTransaction(String sql, String errorMessage, Object... params) throws DaoException {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             setStatement(statement, params);
             statement.executeUpdate();
@@ -109,7 +128,8 @@ public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
      * @throws DaoException if there was an error accessing the database
      */
     public void saveWithGeneratedKeys(String sql, String errorMessage, Object... params) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             setStatement(statement, params);
             statement.executeUpdate();
             try (final ResultSet tableKeys = statement.getGeneratedKeys()) {

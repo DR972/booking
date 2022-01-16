@@ -33,28 +33,28 @@ public class Booking extends Entity<Long> {
     public Booking() {
     }
 
-    /**
-     * The constructor creates a new object Booking with the <b>user</b>, <b>persons</b>, <b>arrival</b>, <b>departure</b>,
-     * <b>days</b>, <b>food</b>, <b>services</b> properties
-     *
-     * @param user      User
-     * @param persons   persons
-     * @param arrival   arrival
-     * @param departure departure
-     * @param days      days
-     * @param food      Food
-     * @param services  AdditionalServices
-     */
-    public Booking(User user, int persons, LocalDate arrival, LocalDate departure, int days, Food food, AdditionalServices services) {
-        this.user = user;
-        this.persons = persons;
-        this.arrival = arrival;
-        this.departure = departure;
-        this.days = days;
-        this.food = food;
-        this.services = services;
-    }
-
+//    /**
+//     * The constructor creates a new object Booking with the <b>user</b>, <b>persons</b>, <b>arrival</b>, <b>departure</b>,
+//     * <b>days</b>, <b>food</b>, <b>services</b> properties
+//     *
+//     * @param user      User
+//     * @param persons   persons
+//     * @param arrival   arrival
+//     * @param departure departure
+//     * @param days      days
+//     * @param food      Food
+//     * @param services  AdditionalServices
+//     */
+//    public Booking(User user, int persons, LocalDate arrival, LocalDate departure, int days, Food food, AdditionalServices services) {
+//        this.user = user;
+//        this.persons = persons;
+//        this.arrival = arrival;
+//        this.departure = departure;
+//        this.days = days;
+//        this.food = food;
+//        this.services = services;
+//    }
+//
     /**
      * The constructor creates a new object Booking with the <b>persons</b>, <b>arrival</b>, <b>departure</b>, <b>days</b>,
      * <b>food</b>, <b>services</b> properties
@@ -74,24 +74,24 @@ public class Booking extends Entity<Long> {
         this.food = food;
         this.services = services;
     }
-
-    /**
-     * The constructor creates a new object Booking with the <b>persons</b>, <b>arrival</b>, <b>days</b>, <b>food</b>,
-     * <b>services</b> properties
-     *
-     * @param persons  persons
-     * @param arrival  arrival
-     * @param days     days
-     * @param food     Food
-     * @param services AdditionalServices
-     */
-    public Booking(int persons, LocalDate arrival, int days, Food food, AdditionalServices services) {
-        this.persons = persons;
-        this.arrival = arrival;
-        this.days = days;
-        this.food = food;
-        this.services = services;
-    }
+//
+//    /**
+//     * The constructor creates a new object Booking with the <b>persons</b>, <b>arrival</b>, <b>days</b>, <b>food</b>,
+//     * <b>services</b> properties
+//     *
+//     * @param persons  persons
+//     * @param arrival  arrival
+//     * @param days     days
+//     * @param food     Food
+//     * @param services AdditionalServices
+//     */
+//    public Booking(int persons, LocalDate arrival, int days, Food food, AdditionalServices services) {
+//        this.persons = persons;
+//        this.arrival = arrival;
+//        this.days = days;
+//        this.food = food;
+//        this.services = services;
+//    }
 
     /**
      * The constructor creates a new object Booking with the <b>number</b>, <b>user</b>, <b>room</b>, <b>persons</b>,

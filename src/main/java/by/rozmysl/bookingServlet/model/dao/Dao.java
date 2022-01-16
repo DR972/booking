@@ -1,9 +1,9 @@
 package by.rozmysl.bookingServlet.model.dao;
 
 import by.rozmysl.bookingServlet.exception.DaoException;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.Entity;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      *
      * @param connection connection
      */
-    void setConnection(ProxyConnection connection);
+    void setConnection(Connection connection);
 
     /**
      * Searches for the object T in the table 'T' by various parameters.
@@ -51,6 +51,16 @@ public interface Dao<T extends Entity<ID>, ID> {
      * @throws DaoException if there was an error accessing the database
      */
     void updateEntity(String sql, String errorMessage, Object... params) throws DaoException;
+
+    /**
+     * Performs various operations (save, update, delete) on the object T in the table 'T` using a transaction.
+     *
+     * @param sql          the wording of the request to the database
+     * @param errorMessage message in case of an error
+     * @param params       Object parameters
+     * @throws DaoException if there was an error accessing the database
+     */
+    void updateEntityUsingTransaction(String sql, String errorMessage, Object... params) throws DaoException;
 
     /**
      * Gets the number of rows in the database.

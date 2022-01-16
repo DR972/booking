@@ -18,7 +18,7 @@
 <html lang="${language}">
 <head>
     <meta charset="utf-8">
-    <title>Price</title>
+    <title>${prices}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen">
 </head>
 

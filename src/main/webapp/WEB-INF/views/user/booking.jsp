@@ -8,7 +8,7 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
-<fmt:message bundle="${msg}" key="page.available" var="available"/>
+<fmt:message bundle="${msg}" key="page.booking" var="pageBooking"/>
 <fmt:message bundle="${msg}" key="book.days" var="days"/>
 <fmt:message bundle="${msg}" key="book.persons" var="persons"/>
 <fmt:message bundle="${msg}" key="book.room.type" var="room"/>
@@ -20,13 +20,13 @@
 <html lang="${language}">
 <head>
     <meta charset="UTF-8">
-    <title>Room Booking</title>
+    <title>${pageBooking}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
 	<div id="content" align="center">
-        <h2>${available}</h2>
+        <h2>${pageBooking}</h2>
         <form action="booking" method="POST">
             <h3>${booking.arrival} - ${booking.departure}, ${days}: ${booking.days}, ${persons}: ${booking.persons}</h3><br/>
         </form>

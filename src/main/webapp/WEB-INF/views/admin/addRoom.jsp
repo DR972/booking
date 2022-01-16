@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Add a room</title>
+    <title>Добавить номер</title>
     <link rel="stylesheet" type="text/css" href="/css/addRoom.css">
 </head>
 <body>

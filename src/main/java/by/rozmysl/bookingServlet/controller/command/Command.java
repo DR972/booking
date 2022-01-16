@@ -1,7 +1,6 @@
 package by.rozmysl.bookingServlet.controller.command;
 
 import by.rozmysl.bookingServlet.exception.CommandException;
-import by.rozmysl.bookingServlet.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 

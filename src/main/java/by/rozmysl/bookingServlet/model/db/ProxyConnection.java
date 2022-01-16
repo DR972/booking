@@ -27,7 +27,7 @@ public class ProxyConnection implements Connection {
     /**
      * Closes connection.
      *
-     * @throws SQLException if can't close connection
+     * @throws SQLException if the connection can't be closed
      */
     void reallyClose() throws SQLException {
         connection.close();
@@ -37,7 +37,10 @@ public class ProxyConnection implements Connection {
      * Returns connection to ConnectionPool.
      */
     @Override
-    public void close() {
+    public void close() throws SQLException {
+        if (!this.getAutoCommit()) {
+            this.setAutoCommit(true);
+        }
         ConnectionPool.getInstance().returnConnectionToPool(this);
     }
 

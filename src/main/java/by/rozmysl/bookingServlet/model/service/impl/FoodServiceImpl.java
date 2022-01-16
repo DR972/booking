@@ -4,8 +4,6 @@ import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.dao.DaoFactory;
 import by.rozmysl.bookingServlet.model.dao.FoodDao;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.hotel.Food;
 import by.rozmysl.bookingServlet.model.service.FoodService;
 import org.slf4j.Logger;
@@ -75,8 +73,7 @@ public class FoodServiceImpl implements FoodService {
      */
     @Override
     public void changeFoodPrice(String type, BigDecimal price) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            foodDao.setConnection(connection);
+        try {
             foodDao.updateEntity(FOOD_CHANGE_FOOD_PRICE, MESSAGE_FOOD_CHANGE_FOOD_PRICE,
                     price,
                     type);

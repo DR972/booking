@@ -36,7 +36,7 @@ public class ToBookingPageCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         RoomService roomService = service.getRoomService();
-
+        System.out.println("ToBookingPageCommand");
         try {
             int days = Integer.parseInt(req.getParameter(DAYS));
             Booking booking = new Booking(

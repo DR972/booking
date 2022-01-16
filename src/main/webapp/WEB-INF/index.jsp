@@ -5,12 +5,14 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
+
+<fmt:message bundle="${msg}" key="page.mainPage" var="mainPage"/>
 <fmt:message bundle="${msg}" key="message.welcome" var="welcome"/>
 
 <!DOCTYPE HTML>
 <html lang="${language}">
 <head>
-    <title>Main</title>
+    <title>${mainPage}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Free rooms</title>
+    <title>Свободные номера</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen">
 </head>
 

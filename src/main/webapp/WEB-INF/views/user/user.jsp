@@ -12,7 +12,7 @@
 <!DOCTYPE HTML>
 <html lang="${language}">
 <head>
-    <title>User page</title>
+    <title>${userPage}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

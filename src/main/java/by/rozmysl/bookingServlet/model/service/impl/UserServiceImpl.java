@@ -4,9 +4,7 @@ import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.exception.MailException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.dao.*;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
 import by.rozmysl.bookingServlet.model.db.EntityTransaction;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.service.Letter;
 import by.rozmysl.bookingServlet.model.entity.user.User;
 import by.rozmysl.bookingServlet.model.service.ServiceFactory;
@@ -94,10 +92,10 @@ public class UserServiceImpl implements UserService {
         user.setActivationCode(UUID.randomUUID().toString());
         EntityTransaction transaction = new EntityTransaction(userDao, roleDao);
         try {
-            transaction.begin();
             service.getMailSender().sendMail(user.getEmail(), ACTIVATION_CODE, new Letter().createMessage(user, language));
+            transaction.begin();
 
-            userDao.updateEntity(USER_SAVE, MESSAGE_USER_SAVE,
+            userDao.updateEntityUsingTransaction(USER_SAVE, MESSAGE_USER_SAVE,
                     user.getId(),
                     user.getLastname(),
                     user.getFirstname(),
@@ -107,7 +105,7 @@ public class UserServiceImpl implements UserService {
                     user.getActivationCode(),
                     user.isBanned());
 
-            roleDao.updateEntity(USER_ROLE_SAVE, MESSAGE_USER_ROLE_SAVE,
+            roleDao.updateEntityUsingTransaction(USER_ROLE_SAVE, MESSAGE_USER_ROLE_SAVE,
                     user.getId(),
                     USER);
             transaction.commit();
@@ -131,8 +129,8 @@ public class UserServiceImpl implements UserService {
         EntityTransaction transaction = new EntityTransaction(userDao, roleDao);
         try {
             transaction.begin();
-            roleDao.updateEntity(USER_ROLE_DELETE, MESSAGE_USER_ROLE_DELETE, username);
-            userDao.updateEntity(USER_DELETE, MESSAGE_USER_DELETE, username);
+            roleDao.updateEntityUsingTransaction(USER_ROLE_DELETE, MESSAGE_USER_ROLE_DELETE, username);
+            userDao.updateEntityUsingTransaction(USER_DELETE, MESSAGE_USER_DELETE, username);
             transaction.commit();
         } catch (DaoException e) {
             transaction.rollback();
@@ -185,8 +183,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            userDao.setConnection(connection);
+        try {
             userDao.updateEntity(USER_ACTIVATE, MESSAGE_USER_ACTIVATE, user.getId());
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_USER_ACTIVATE, e);
@@ -232,8 +229,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void changeListUserRoles(String username) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            roleDao.setConnection(connection);
+        try {
             User user = findById(username);
             if (user.getRoles().contains(ADMIN)) {
                 roleDao.updateEntity(USER_ROLE_DELETE_ADMIN, MESSAGE_USER_ROLE_DELETE_ADMIN, user.getId());
@@ -256,8 +252,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void changeUserAccountLock(String username) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            userDao.setConnection(connection);
+        try {
             User user = findById(username);
             userDao.updateEntity(USER_CHANGE_ACCOUNT_LOCK, MESSAGE_USER_CHANGE_ACCOUNT_LOCK,
                     !user.isBanned(),

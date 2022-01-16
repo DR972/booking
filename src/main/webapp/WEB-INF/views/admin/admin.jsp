@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Home Page</title>
+    <title>Страница администратора</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

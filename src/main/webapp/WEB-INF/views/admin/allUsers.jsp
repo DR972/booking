@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Все пользователи</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

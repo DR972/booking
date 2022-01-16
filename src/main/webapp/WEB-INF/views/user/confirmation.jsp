@@ -6,6 +6,7 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
+<fmt:message bundle="${msg}" key="page.confirmation" var="confirmation"/>
 <fmt:message bundle="${msg}" key="message.thanks" var="message"/>
 <fmt:message bundle="${msg}" key="book.client" var="client"/>
 <fmt:message bundle="${msg}" key="book.arrival" var="arrival"/>
@@ -20,11 +21,12 @@
 <html lang="${language}">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation of the booking</title>
+    <title>${confirmation}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
+
 	<div id="content" align="center">
         <h2>${message}</h2>
         <h3>${client}: ${pageContext.request.userPrincipal.name}</h3>

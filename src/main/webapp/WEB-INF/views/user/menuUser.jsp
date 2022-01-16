@@ -12,7 +12,6 @@
 <fmt:message bundle="${msg}" key="page.prices" var="prices"/>
 <fmt:message bundle="${msg}" key="page.userBookings" var="userBookings"/>
 <fmt:message bundle="${msg}" key="page.photo" var="photo"/>
-<fmt:message bundle="${msg}" key="page.prices" var="prices"/>
 <fmt:message bundle="${msg}" key="page.contacts" var="contacts"/>
 <fmt:message bundle="${msg}" key="page.logOut" var="logOut"/>
 
@@ -31,7 +30,6 @@
 			    <td><a href="/user/bookingDetails">${book}</a></td>
 			    <td><a href="/anonymous/price">${prices}</a></td>
 			    <td><a href="/user/user">${userPage}</a></td>
-			    <td><a href="/anonymous/price">${prices}</a></td>
                 <td><a href="/user/userBookings">${userBookings}</a></td>
 			    <td><a href="#">${photo}</a></td>
 			    <td><a href="#">${contacts}</a></td>

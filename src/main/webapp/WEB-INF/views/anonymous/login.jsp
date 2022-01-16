@@ -7,6 +7,7 @@
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
 <fmt:message bundle="${msg}" key="page.logIn" var="logIn"/>
+<fmt:message bundle="${msg}" key="message.logIn" var="message"/>
 <fmt:message bundle="${msg}" key="form.username" var="username"/>
 <fmt:message bundle="${msg}" key="form.password" var="password"/>
 <fmt:message bundle="${msg}" key="button.logon" var="logon"/>
@@ -15,14 +16,14 @@
 <html lang="${language}">
 <head>
     <meta charset="utf-8">
-    <title>Log in to account</title>
+    <title>${logIn}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
     <jsp:include page="menu.jsp"></jsp:include>
     <div id="content">
-        <h2>${logIn}</h2>
+        <h2>${message}</h2>
         <c:if test="${loginError != null}">
             <h3 style="color: red;"><fmt:message bundle="${msg}" key="${loginError}"/></h3>
         </c:if>

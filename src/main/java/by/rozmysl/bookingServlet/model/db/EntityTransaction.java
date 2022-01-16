@@ -4,20 +4,21 @@ import by.rozmysl.bookingServlet.model.dao.Dao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class EntityTransaction implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityTransaction.class);
-    private final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool();
+    private final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
 
     /**
      * Constructs EntityTransaction with at least one dao.
      *
      * @param dao    Dao<T,ID>   dao
-     * @param otherDaos Dao<T,ID> other dao
+     * @param otherDao Dao<T,ID> other dao
      */
-    public EntityTransaction(Dao<?, ?> dao, Dao<?, ?>... otherDaos) {
-        setConnection(dao, otherDaos);
+    public EntityTransaction(Dao<?, ?> dao, Dao<?, ?>... otherDao) {
+        setConnection(dao, otherDao);
     }
 
     /**
@@ -67,19 +68,19 @@ public class EntityTransaction implements AutoCloseable {
 
     @Override
     public void close() {
-        connection.close();
+        ConnectionPool.getInstance().returnConnectionToPool(connection);
     }
 
     /**
      * Sets connection to all dao.
      *
      * @param dao       dao
-     * @param otherDaos other dao
-     * @see Dao#setConnection(ProxyConnection)
+     * @param otherDao other dao
+     * @see Dao#setConnection(Connection)
      */
-    private void setConnection(Dao<?, ?> dao, Dao<?, ?>[] otherDaos) {
+    private void setConnection(Dao<?, ?> dao, Dao<?, ?>[] otherDao) {
         dao.setConnection(connection);
-        for (Dao<?, ?> anotherDAO : otherDaos) {
+        for (Dao<?, ?> anotherDAO : otherDao) {
             anotherDAO.setConnection(connection);
         }
     }

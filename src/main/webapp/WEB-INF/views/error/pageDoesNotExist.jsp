@@ -4,13 +4,15 @@
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
+
+<fmt:message bundle="${msg}" key="page.error" var="pageError"/>
 <fmt:message bundle="${msg}" key="error.page" var="error"/>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Access Denied</title>
+    <title>${pageError}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>

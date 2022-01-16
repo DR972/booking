@@ -1,7 +1,6 @@
 package by.rozmysl.bookingServlet.controller.command.impl.user;
 
 import by.rozmysl.bookingServlet.controller.command.*;
-import by.rozmysl.bookingServlet.controller.command.impl.login.ToPriceCommand;
 import by.rozmysl.bookingServlet.exception.CommandException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.entity.user.Booking;
@@ -35,6 +34,7 @@ public class GetBookingDetailsCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         RoomService roomService = service.getRoomService();
+        System.out.println("GetBookingDetailsCommand");
         try {
             req.setAttribute(ALL_FOOD, service.getFoodService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
             req.setAttribute(ALL_SERVICES, service.getServicesService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));

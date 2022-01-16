@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>All bookings</title>
+    <title>Все бронирования</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>

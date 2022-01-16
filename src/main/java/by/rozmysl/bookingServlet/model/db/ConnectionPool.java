@@ -92,7 +92,7 @@ public class ConnectionPool {
      *
      * @return connection
      */
-    public ProxyConnection getConnectionFromPool() {
+    public Connection getConnectionFromPool() {
         ProxyConnection connection = null;
         if (availableConnections.size() > 0) {
             try {
@@ -113,8 +113,9 @@ public class ConnectionPool {
     public void returnConnectionToPool(Connection connection) {
         if (connection != null && busyConnections.contains((ProxyConnection) connection)) {
             try {
-                busyConnections.remove((ProxyConnection) connection);
-                availableConnections.put((ProxyConnection) connection);
+                ProxyConnection proxy = (ProxyConnection) connection;
+                busyConnections.remove(proxy);
+                availableConnections.put(proxy);
             } catch (InterruptedException e) {
                 LOGGER.error("Error while trying to check autocommit.");
             }
@@ -154,19 +155,13 @@ public class ConnectionPool {
      * Clears connection queue and closes connections.
      *
      * @param connectionQueue connection queue
-     * @throws InterruptedException if can't close the connection
-     * @throws SQLException if can't close the connection
+     * @throws InterruptedException if connection cannot be closed
+     * @throws SQLException if connection cannot be closed
      */
     private void clearConnectionQueue(BlockingQueue<ProxyConnection> connectionQueue) throws SQLException, InterruptedException {
         while (!connectionQueue.isEmpty()) {
             connectionQueue.take().reallyClose();
         }
-//        ProxyConnection connection;
-//        while ((connection = connectionQueue.poll()) != null) {
-//            if (!connection.isClosed()) {
-//                connection.reallyClose();
-//            }
-//        }
     }
 
     /**

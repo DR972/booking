@@ -7,7 +7,7 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="/localization/message" var="msg"/>
 
-<fmt:message bundle="${msg}" key="page.book" var="book"/>
+<fmt:message bundle="${msg}" key="page.bookingDetails" var="BookingDetails"/>
 <fmt:message bundle="${msg}" key="book.arrival" var="arrival"/>
 <fmt:message bundle="${msg}" key="book.days" var="days"/>
 <fmt:message bundle="${msg}" key="book.persons" var="persons"/>
@@ -19,12 +19,12 @@
 <html lang="${language}">
 <head>
     <meta charset="UTF-8">
-    <title>Room booking form</title>
+    <title>${BookingDetails}</title>
 </head>
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>
 	<div align="center" style="padding: 70px;">
-		<h2>${book}</h2>
+		<h2>${BookingDetails}</h2>
         <form action="bookingDetails" method="POST">
         <c:if test="${errorValidate != null}">
              <h3 style="color: red;"><fmt:message bundle="${msg}" key="${errorValidate}"/></h3>

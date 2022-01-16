@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Change room parameters</title>
+    <title>Изменение параметров номера</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

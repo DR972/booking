@@ -4,8 +4,6 @@ import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.dao.AdditionalServicesDao;
 import by.rozmysl.bookingServlet.model.dao.DaoFactory;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.hotel.AdditionalServices;
 import by.rozmysl.bookingServlet.model.service.AdditionalServicesService;
 import org.slf4j.Logger;
@@ -75,8 +73,7 @@ public class AdditionalServicesServiceImpl implements AdditionalServicesService 
      */
     @Override
     public void changeServicePrice(String type, BigDecimal price) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            servicesDao.setConnection(connection);
+        try {
             servicesDao.updateEntity(ADDITIONALSERVICES_CHANGE_SERVICE_PRICE, MESSAGE_ADDITIONALSERVICES_CHANGE_SERVICE_PRICE,
                     price,
                     type);

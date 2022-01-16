@@ -4,8 +4,6 @@ import by.rozmysl.bookingServlet.exception.DaoException;
 import by.rozmysl.bookingServlet.exception.ServiceException;
 import by.rozmysl.bookingServlet.model.dao.DaoFactory;
 import by.rozmysl.bookingServlet.model.dao.RoomDao;
-import by.rozmysl.bookingServlet.model.db.ConnectionPool;
-import by.rozmysl.bookingServlet.model.db.ProxyConnection;
 import by.rozmysl.bookingServlet.model.entity.hotel.Room;
 import by.rozmysl.bookingServlet.model.service.RoomService;
 import org.slf4j.Logger;
@@ -75,8 +73,7 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public void save(Room room) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            roomDao.setConnection(connection);
+        try {
             roomDao.updateEntity(ROOM_SAVE, MESSAGE_ROOM_SAVE,
                     room.getId(),
                     room.getType(),
@@ -96,8 +93,7 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public void delete(Integer roomNumber) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            roomDao.setConnection(connection);
+        try {
             roomDao.updateEntity(ROOM_DELETE, MESSAGE_ROOM_DELETE, roomNumber);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_ROOM_DELETE, e);
@@ -114,8 +110,7 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public void updatePrice(Room roomNumber, BigDecimal price) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            roomDao.setConnection(connection);
+        try {
             roomDao.updateEntity(ROOM_UPDATE_PRICE, MESSAGE_ROOM_UPDATE_PRICE,
                     price,
                     roomNumber.getType(),
@@ -135,8 +130,7 @@ public class RoomServiceImpl implements RoomService {
      */
     @Override
     public void updateParameters(int roomNumber, Room param) throws ServiceException {
-        try (final ProxyConnection connection = ConnectionPool.getInstance().getConnectionFromPool()) {
-            roomDao.setConnection(connection);
+        try {
             roomDao.updateEntity(ROOM_UPDATE_PARAMETERS, MESSAGE_ROOM_UPDATE_PARAMETERS,
                     param.getType(),
                     param.getSleeps(),

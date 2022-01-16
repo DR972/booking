@@ -20,7 +20,7 @@
 <html lang="${language}">
 <head>
     <meta charset="utf-8">
-    <title>Registration</title>
+    <title>${registration}</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 

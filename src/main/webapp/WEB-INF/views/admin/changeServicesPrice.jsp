@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Change the prices of services</title>
+    <title>Изменение цены сервисов</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
