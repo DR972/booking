@@ -161,20 +161,20 @@ public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
      * @throws DaoException if there was an error accessing the database
      */
     private List<T> getResultSet(String sql, String errorMessage, StatementConsumer statementConsumer) throws DaoException {
-        List<T> t = new ArrayList<>();
+        List<T> entities = new ArrayList<>();
         try (final Connection connection = ConnectionPool.getInstance().getConnectionFromPool();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             statementConsumer.accept(preparedStatement);
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
-                    t.add(buildEntity(resultSet));
+                    entities.add(buildEntity(resultSet));
                 }
             }
         } catch (SQLException e) {
             LOGGER.error(errorMessage, e);
             throw new DaoException(errorMessage, e);
         }
-        return t;
+        return entities;
     }
 
     /**

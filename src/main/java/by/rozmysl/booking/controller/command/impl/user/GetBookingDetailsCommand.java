@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
@@ -34,12 +35,16 @@ public class GetBookingDetailsCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         RoomService roomService = service.getRoomService();
-        System.out.println("GetBookingDetailsCommand");
+
+        if (req.getSession().getAttribute(ACTION) == BOOKING) {
+            return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
+        }
+
         try {
             req.setAttribute(ALL_FOOD, service.getFoodService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
             req.setAttribute(ALL_SERVICES, service.getServicesService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
 
-            if (req.getParameter(ACTION) == null) {
+            if (!Objects.equals(req.getParameter(ACTION), BOOKING_DETAILS)) {
                 return new PageGuide(PageAddress.BOOKING_DETAILS, TransferMethod.FORWARD);
             }
 
@@ -63,14 +68,16 @@ public class GetBookingDetailsCommand implements Command {
                 req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
             }
 
-            req.setAttribute(BOOKING, booking);
-            req.setAttribute(FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
+            req.getSession().setAttribute(BOOKING, booking);
+            req.getSession().setAttribute(FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
                     roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
                             (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);
         }
+
+        req.getSession().setAttribute(ACTION, BOOKING);
         return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
     }
 }

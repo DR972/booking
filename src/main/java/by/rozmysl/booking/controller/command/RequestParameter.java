@@ -34,6 +34,7 @@ public final class RequestParameter {
     public static final String REDIRECT_ID = "redirectId";
 
     public static final String BOOKING_NUMBER = "bookingNumber";
+    public static final String BOOKING_DETAILS = "bookingDetails";
     public static final String PERSONS = "persons";
     public static final String ARRIVAL = "arrival";
     public static final String DAYS = "days";
@@ -51,7 +52,6 @@ public final class RequestParameter {
     public static final String LANGUAGE = "language";
     public static final String CHANGE_ROLE_LIST = "changeRoleList";
     public static final String CHANGE_ACCOUNT_LOCK = "changeAccountLock";
-
 
     public static final String JAVAX_SERVLET_ERROR_EXCEPTION = "javax.servlet.error.exception";
     public static final String JAVAX_SERVLET_ERROR_STATUS_CODE = "javax.servlet.error.status_code";

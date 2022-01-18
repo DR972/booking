@@ -2,9 +2,13 @@ package by.rozmysl.booking.controller.command.impl.admin;
 
 import by.rozmysl.booking.controller.command.RequestAttribute;
 import by.rozmysl.booking.controller.command.RequestParameter;
+
 import javax.servlet.http.HttpServletRequest;
 
-public final class PageSelection {
+/**
+ * Defines the page parameters.
+ */
+public final class SelectingPageParameters {
     private static final int DEFAULT_PAGE_NUMBER = 0;
     private static final int DEFAULT_NUMBER_ROWS = 10;
 
@@ -12,10 +16,16 @@ public final class PageSelection {
      * Private constructor without parameters.
      * Restrict instantiation of the class.
      */
-    private PageSelection() {
+    private SelectingPageParameters() {
     }
 
-    public static int getPageNumber (HttpServletRequest req) {
+    /**
+     * Gets page number
+     *
+     * @param req HttpServletRequest
+     * @return page number
+     */
+    public static int getPageNumber(HttpServletRequest req) {
         int pageNumber = DEFAULT_PAGE_NUMBER;
         if (req.getParameter(RequestParameter.PAGE_NUMBER) != null) {
             pageNumber = Integer.parseInt(req.getParameter(RequestParameter.PAGE_NUMBER));
@@ -24,7 +34,13 @@ public final class PageSelection {
         return pageNumber;
     }
 
-    public static int getRows (HttpServletRequest req) {
+    /**
+     * Get the number of rows per page
+     *
+     * @param req HttpServletRequest
+     * @return number of rows
+     */
+    public static int getNumberRows(HttpServletRequest req) {
         int rows = DEFAULT_NUMBER_ROWS;
         if (req.getParameter(RequestParameter.ROWS) != null) {
             rows = Integer.parseInt(req.getParameter(RequestParameter.ROWS));

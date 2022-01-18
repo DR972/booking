@@ -60,8 +60,8 @@ public class GetAllBookingsCommand implements Command {
                         req.getParameter(RequestParameter.STATUS) + "'  by the admin " + req.getUserPrincipal().getName());
             }
 
-            int pageNumber = PageSelection.getPageNumber(req);
-            int rows = PageSelection.getRows(req);
+            int pageNumber = SelectingPageParameters.getPageNumber(req);
+            int rows = SelectingPageParameters.getNumberRows(req);
             req.setAttribute(RequestAttribute.COUNT_PAGES, bookingService.countNumberBookingPages(rows));
 
             List<Booking> allBookings = bookingService.findAll(pageNumber, rows);

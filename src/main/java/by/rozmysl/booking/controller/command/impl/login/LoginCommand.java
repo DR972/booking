@@ -62,11 +62,8 @@ public class LoginCommand implements Command {
         if (requestUri != null) {
             return new PageGuide(requestUri, TransferMethod.REDIRECT);
         } else {
-            if (user.getRoles().contains(ADMIN)) {
-                return new PageGuide(PageAddress.ADMIN_REDIRECT, TransferMethod.REDIRECT);
-            } else {
-                return new PageGuide(PageAddress.USER_REDIRECT, TransferMethod.REDIRECT);
-            }
+            return user.getRoles().contains(ADMIN) ? new PageGuide(PageAddress.ADMIN_REDIRECT, TransferMethod.REDIRECT)
+                    : new PageGuide(PageAddress.USER_REDIRECT, TransferMethod.REDIRECT);
         }
     }
 }

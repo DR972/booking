@@ -37,7 +37,6 @@ public final class PageAddress {
     public static final String CONFIRMATION = "/WEB-INF/views/user/confirmation.jsp";
     public static final String USER_BOOKINGS = "/WEB-INF/views/user/userBookings.jsp";
 
-
     /* Error pages */
     public static final String PAGE_DOES_NOT_EXIST = "/WEB-INF/views/error/pageDoesNotExist.jsp";
     public static final String ACCESS_DENIED = "/WEB-INF/views/error/accessDenied.jsp";

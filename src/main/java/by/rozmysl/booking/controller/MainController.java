@@ -18,7 +18,6 @@ import java.io.IOException;
 @WebServlet(name = "MainController", urlPatterns = {"/admin/*", "/user/*", "/anonymous/*"})
 public class MainController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
-    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,7 +41,7 @@ public class MainController extends HttpServlet {
         Command command = CommandType.valueOf(CommandType.convert(req.getPathInfo())).getAction();
         try {
             PageGuide pageGuide = command.execute(req);
-            if (TransferMethod.FORWARD == pageGuide.getTransferMethod()) {
+            if (pageGuide.getTransferMethod() == TransferMethod.FORWARD) {
                 req.getRequestDispatcher(pageGuide.getPageAddress()).forward(req, resp);
             } else {
                 resp.sendRedirect(pageGuide.getPageAddress());

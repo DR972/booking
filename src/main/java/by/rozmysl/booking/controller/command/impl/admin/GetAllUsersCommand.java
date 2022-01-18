@@ -50,8 +50,8 @@ public class GetAllUsersCommand implements Command {
                 }
             }
 
-            int pageNumber = PageSelection.getPageNumber(req);
-            int rows = PageSelection.getRows(req);
+            int pageNumber = SelectingPageParameters.getPageNumber(req);
+            int rows = SelectingPageParameters.getNumberRows(req);
             req.setAttribute(COUNT_PAGES, userService.countNumberUsersPages(rows));
             req.setAttribute(ALL_USERS, userService.findAll(pageNumber, rows));
         } catch (ServiceException e) {

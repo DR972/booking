@@ -21,7 +21,6 @@ import static by.rozmysl.booking.controller.command.RequestParameter.*;
 public class ErrorHandler extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
     public static final String UNKNOWN = "Unknown";
-    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +38,7 @@ public class ErrorHandler extends HttpServlet {
      * @param req  request content
      * @param resp response content
      * @throws ServletException if action cannot execute
-     * @throws IOException if action cannot execute
+     * @throws IOException      if action cannot execute
      */
     private void processError(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Throwable throwable = (Throwable) req.getAttribute(JAVAX_SERVLET_ERROR_EXCEPTION);

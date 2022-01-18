@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ctg" uri="/customtags" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
@@ -29,7 +30,7 @@
 
 	<div id="content" align="center">
         <h2>${message}</h2>
-        <h3>${client}: ${pageContext.request.userPrincipal.name}</h3>
+        <h3>${client}: ${booking.user.id}</h3>
         <h3>${arrival}: ${booking.arrival}</h3>
         <h3>${departure}: ${booking.departure}</h3>
         <h3>${room}: <fmt:message bundle="${msg}" key="db.${booking.room.type}"/></h3>

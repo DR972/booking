@@ -20,6 +20,10 @@ public final class PasswordEncryptor {
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 256;
 
+    /**
+     * Private constructor without parameters.
+     * Restrict instantiation of the class.
+     */
     private PasswordEncryptor() {
     }
 

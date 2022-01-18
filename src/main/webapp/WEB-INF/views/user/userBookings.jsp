@@ -29,7 +29,6 @@
 </head>
 
 <body>
-     ${userBookings}
     <jsp:include page="menuUser.jsp"></jsp:include>
     <div id="content" align="center">
         <h3><br/>${userBookings}</h3>

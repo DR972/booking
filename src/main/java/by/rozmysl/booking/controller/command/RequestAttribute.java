@@ -26,6 +26,7 @@ public final class RequestAttribute {
     public static final String ALL_SERVICES = "allServices";
 
     public static final String BOOKING = "booking";
+    public static final String CONFIRMATION = "confirmation";
     public static final String ALL_BOOKINGS = "allBookings";
     public static final String DATE_ERROR = "dateError";
     public static final String DATE_ERROR_RU = "Неправильно указаны даты!";

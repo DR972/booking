@@ -29,14 +29,14 @@ public class GetFreeRoomsCommand implements Command {
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         try {
-        if (req.getParameter(FROM) != null && req.getParameter(TO) != null) {
-            if (LocalDate.parse(req.getParameter(FROM)).isBefore(LocalDate.parse(req.getParameter(TO)))) {
-                req.setAttribute(FREE_ROOMS, ServiceFactory.getInstance().getRoomService().findAllFreeRoomsBetweenTwoDates(
-                        LocalDate.parse(req.getParameter(FROM)), LocalDate.parse(req.getParameter(TO))));
-            } else {
-                req.setAttribute(DATE_ERROR, DATE_ERROR_RU);
+            if (req.getParameter(FROM) != null && req.getParameter(TO) != null) {
+                if (LocalDate.parse(req.getParameter(FROM)).isBefore(LocalDate.parse(req.getParameter(TO)))) {
+                    req.setAttribute(FREE_ROOMS, ServiceFactory.getInstance().getRoomService().findAllFreeRoomsBetweenTwoDates(
+                            LocalDate.parse(req.getParameter(FROM)), LocalDate.parse(req.getParameter(TO))));
+                } else {
+                    req.setAttribute(DATE_ERROR, DATE_ERROR_RU);
+                }
             }
-        }
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);
