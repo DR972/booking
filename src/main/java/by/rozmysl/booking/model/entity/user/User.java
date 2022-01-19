@@ -34,24 +34,6 @@ public class User extends Entity<String> {
         super(username);
     }
 
-//    /**
-//     * The constructor creates a new object User with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
-//     * * <b>password</b>, <b>email</b> properties
-//     *
-//     * @param username  id of the User
-//     * @param lastname  lastname
-//     * @param firstname firstname
-//     * @param password  password
-//     * @param email     email
-//     */
-//    public User(String username, String lastname, String firstname, String password, String email) {
-//        super(username);
-//        this.lastname = lastname;
-//        this.firstname = firstname;
-//        this.password = password;
-//        this.email = email;
-//    }
-//
     /**
      * The constructor creates a new object User with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
      * <b>password</b>, <b>passwordConfirm</b>, <b>email</b> properties
@@ -71,29 +53,6 @@ public class User extends Entity<String> {
         this.passwordConfirm = passwordConfirm;
         this.email = email;
     }
-
-//    /**
-//     * The constructor creates a new object Booking with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,
-//     * <b>password</b>, <b>active</b>, <b>email</b>, <b>activationCode</b>, <b>roles</b> properties
-//     *
-//     * @param username       id of the User
-//     * @param lastname       lastname
-//     * @param firstname      firstname
-//     * @param password       password
-//     * @param active         active
-//     * @param email          email
-//     * @param activationCode activationCode
-//     */
-//    public User(String username, String lastname, String firstname, String password, boolean active, String email, String activationCode, Set<String> roles) {
-//        super(username);
-//        this.lastname = lastname;
-//        this.firstname = firstname;
-//        this.password = password;
-//        this.active = active;
-//        this.email = email;
-//        this.activationCode = activationCode;
-//        this.roles = roles;
-//    }
 
     /**
      * The constructor creates a new object Booking with the <b>username</b>, <b>lastname</b>, <b>firstname</b>,

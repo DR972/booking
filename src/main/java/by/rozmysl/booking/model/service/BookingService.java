@@ -49,7 +49,7 @@ public interface BookingService {
     /**
      * Provides logic for counting the number of pages of all Booking objects.
      *
-     * @param rows       number of rows per page
+     * @param rows number of rows per page
      * @return number of pages
      * @throws ServiceException if the operation failed
      */
@@ -58,10 +58,12 @@ public interface BookingService {
     /**
      * Provides booking validation.
      *
-     * @param booking Booking booking
+     * @param arrival arrival date
+     * @param days    number of days
+     * @param persons number of persons
      * @return validation result
      */
-    String validateBooking(Booking booking);
+    String validateBooking(String arrival, String days, String persons);
 
     /**
      * Provides logic for searching for all Bookings between two dates.
@@ -76,7 +78,7 @@ public interface BookingService {
     /**
      * Provides logic for searching for all Bookings made by the username.
      *
-     * @param username   id of the User
+     * @param username id of the User
      * @return list of Booking objects
      * @throws ServiceException if the operation failed
      */

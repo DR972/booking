@@ -84,7 +84,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void save(Booking booking) throws ServiceException {
         booking.setAmount(calculateAmount(booking));
-        try  {
+        try {
             bookingDao.saveWithGeneratedKeys(BOOKING_SAVE, MESSAGE_BOOKING_SAVE,
                     booking.getUser().getId(),
                     booking.getRoom().getId(),
@@ -110,7 +110,7 @@ public class BookingServiceImpl implements BookingService {
      */
     @Override
     public void delete(Long number) throws ServiceException {
-        try  {
+        try {
             new Letter().deleteInvoice("src/main/resources/static/" + number + ".pdf");
             bookingDao.updateEntity(BOOKING_DELETE, MESSAGE_BOOKING_DELETE, number);
         } catch (DaoException e) {
@@ -139,12 +139,14 @@ public class BookingServiceImpl implements BookingService {
     /**
      * Provides booking validation.
      *
-     * @param booking Booking booking
+     * @param arrival arrival date
+     * @param days    number of days
+     * @param persons number of persons
      * @return validation result
      */
     @Override
-    public String validateBooking(Booking booking) {
-        return new BookingValidator().allValidate(booking);
+    public String validateBooking(String arrival, String days, String persons) {
+        return new BookingValidator().allValidate(arrival, days, persons);
     }
 
     /**
@@ -195,7 +197,7 @@ public class BookingServiceImpl implements BookingService {
     public void changeRoom(long number, int roomNumber, ServiceFactory service) throws ServiceException {
         Booking booking = getAllBookingInfo(number, service);
         booking.setRoom(service.getRoomService().findById(roomNumber));
-        try  {
+        try {
             bookingDao.updateEntity(BOOKING_CHANGE_ROOM, MESSAGE_BOOKING_CHANGE_ROOM,
                     roomNumber,
                     calculateAmount(booking),
@@ -234,7 +236,7 @@ public class BookingServiceImpl implements BookingService {
             new Letter().deleteInvoice(filePath);
         }
 
-        try  {
+        try {
             bookingDao.updateEntity(BOOKING_CHANGE_BOOKING_STATUS, MESSAGE_BOOKING_CHANGE_BOOKING_STATUS,
                     status,
                     number);

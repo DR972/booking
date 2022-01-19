@@ -48,20 +48,24 @@ public class GetBookingDetailsCommand implements Command {
                 return new PageGuide(PageAddress.BOOKING_DETAILS, TransferMethod.FORWARD);
             }
 
-            int days = Integer.parseInt(req.getParameter(DAYS));
-            Booking booking = new Booking(
-                    Integer.parseInt(req.getParameter(PERSONS)),
-                    LocalDate.parse(req.getParameter(ARRIVAL)),
-                    LocalDate.parse(req.getParameter(ARRIVAL)).plusDays(days),
-                    days,
-                    service.getFoodService().findById(req.getParameter(FOOD)),
-                    service.getServicesService().findById(req.getParameter(SERVICE)));
-
-            String validate = service.getBookingService().validateBooking(booking);
+            String arrival = req.getParameter(ARRIVAL);
+            String days = req.getParameter(DAYS);
+            String persons = req.getParameter(PERSONS);
+            String validate = service.getBookingService().validateBooking(arrival, days, persons);
             if (validate != null) {
                 req.setAttribute(ERROR_VALIDATE, validate);
                 return new PageGuide(PageAddress.BOOKING_DETAILS, TransferMethod.FORWARD);
             }
+
+            int numberDays = Integer.parseInt(days);
+            LocalDate arrivalDate = LocalDate.parse(arrival);
+            Booking booking = new Booking(
+                    Integer.parseInt(persons),
+                    arrivalDate,
+                    arrivalDate.plusDays(numberDays),
+                    numberDays,
+                    service.getFoodService().findById(req.getParameter(FOOD)),
+                    service.getServicesService().findById(req.getParameter(SERVICE)));
 
             if (roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
                     (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {

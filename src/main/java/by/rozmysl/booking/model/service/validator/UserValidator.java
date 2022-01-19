@@ -9,7 +9,7 @@ import by.rozmysl.booking.model.service.UserService;
  */
 public class UserValidator extends Validator {
     private static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9.\\-]{4,20}";
-    private static final String PASSWORD_PATTERN = "[0-9]{5,}";// "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}";
+    private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}";
     private static final String NAME_PATTERN = "[A-Za-zА-Яа-яЁё]{2,20}";
     private static final String EMAIL_PATTERN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
     private static final String USERNAME = "username";
@@ -23,8 +23,8 @@ public class UserValidator extends Validator {
     /**
      * Executes all user validate
      *
-     * @param user user
-     *  @param userService UserService
+     * @param user        user
+     * @param userService UserService
      * @throws ServiceException if there was an error accessing the database
      */
     public String allValidate(User user, UserService userService) throws ServiceException {
@@ -34,10 +34,20 @@ public class UserValidator extends Validator {
         if (userService.findById(user.getId()) != null) {
             return REPEATING_NAME;
         }
-        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+        if (!validatePasswordConfirmation(user)) {
             return PASSWORD_CONFIRM;
         }
         return null;
+    }
+
+    /**
+     * Executes a password confirmation check
+     *
+     * @param user user
+     * @return validation result
+     */
+    public boolean validatePasswordConfirmation(User user) {
+        return user.getPassword().equals(user.getPasswordConfirm());
     }
 
     /**

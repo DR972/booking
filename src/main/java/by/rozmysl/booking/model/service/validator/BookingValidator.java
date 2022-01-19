@@ -1,7 +1,5 @@
 package by.rozmysl.booking.model.service.validator;
 
-import by.rozmysl.booking.model.entity.user.Booking;
-
 import java.time.LocalDate;
 
 /**
@@ -19,13 +17,15 @@ public class BookingValidator extends Validator {
     /**
      * Executes all booking validate
      *
-     * @param booking  Booking booking
+     * @param arrival arrival date
+     * @param days    number of days
+     * @param persons number of persons
      */
-    public String allValidate(Booking booking) {
-        if (!validateBookingParam(booking)) {
+    public String allValidate(String arrival, String days, String persons) {
+        if (!validateBookingParam(arrival, days, persons)) {
             return getValidationMessage();
         }
-        if (booking.getArrival().isBefore(LocalDate.now())) {
+        if (!validateArrivalDate(arrival)) {
             return VAL_DATE;
         }
         return null;
@@ -34,12 +34,24 @@ public class BookingValidator extends Validator {
     /**
      * Executes the booking parameters validate
      *
-     * @param booking Booking booking
+     * @param arrival arrival date
+     * @param days    number of days
+     * @param persons number of persons
      * @return validation result
      */
-    public boolean validateBookingParam(Booking booking) {
-        return validate(String.valueOf(booking.getArrival()), DATE_PATTERN, DATE) &&
-                validate(String.valueOf(booking.getDays()), DAYS_PATTERN, DAYS) &&
-                validate(String.valueOf(booking.getPersons()), PERSONS_PATTERN, PERSONS);
+    public boolean validateBookingParam(String arrival, String days, String persons) {
+        return validate(arrival, DATE_PATTERN, DATE) &&
+                validate(days, DAYS_PATTERN, DAYS) &&
+                validate(persons, PERSONS_PATTERN, PERSONS);
+    }
+
+    /**
+     * Executes a check-in date validate
+     *
+     * @param arrival arrival date
+     * @return validation result
+     */
+    public boolean validateArrivalDate(String arrival) {
+        return !LocalDate.parse(arrival).isBefore(LocalDate.now());
     }
 }
