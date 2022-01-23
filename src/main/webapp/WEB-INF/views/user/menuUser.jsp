@@ -25,7 +25,7 @@
     <div class="menu" id="menu">
 	    <table style="width: 100%;">
 		    <tr align = "center">
-			    <td><a href="/">${mainPage}</a></td>
+			    <td><a href="/anonymous/mainPage">${mainPage}</a></td>
 			    <td><a href="/user/bookingDetails">${book}</a></td>
 			    <td><a href="/anonymous/price">${prices}</a></td>
 			    <td><a href="/user/user">${userPage}</a></td>

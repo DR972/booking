@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- * Provides a service for determining the user's name and role in the session with the <b>username</b>, <b>roles</b>,
- * <b>realRequest</b> properties.
+ * An extension for the HTTPServletRequest that overrides the getUserPrincipal() and isUserInRole().
+ * If the user or roles are null on this wrapper, the parent request is consulted.
  */
 public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
     private final String username;
@@ -38,8 +38,7 @@ public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public boolean isUserInRole(String role) {
-        if (roles == null) return this.realRequest.isUserInRole(role);
-        return roles.contains(role);
+        return roles == null ? this.realRequest.isUserInRole(role) : roles.contains(role);
     }
 
     /**
@@ -49,7 +48,6 @@ public class UserRoleRequestWrapper extends HttpServletRequestWrapper {
      */
     @Override
     public Principal getUserPrincipal() {
-        if (this.username == null) return realRequest.getUserPrincipal();
-        return () -> username;
+        return this.username == null ? realRequest.getUserPrincipal() : (() -> username);
     }
 }

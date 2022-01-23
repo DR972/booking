@@ -31,6 +31,15 @@ public class SecurityFilter implements Filter {
     public void init(FilterConfig filterConfig) {
     }
 
+    /**
+     * Do filter.
+     *
+     * @param req  the Servlet request
+     * @param resp the Servlet response
+     * @param chain     the Filter chain
+     * @throws IOException      Signals that an I/O exception has occurred.
+     * @throws ServletException the servlet exception
+     */
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;

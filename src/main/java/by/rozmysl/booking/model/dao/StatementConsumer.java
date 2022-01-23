@@ -13,7 +13,7 @@ public interface StatementConsumer {
      * Performs this operation on given {@link PreparedStatement}.
      *
      * @param statement {@link PreparedStatement} argument
-     * @throws SQLException if can not perform an operation
+     * @throws SQLException if an error occurred during the operation
      */
     void accept(PreparedStatement statement) throws SQLException;
 

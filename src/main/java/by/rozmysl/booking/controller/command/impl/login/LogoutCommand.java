@@ -26,6 +26,6 @@ public class LogoutCommand implements Command {
     public PageGuide execute(HttpServletRequest req) {
         LOGGER.info("The user '" + req.getUserPrincipal().getName() + "' is logged out.");
         req.getSession().invalidate();
-        return new PageGuide(PageAddress.MAIN, TransferMethod.REDIRECT);
+        return new PageGuide(PageAddress.MAIN_REDIRECT, TransferMethod.REDIRECT);
     }
 }

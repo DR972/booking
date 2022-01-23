@@ -12,7 +12,7 @@
     <div class="menu" id="menu">
 	    <table style="width: 100%;">
 		    <tr align = "center">
-			    <td><a href="/">Главная</a></td>
+			    <td><a href="/anonymous/mainPage">Главная</a></td>
 			    <td><a href="/user/bookingDetails">Забронировать номер</a></td>
 			    <td><a href="/admin/allUsers">Все пользователи</a></td>
 			    <td><a href="/admin/allBookings">Все бронирования</a></td>

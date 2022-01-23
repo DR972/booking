@@ -27,7 +27,8 @@ public final class PageAddress {
     public static final String LOGIN = "/WEB-INF/views/anonymous/login.jsp";
     public static final String REGISTRATION = "/WEB-INF/views/anonymous/registration.jsp";
     public static final String PRICE = "/WEB-INF/views/anonymous/price.jsp";
-    public static final String MAIN = "/";
+    public static final String MAIN = "/WEB-INF/views/anonymous/mainPage.jsp";
+    public static final String MAIN_REDIRECT = "/anonymous/mainPage";
 
     /* USER pages */
     public static final String USER = "/WEB-INF/views/user/user.jsp";

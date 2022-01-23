@@ -41,8 +41,8 @@ public abstract class DaoImpl<T extends Entity<ID>, ID> implements Dao<T, ID> {
      */
     @Override
     public T findEntity(String sql, String errorMessage, Object... params) throws DaoException {
-        List<T> t = getResultSet(sql, errorMessage, statement -> setStatement(statement, params));
-        return t.size() != 0 ? t.get(0) : null;
+        List<T> entities = getResultSet(sql, errorMessage, statement -> setStatement(statement, params));
+        return entities.size() != 0 ? entities.get(0) : null;
     }
 
     /**

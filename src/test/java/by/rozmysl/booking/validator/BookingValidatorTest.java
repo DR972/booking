@@ -44,7 +44,7 @@ public class BookingValidatorTest {
                 {"2023-03-11", "2", "1",
                         true, true},
 
-                { "2020-11-02", "-2","1",
+                {"2020-11-02", "-2", "1",
                         false, false},
 
                 {"2030-02-18", "2", "-1",
@@ -79,7 +79,7 @@ public class BookingValidatorTest {
     public void validateUsernameTest() {
         try {
             assertThat(bookingValidator.validateArrivalDate(arrival), is(arrivalDateValidity));
-        } catch (DateTimeException ignored){
+        } catch (DateTimeException ignored) {
         }
     }
 }

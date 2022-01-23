@@ -28,6 +28,7 @@ import static by.rozmysl.booking.model.util.SqlQuery.*;
 public class BookingServiceImpl implements BookingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingServiceImpl.class);
     private static final String MAIL_MESSAGE = "Счет во вложении";
+    private static final String INVOICE_PATH = "src/main/resources/static/";
     private static final String ADDITIONALSERVICES_TYPE_TRANSFER = "трансфер";
     private static final String ADDITIONALSERVICES_TYPE_PARKING = "стоянка";
 
@@ -111,7 +112,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void delete(Long number) throws ServiceException {
         try {
-            new Letter().deleteInvoice("src/main/resources/static/" + number + ".pdf");
+            new Letter().deleteInvoice(INVOICE_PATH + number + ".pdf");
             bookingDao.updateEntity(BOOKING_DELETE, MESSAGE_BOOKING_DELETE, number);
         } catch (DaoException e) {
             LOGGER.error(MESSAGE_BOOKING_DELETE, e);
@@ -219,7 +220,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void changeBookingStatus(long number, String status, ServiceFactory service) throws ServiceException {
         Booking booking = getAllBookingInfo(number, service);
-        String filePath = "src/main/resources/static/" + number + ".pdf";
+        String filePath = INVOICE_PATH + number + ".pdf";
 
         if (status.equals(StatusReservation.INVOICE.getStatus())) {
             try {

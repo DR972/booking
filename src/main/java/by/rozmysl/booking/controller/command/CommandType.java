@@ -8,6 +8,7 @@ import by.rozmysl.booking.controller.command.impl.user.GetBookingDetailsCommand;
 import by.rozmysl.booking.controller.command.impl.user.ToUserPageCommand;
 
 public enum CommandType {
+    MAIN_PAGE(new ToMainPageCommand()),
     LOGIN(new LoginCommand()),
     ACTIVATION(new ActivationAccountCommand()),
     LOGOUT(new LogoutCommand()),

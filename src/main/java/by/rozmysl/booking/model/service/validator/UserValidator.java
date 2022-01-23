@@ -7,9 +7,9 @@ import by.rozmysl.booking.model.service.UserService;
 /**
  * Provides user validation.
  */
-public class UserValidator extends Validator {
+public final class UserValidator extends Validator {
     private static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9.\\-]{4,20}";
-    private static final String PASSWORD_PATTERN = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}";
+    private static final String PASSWORD_PATTERN = "[0-9]{5,}";// "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}";
     private static final String NAME_PATTERN = "[A-Za-zА-Яа-яЁё]{2,20}";
     private static final String EMAIL_PATTERN = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$";
     private static final String USERNAME = "username";
@@ -28,11 +28,12 @@ public class UserValidator extends Validator {
      * @throws ServiceException if there was an error accessing the database
      */
     public String allValidate(User user, UserService userService) throws ServiceException {
-        if (!validateSignUpParam(user)) {
-            return getValidationMessage();
-        }
+
         if (userService.findById(user.getId()) != null) {
             return REPEATING_NAME;
+        }
+        if (!validateSignUpParam(user)) {
+            return getValidationMessage();
         }
         if (!validatePasswordConfirmation(user)) {
             return PASSWORD_CONFIRM;

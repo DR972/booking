@@ -27,7 +27,7 @@ public final class SqlQuery {
     public static final String USER_DELETE =
             "delete from USER where USERNAME  = ?";
     public static final String USER_FIND_BY_ACTIVATION_CODE =
-            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED from USER " +
+            "select USERNAME, LASTNAME, FIRSTNAME, EMAIL, PASSWORD, ACTIVE, ACTIVATIONCODE, BANNED, GROUP_CONCAT (ROLE.NAME) as NAME from USER " +
                     "left join USER_ROLE on USERNAME = USER left join ROLE on ROLE = NAME where ACTIVATIONCODE = ?";
     public static final String USER_FIND_ROWS_COUNT =
             "select COUNT(*) as count from USER";

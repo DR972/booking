@@ -28,13 +28,13 @@
     <div class="menu" id="menu">
 	    <table style="width: 100%;">
 		    <tr align = "center">
-			    <td><a href="/">${mainPage}</a></td>
+			    <td><a href="/anonymous/mainPage">${mainPage}</a></td>
 			    <td><a href="/user/bookingDetails">${book}</a></td>
 			    <td><a href="/anonymous/price">${prices}</a></td>
-			    <c:if test = "${pageContext.request.isUserInRole('ADMIN')}">
+			    <c:if test = "${loggedUser.roles.contains('ADMIN')}">
                     <td><a href="/admin/admin">${adminPage}</a></td>
                 </c:if>
-                <c:if test = "${pageContext.request.isUserInRole('USER')}">
+                <c:if test = "${loggedUser.roles.contains('USER')}">
                     <td><a href="/user/user">${userPage}</a></td>
                 </c:if>
 			    <td><a href="#">${photo}</a></td>
@@ -50,5 +50,6 @@
 			    <td><a style="color:red">${loggedUser.id}</a></td>
 		    </tr>
 	    </table>
+	</div>
 </body>
 </html>
