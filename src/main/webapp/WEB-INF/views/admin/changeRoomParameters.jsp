@@ -49,7 +49,8 @@
                     <td>
                         <form action="changeRoomParameters" method="post">
                             <input type="number" step="1" name="price" value="${room.price}"/>
-                            <input type="hidden" name="roomNumber" value="${room.id}"/>
+                            <input type="hidden" name="type" value="${room.type}"/>
+                            <input type="hidden" name="sleeps" value="${room.sleeps}"/>
                             <input type="hidden" name="changePrice" value="changePrice"/>
                             <button type="submit">Изменить</button>
                         </form>

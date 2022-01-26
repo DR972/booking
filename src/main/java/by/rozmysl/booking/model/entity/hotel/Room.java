@@ -21,19 +21,6 @@ public class Room extends Entity<Integer> {
     }
 
     /**
-     * The constructor creates a new object Room with the <b>roomNumber</b>, <b>type</b>, <b>sleeps</b> properties
-     *
-     * @param roomNumber id of the Room
-     * @param type       type
-     * @param sleeps     sleeps
-     */
-    public Room(int roomNumber, String type, int sleeps) {
-        super(roomNumber);
-        this.type = type;
-        this.sleeps = sleeps;
-    }
-
-    /**
      * The constructor creates a new object Room with the <b>roomNumber</b> properties
      *
      * @param roomNumber id of the Room

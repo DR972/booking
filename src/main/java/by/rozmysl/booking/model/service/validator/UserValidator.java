@@ -4,6 +4,8 @@ import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.model.service.UserService;
 
+import static by.rozmysl.booking.model.ModelManager.USER_FIND_BY_ID;
+
 /**
  * Provides user validation.
  */
@@ -28,8 +30,8 @@ public final class UserValidator extends Validator {
      * @throws ServiceException if there was an error accessing the database
      */
     public String allValidate(User user, UserService userService) throws ServiceException {
-
-        if (userService.findById(user.getId()) != null) {
+//        if (userService.findById(user.getId()) != null) {
+        if (userService.findEntity(User.class, USER_FIND_BY_ID, user.getId()) != null) {
             return REPEATING_NAME;
         }
         if (!validateSignUpParam(user)) {

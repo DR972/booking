@@ -50,6 +50,7 @@ public final class RequestParameter {
     public static final String PASSWORD_CONFIRM = "passwordConfirm";
     public static final String EMAIL = "email";
     public static final String LANGUAGE = "language";
+    public static final String BANNED = "banned";
     public static final String CHANGE_ROLE_LIST = "changeRoleList";
     public static final String CHANGE_ACCOUNT_LOCK = "changeAccountLock";
 

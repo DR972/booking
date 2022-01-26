@@ -3,13 +3,17 @@ package by.rozmysl.booking.controller.command.impl.login;
 import by.rozmysl.booking.controller.command.*;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
+import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
+import static by.rozmysl.booking.model.ModelManager.USER_ACTIVATE;
+import static by.rozmysl.booking.model.ModelManager.USER_FIND_BY_ACTIVATION_CODE;
 
 /**
  * Provides service to initialize actions on the ActivationAccountCommand.
@@ -26,11 +30,14 @@ public class ActivationAccountCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
+        UserService userService = ServiceFactory.getInstance().getUserService();
         try {
-            if (ServiceFactory.getInstance().getUserService().activateUser(req.getPathInfo().substring(11))) {
-                req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_TRUE);
-            } else {
+            User user = userService.findEntity(User.class, USER_FIND_BY_ACTIVATION_CODE, req.getPathInfo().substring(11));
+            if (user == null) {
                 req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_ERROR);
+            } else {
+                userService.updateEntity(USER_ACTIVATE, user.getId());
+                req.setAttribute(MESSAGE_ACTIVE, MESSAGE_ACTIVE_TRUE);
             }
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);

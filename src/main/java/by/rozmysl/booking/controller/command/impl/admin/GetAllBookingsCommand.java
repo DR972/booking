@@ -20,6 +20,7 @@ import java.util.Map;
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_BOOKINGS;
 import static by.rozmysl.booking.controller.command.RequestAttribute.AVAILABLE_ROOMS;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the GetAllBookingsCommand.
@@ -47,8 +48,6 @@ public class GetAllBookingsCommand implements Command {
             }
 
             if (req.getParameter(CHANGE_ROOM) != null && req.getParameter(CHANGE_ROOM).equals(CHANGE_ROOM)) {
-                System.out.println(req.getParameter(BOOKING_NUMBER));
-                System.out.println(req.getParameter(ROOM_NUMBER));
                 bookingService.changeRoom(Long.parseLong(req.getParameter(BOOKING_NUMBER)), Integer.parseInt(req.getParameter(ROOM_NUMBER)), service);
                 LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the room number was changed to " +
                         req.getParameter(ROOM_NUMBER) + " by the admin " + req.getUserPrincipal().getName());
@@ -62,14 +61,14 @@ public class GetAllBookingsCommand implements Command {
 
             int pageNumber = SelectingPageParameters.getPageNumber(req);
             int rows = SelectingPageParameters.getNumberRows(req);
-            req.setAttribute(RequestAttribute.COUNT_PAGES, bookingService.countNumberBookingPages(rows));
-
-            List<Booking> allBookings = bookingService.findAll(pageNumber, rows);
+            req.setAttribute(RequestAttribute.COUNT_PAGES, bookingService.countNumberEntityRows(BOOKING_FIND_ROWS_COUNT, rows));
+            List<Booking> allBookings = bookingService.findListEntities(BOOKING_FIND_ALL, rows, pageNumber, rows);
             Map<Long, List<Room>> availableRooms = new HashMap<>();
             for (Booking booking : allBookings) {
-                availableRooms.put(booking.getId(), roomService.findAllFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                        (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+                availableRooms.put(booking.getId(), roomService.findListEntities(ROOM_FIND_ALL_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
+                        booking.getPersons(), booking.getDeparture(), booking.getArrival()));
             }
+
             req.setAttribute(AVAILABLE_ROOMS, availableRooms);
             req.setAttribute(ALL_BOOKINGS, allBookings);
             req.setAttribute(RequestAttribute.STATUS, StatusReservation.values());

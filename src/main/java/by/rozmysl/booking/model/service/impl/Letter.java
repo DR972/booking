@@ -1,4 +1,4 @@
-package by.rozmysl.booking.model.service;
+package by.rozmysl.booking.model.service.impl;
 
 import by.rozmysl.booking.exception.MailException;
 import by.rozmysl.booking.model.entity.user.Booking;
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Provides a service for creating emails.
@@ -53,9 +54,7 @@ public class Letter {
     public void createInvoice(Booking booking, String path) throws MailException {
         Document doc;
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            String font = classLoader.getResource(FONT_PATH).getPath();
-            //String invoice = Letter.class.getResource("/").getFile() + path;
+            String font = Objects.requireNonNull(getClass().getClassLoader().getResource(FONT_PATH)).getPath();
             doc = new Document(new PdfDocument(new PdfWriter(path)));
             doc.setFont(PdfFontFactory.createFont(font, ENCODING));
         } catch (IOException | NullPointerException e) {

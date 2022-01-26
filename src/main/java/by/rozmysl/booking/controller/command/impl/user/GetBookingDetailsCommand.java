@@ -3,7 +3,12 @@ package by.rozmysl.booking.controller.command.impl.user;
 import by.rozmysl.booking.controller.command.*;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
+import by.rozmysl.booking.model.entity.hotel.AdditionalServices;
+import by.rozmysl.booking.model.entity.hotel.Food;
+import by.rozmysl.booking.model.entity.hotel.Room;
 import by.rozmysl.booking.model.entity.user.Booking;
+import by.rozmysl.booking.model.service.AdditionalServicesService;
+import by.rozmysl.booking.model.service.FoodService;
 import by.rozmysl.booking.model.service.RoomService;
 import by.rozmysl.booking.model.service.ServiceFactory;
 import org.slf4j.Logger;
@@ -11,10 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the GetBookingDetailsCommand.
@@ -35,14 +42,16 @@ public class GetBookingDetailsCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         RoomService roomService = service.getRoomService();
+        FoodService foodService = service.getFoodService();
+        AdditionalServicesService services = service.getServicesService();
 
         if (req.getSession().getAttribute(ACTION) == BOOKING) {
             return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
         }
 
         try {
-            req.setAttribute(ALL_FOOD, service.getFoodService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
-            req.setAttribute(ALL_SERVICES, service.getServicesService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_FOOD, foodService.findListEntities(FOOD_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_SERVICES, services.findListEntities(ADDITIONALSERVICES_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
 
             if (!Objects.equals(req.getParameter(ACTION), BOOKING_DETAILS)) {
                 return new PageGuide(PageAddress.BOOKING_DETAILS, TransferMethod.FORWARD);
@@ -64,18 +73,18 @@ public class GetBookingDetailsCommand implements Command {
                     arrivalDate,
                     arrivalDate.plusDays(numberDays),
                     numberDays,
-                    service.getFoodService().findById(req.getParameter(FOOD)),
-                    service.getServicesService().findById(req.getParameter(SERVICE)));
+                    foodService.findEntity(Food.class, FOOD_FIND_BY_ID, req.getParameter(FOOD)),
+                    services.findEntity(AdditionalServices.class, ADDITIONALSERVICES_FIND_BY_ID, req.getParameter(SERVICE)));
 
-            if (roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                    (booking.getArrival(), booking.getDeparture(), booking.getPersons()).size() == 0) {
+            List<Room> rooms = roomService.findListEntities(ROOM_FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
+                    booking.getPersons(), booking.getDeparture(), booking.getArrival());
+
+            if (rooms.size() == 0) {
                 req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
             }
 
             req.getSession().setAttribute(BOOKING, booking);
-            req.getSession().setAttribute(FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
-                    roomService.findAllTypesFreeRoomsBetweenTwoDatesWithGreaterOrEqualSleeps
-                            (booking.getArrival(), booking.getDeparture(), booking.getPersons()));
+            req.getSession().setAttribute(FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS, rooms);
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

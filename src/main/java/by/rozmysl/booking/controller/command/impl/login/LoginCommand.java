@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.LOGIN_ERROR;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.USER_FIND_BY_ID;
 
 /**
  * Provides service to initialize actions on the LoginCommand.
@@ -39,7 +40,7 @@ public class LoginCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
         User user;
         try {
-            user = userService.findById(req.getParameter(USERNAME));
+            user = userService.findEntity(User.class, USER_FIND_BY_ID, req.getParameter(USERNAME));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

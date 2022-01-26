@@ -35,10 +35,21 @@ public class CommandFilter implements Filter {
             request.getServletContext().getRequestDispatcher(PageAddress.MAIN).forward(request, resp);
             return;
         }
-        if (request.getPathInfo() == null || !Arrays.asList(CommandType.values()).toString().contains(CommandType.convert(request.getPathInfo()))) {
-            request.getServletContext().getRequestDispatcher(PageAddress.PAGE_DOES_NOT_EXIST).forward(request, resp);
-            return;
+//        if (request.getPathInfo() == null || !Arrays.asList(CommandType.values()).toString().contains(CommandType.convert(request.getPathInfo()))) {
+//            request.getServletContext().getRequestDispatcher(PageAddress.PAGE_DOES_NOT_EXIST).forward(request, resp);
+//            return;
+//        }
+        if (request.getPathInfo() != null) {
+            String commandType = CommandType.convert(request.getPathInfo());
+            if (!Arrays.asList(CommandType.values()).toString().contains(commandType)) {
+                request.getServletContext().getRequestDispatcher(PageAddress.PAGE_DOES_NOT_EXIST).forward(request, resp);
+                return;
+            }
         }
+
+//        if (request.getPathInfo() == null) {
+//            request.getServletContext().getRequestDispatcher(PageAddress.PAGE_DOES_NOT_EXIST).forward(req, resp);
+//        }
         chain.doFilter(request, resp);
     }
 

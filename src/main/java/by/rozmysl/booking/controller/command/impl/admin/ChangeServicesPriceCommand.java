@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the ChangeServicesPriceCommand.
@@ -37,22 +38,20 @@ public class ChangeServicesPriceCommand implements Command {
         AdditionalServicesService servicesService = service.getServicesService();
 
         try {
-            if (req.getParameter(CHANGE_FOOD_PRICE) != null
-                    && req.getParameter(CHANGE_FOOD_PRICE).equals(CHANGE_FOOD_PRICE)) {
-                foodService.changeFoodPrice(req.getParameter(FOOD_TYPE), new BigDecimal(req.getParameter(FOOD_PRICE)));
+            if (req.getParameter(CHANGE_FOOD_PRICE) != null && req.getParameter(CHANGE_FOOD_PRICE).equals(CHANGE_FOOD_PRICE)) {
+                foodService.updateEntity(FOOD_CHANGE_FOOD_PRICE, new BigDecimal(req.getParameter(FOOD_PRICE)), req.getParameter(FOOD_TYPE));
                 LOGGER.info("For food '" + req.getParameter(FOOD_TYPE) + "', the price was changed to '" +
                         req.getParameter(FOOD_PRICE) + "' by admin " + req.getUserPrincipal().getName());
             }
 
-            if (req.getParameter(CHANGE_SERVICES_PRICE) != null
-                    && req.getParameter(CHANGE_SERVICES_PRICE).equals(CHANGE_SERVICES_PRICE)) {
-                servicesService.changeServicePrice(req.getParameter(SERVICE_TYPE), new BigDecimal(req.getParameter(SERVICE_PRICE)));
+            if (req.getParameter(CHANGE_SERVICES_PRICE) != null && req.getParameter(CHANGE_SERVICES_PRICE).equals(CHANGE_SERVICES_PRICE)) {
+                servicesService.updateEntity(ADDITIONALSERVICES_CHANGE_SERVICE_PRICE, new BigDecimal(req.getParameter(SERVICE_PRICE)), req.getParameter(SERVICE_TYPE));
                 LOGGER.info("For service '" + req.getParameter(SERVICE_TYPE) + "', the price was changed to '" +
                         req.getParameter(SERVICE_PRICE) + "' by admin " + req.getUserPrincipal().getName());
             }
 
-            req.setAttribute(ALL_FOOD, foodService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
-            req.setAttribute(ALL_SERVICES, servicesService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_FOOD, foodService.findListEntities(FOOD_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_SERVICES, servicesService.findListEntities(ADDITIONALSERVICES_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

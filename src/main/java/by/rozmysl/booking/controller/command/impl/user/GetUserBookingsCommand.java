@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.USER_BOOKING;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.BOOKING_FIND_ALL_BOOKINGS_BY_USER;
 
 /**
  * Provides service to initialize actions on the GetUserBookingsCommand.
@@ -34,7 +35,7 @@ public class GetUserBookingsCommand implements Command {
                 bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
                 LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was canceled by the user.");
             }
-            req.setAttribute(USER_BOOKING, bookingService.findAllBookingsByUser(req.getUserPrincipal().getName()));
+            req.setAttribute(USER_BOOKING, bookingService.findListEntities(BOOKING_FIND_ALL_BOOKINGS_BY_USER, req.getUserPrincipal().getName()));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

@@ -48,6 +48,7 @@
                                 <input type="hidden" name="rows" value="${rows}"/>
                                 <input type="hidden" name="pageNumber" value="${pageNumber}"/>
                                 <input type="hidden" name="username" value="${user.id}"/>
+                                <input type="hidden" name="banned" value="${user.banned}"/>
                                 <input type="hidden" name="changeAccountLock" value="changeAccountLock"/>
                                 <button type="submit">Изменить</button>
                             </form>

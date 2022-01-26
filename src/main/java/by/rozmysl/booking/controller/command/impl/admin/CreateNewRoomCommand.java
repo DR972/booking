@@ -18,6 +18,7 @@ import static by.rozmysl.booking.controller.command.RequestParameter.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.PRICE;
 import static by.rozmysl.booking.controller.command.RequestParameter.SLEEPS;
 import static by.rozmysl.booking.controller.command.RequestParameter.TYPE;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the CreateNewRoomCommand.
@@ -36,18 +37,18 @@ public class CreateNewRoomCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         RoomService roomService = ServiceFactory.getInstance().getRoomService();
         try {
-            req.setAttribute(ALL_TYPES_ROOMS, roomService.findAllTypesRooms());
+            req.setAttribute(ALL_TYPES_ROOMS, roomService.findListEntities(ROOM_FIND_ALL_TYPES_ROOMS));
 
             if (req.getParameter(ACTION) == null) {
                 return new PageGuide(PageAddress.ADD_ROOM, TransferMethod.FORWARD);
             }
 
-            if (roomService.findById(Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER))) != null) {
+            if (roomService.findEntity(Room.class, ROOM_FIND_BY_ID, Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER))) != null) {
                 req.setAttribute(ERROR_ROOM_NUMBER, ERROR_ROOM_NUMBER_RU);
                 return new PageGuide(PageAddress.ADD_ROOM, TransferMethod.FORWARD);
             }
 
-            Room room = roomService.findRoomByTypeAndSleeping(req.getParameter(TYPE), Integer.parseInt(req.getParameter(SLEEPS)));
+            Room room = roomService.findEntity(Room.class, ROOM_FIND_ROOM_BY_TYPE_AND_SLEEPING, req.getParameter(TYPE), Integer.parseInt(req.getParameter(SLEEPS)));
             if (room == null && req.getParameter(PRICE) == null) {
                 req.setAttribute(RequestAttribute.ROOM_NUMBER, req.getParameter(RequestParameter.ROOM_NUMBER));
                 req.setAttribute(RequestAttribute.TYPE, req.getParameter(RequestParameter.TYPE));
@@ -57,14 +58,14 @@ public class CreateNewRoomCommand implements Command {
             }
 
             if (room != null) {
-                roomService.save(new Room(Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER)), room.getType(),
-                        room.getSleeps(), room.getPrice()));
+                roomService.updateEntity(ROOM_SAVE, Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER)), room.getType(),
+                        room.getSleeps(), room.getPrice());
                 LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
             }
 
             if (req.getParameter(PRICE) != null) {
-                roomService.save(new Room(Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER)), req.getParameter(TYPE),
-                        Integer.parseInt(req.getParameter(SLEEPS)), new BigDecimal(req.getParameter(PRICE))));
+                roomService.updateEntity(ROOM_SAVE, Integer.parseInt(req.getParameter(RequestParameter.ROOM_NUMBER)),
+                        req.getParameter(TYPE), Integer.parseInt(req.getParameter(SLEEPS)), new BigDecimal(req.getParameter(PRICE)));
                 LOGGER.info("Admin '" + req.getUserPrincipal().getName() + "' created a new room - " + room);
             }
         } catch (ServiceException e) {

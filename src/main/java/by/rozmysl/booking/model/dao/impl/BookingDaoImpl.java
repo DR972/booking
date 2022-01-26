@@ -30,13 +30,17 @@ public class BookingDaoImpl extends DaoImpl<Booking, Long> implements BookingDao
         return new Booking(
                 resultSet.getLong(BOOKING_COLUMN_NUMBER),
                 new User(resultSet.getString(BOOKING_COLUMN_USER)),
-                new Room(resultSet.getInt(BOOKING_COLUMN_ROOM), resultSet.getString(ROOM_COLUMN_TYPE), resultSet.getInt(ROOM_COLUMN_SLEEPS)),
+                new Room(
+                        resultSet.getInt(BOOKING_COLUMN_ROOM),
+                        resultSet.getString(ROOM_COLUMN_TYPE),
+                        resultSet.getInt(ROOM_COLUMN_SLEEPS),
+                        resultSet.getBigDecimal(ROOM_COLUMN_PRICE)),
                 resultSet.getInt(BOOKING_COLUMN_PERSONS),
                 LocalDate.parse(resultSet.getString(BOOKING_COLUMN_ARRIVAL)),
                 LocalDate.parse(resultSet.getString(BOOKING_COLUMN_DEPARTURE)),
                 resultSet.getInt(BOOKING_COLUMN_DAYS),
-                new Food(resultSet.getString(BOOKING_COLUMN_FOOD)),
-                new AdditionalServices(resultSet.getString(BOOKING_COLUMN_SERVICES)),
+                new Food(resultSet.getString(BOOKING_COLUMN_FOOD), resultSet.getBigDecimal(FOOD_COLUMN_PRICE)),
+                new AdditionalServices(resultSet.getString(BOOKING_COLUMN_SERVICES), resultSet.getBigDecimal(ADDITIONALSERVICES_COLUMN_PRICE)),
                 resultSet.getBigDecimal(BOOKING_COLUMN_AMOUNT),
                 resultSet.getString(BOOKING_COLUMN_STATUS));
     }

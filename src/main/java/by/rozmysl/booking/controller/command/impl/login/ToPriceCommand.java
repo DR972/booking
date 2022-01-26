@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the ToPriceCommand.
@@ -30,9 +31,9 @@ public class ToPriceCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         ServiceFactory service = ServiceFactory.getInstance();
         try {
-            req.setAttribute(ALL_ROOMS_BY_TYPES_AND_SLEEPS, service.getRoomService().findAllRoomsByTypesAndSleeps());
-            req.setAttribute(ALL_FOOD, service.getFoodService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
-            req.setAttribute(ALL_SERVICES, service.getServicesService().findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_ROOMS_BY_TYPES_AND_SLEEPS, service.getRoomService().findListEntities(ROOM_FIND_ALL_ROOMS_BY_TYPES_AND_SLEEPS));
+            req.setAttribute(ALL_FOOD, service.getFoodService().findListEntities(FOOD_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_SERVICES, service.getServicesService().findListEntities(ADDITIONALSERVICES_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

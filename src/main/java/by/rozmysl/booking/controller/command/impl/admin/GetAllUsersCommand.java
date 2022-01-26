@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the GetAllUsersCommand.
@@ -33,7 +34,7 @@ public class GetAllUsersCommand implements Command {
 
         try {
             if (req.getParameter(CHANGE_ACCOUNT_LOCK) != null && req.getParameter(CHANGE_ACCOUNT_LOCK).equals(CHANGE_ACCOUNT_LOCK)) {
-                userService.changeUserAccountLock(req.getParameter(USERNAME));
+                userService.updateEntity(USER_CHANGE_ACCOUNT_LOCK, !Boolean.parseBoolean(req.getParameter(BANNED)), req.getParameter(USERNAME));
             }
 
             if (req.getParameter(CHANGE_ROLE_LIST) != null && req.getParameter(CHANGE_ROLE_LIST).equals(CHANGE_ROLE_LIST)) {
@@ -42,7 +43,7 @@ public class GetAllUsersCommand implements Command {
 
             if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
                 String username = req.getParameter(USERNAME);
-                if (!service.getBookingService().findAllBookingsByUser(username).isEmpty()) {
+                if (!service.getBookingService().findListEntities(BOOKING_FIND_ALL_BOOKINGS_BY_USER, username).isEmpty()) {
                     req.setAttribute(ERROR_DELETE_USER, ERROR_DELETE_USER_RU);
                 } else {
                     userService.delete(username);
@@ -52,8 +53,8 @@ public class GetAllUsersCommand implements Command {
 
             int pageNumber = SelectingPageParameters.getPageNumber(req);
             int rows = SelectingPageParameters.getNumberRows(req);
-            req.setAttribute(COUNT_PAGES, userService.countNumberUsersPages(rows));
-            req.setAttribute(ALL_USERS, userService.findAll(pageNumber, rows));
+            req.setAttribute(RequestAttribute.COUNT_PAGES, userService.countNumberEntityRows(USER_FIND_ROWS_COUNT, rows));
+            req.setAttribute(ALL_USERS, userService.findListEntities(USER_FIND_ALL, rows, pageNumber, rows));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);

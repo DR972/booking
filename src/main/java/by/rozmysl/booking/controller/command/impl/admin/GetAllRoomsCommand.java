@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_ROOMS;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
+import static by.rozmysl.booking.model.ModelManager.*;
 
 /**
  * Provides service to initialize actions on the GetAllRoomsCommand.
@@ -35,16 +36,17 @@ public class GetAllRoomsCommand implements Command {
 
         try {
             if (req.getParameter(CHANGE_ROOM_PRICE) != null && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
-                roomService.updatePrice(roomService.findById(Integer.parseInt(req.getParameter(ROOM_NUMBER))), new BigDecimal(req.getParameter(PRICE)));
+                roomService.updateEntity(ROOM_UPDATE_PRICE, new BigDecimal(req.getParameter(PRICE)),
+                        req.getParameter(TYPE), Integer.parseInt(req.getParameter(SLEEPS)));
                 LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +
                         req.getParameter(PRICE) + "' by admin " + req.getUserPrincipal().getName());
             }
             if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
-                roomService.delete(Integer.parseInt(req.getParameter(ROOM_NUMBER)));
+                roomService.updateEntity(ROOM_DELETE, Integer.parseInt(req.getParameter(ROOM_NUMBER)));
                 LOGGER.info("Room # " + req.getParameter(ROOM_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
             }
 
-            req.setAttribute(ALL_ROOMS, roomService.findAll(DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
+            req.setAttribute(ALL_ROOMS, roomService.findListEntities(ROOM_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);
