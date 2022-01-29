@@ -6,7 +6,7 @@ import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.dao.*;
 import by.rozmysl.booking.model.db.EntityTransaction;
 import by.rozmysl.booking.model.entity.user.User;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.UserService;
 import by.rozmysl.booking.model.service.validator.UserValidator;
 import by.rozmysl.booking.model.service.validator.PasswordEncryptor;
@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 import static by.rozmysl.booking.model.util.LoggerMessageError.*;
 
 /**
  * Provides logic for working with data sent to the `User` table DAO.
  */
-public class UserServiceImpl extends ServiceImpl<User, String> implements UserService {
+public class UserServiceImpl extends AbstractService<User, String> implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     private static final String ACTIVATION_CODE = "Activation code";
     private static final String USER = "USER";
@@ -37,9 +37,9 @@ public class UserServiceImpl extends ServiceImpl<User, String> implements UserSe
      * The constructor creates a new object UserServiceImpl without property.
      */
     public UserServiceImpl() {
-        final DaoFactory daoFactory = DaoFactory.getInstance();
-        userDao = daoFactory.getUserDao();
-        roleDao = daoFactory.getRoleDao();
+        final DaoProvider daoProvider = DaoProvider.getInstance();
+        userDao = daoProvider.getUserDao();
+        roleDao = daoProvider.getRoleDao();
     }
 
     /**
@@ -47,15 +47,15 @@ public class UserServiceImpl extends ServiceImpl<User, String> implements UserSe
      *
      * @param user     User
      * @param language User language
-     * @param service  ServiceFactory
+     * @param service  ServiceProvider
      * @throws ServiceException if the operation failed
      */
     @Override
-    public void save(User user, String language, ServiceFactory service) throws ServiceException {
+    public void save(User user, String language, ServiceProvider service) throws ServiceException {
         user.setActivationCode(UUID.randomUUID().toString());
         EntityTransaction transaction = new EntityTransaction(userDao, roleDao);
         try {
-            service.getMailSender().sendMail(user.getEmail(), ACTIVATION_CODE, new Letter().createMessage(user, language));
+            service.getMailSender().sendMail(user.getEmail(), ACTIVATION_CODE, new LetterCreator().createMessage(user, language));
             transaction.begin();
             userDao.updateEntityUsingTransaction(USER_SAVE,
                     user.getId(),
@@ -133,6 +133,7 @@ public class UserServiceImpl extends ServiceImpl<User, String> implements UserSe
      * @param username id of the User
      * @throws ServiceException if the operation failed
      */
+
     @Override
     public void changeListUserRoles(String username) throws ServiceException {
         User user = findEntity(User.class, USER_FIND_BY_ID, username);

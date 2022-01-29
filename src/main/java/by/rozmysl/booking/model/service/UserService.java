@@ -13,10 +13,10 @@ public interface UserService extends Service<User, String> {
      *
      * @param user     User
      * @param language User language
-     * @param service  ServiceFactory
+     * @param service  ServiceProvider
      * @throws ServiceException if the operation failed
      */
-    void save(User user, String language, ServiceFactory service) throws ServiceException;
+    void save(User user, String language, ServiceProvider service) throws ServiceException;
 
     /**
      * Provides logic for deleting the User in the `User` table and deleting the UserRole in the `UserRole` table

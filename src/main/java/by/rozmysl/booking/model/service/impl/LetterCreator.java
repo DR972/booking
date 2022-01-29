@@ -20,8 +20,8 @@ import java.util.Objects;
 /**
  * Provides a service for creating emails.
  */
-public class Letter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Letter.class);
+public class LetterCreator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LetterCreator.class);
     private static final String FONT_PATH = "static/myFont.ttf";
     private static final String ENCODING = "Cp1251";
 
@@ -45,7 +45,7 @@ public class Letter {
     }
 
     /**
-     * Executes actions to create a "Letter" file
+     * Executes actions to create a "LetterCreator" file
      *
      * @param booking booking
      * @param path    file path
@@ -112,7 +112,7 @@ public class Letter {
     }
 
     /**
-     * Executes actions to delete the "Letter" file
+     * Executes actions to delete the "LetterCreator" file
      *
      * @param path file path
      */

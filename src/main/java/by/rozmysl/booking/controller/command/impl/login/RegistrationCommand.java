@@ -4,7 +4,7 @@ import by.rozmysl.booking.controller.command.*;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.user.User;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.UserService;
 
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class RegistrationCommand implements Command {
             return new PageGuide(PageAddress.REGISTRATION, TransferMethod.FORWARD);
         }
 
-        ServiceFactory service = ServiceFactory.getInstance();
+        ServiceProvider service = ServiceProvider.getInstance();
         UserService userService = service.getUserService();
         User user = new User(
                 req.getParameter(USERNAME),

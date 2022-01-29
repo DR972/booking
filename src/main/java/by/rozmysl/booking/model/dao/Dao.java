@@ -1,7 +1,7 @@
 package by.rozmysl.booking.model.dao;
 
 import by.rozmysl.booking.exception.DaoException;
-import by.rozmysl.booking.model.ModelManager;
+import by.rozmysl.booking.model.ModelTypeProvider;
 import by.rozmysl.booking.model.entity.Entity;
 
 import java.sql.Connection;
@@ -24,56 +24,56 @@ public interface Dao<T extends Entity<ID>, ID> {
     /**
      * Searches for the object T in the table 'T' by various parameters.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @param params       Object parameters
      * @return T object
      * @throws DaoException if there was an error accessing the database
      */
-    T findEntity(ModelManager modelManager, Object... params) throws DaoException;
+    T findEntity(ModelTypeProvider provider, Object... params) throws DaoException;
 
     /**
      * Searches for all T objects in the `T` by various parameters.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @param params       Object parameters
      * @return list of T objects
      * @throws DaoException if there was an error accessing the database
      */
-    List<T> findListEntities(ModelManager modelManager, Object... params) throws DaoException;
+    List<T> findListEntities(ModelTypeProvider provider, Object... params) throws DaoException;
 
     /**
      * Performs various operations (save, update, delete) on the object T in the table 'T`.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @param params       Object parameters
      * @throws DaoException if there was an error accessing the database
      */
-    void updateEntity(ModelManager modelManager, Object... params) throws DaoException;
+    void updateEntity(ModelTypeProvider provider, Object... params) throws DaoException;
 
     /**
      * Performs various operations (save, update, delete) on the object T in the table 'T` using a transaction.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @param params       Object parameters
      * @throws DaoException if there was an error accessing the database
      */
-    void updateEntityUsingTransaction(ModelManager modelManager, Object... params) throws DaoException;
+    void updateEntityUsingTransaction(ModelTypeProvider provider, Object... params) throws DaoException;
 
     /**
      * Saves information to a database with automatic key generation.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @param params       Object parameters
      * @throws DaoException if there was an error accessing the database
      */
-    void saveWithGeneratedKeys(ModelManager modelManager, Object... params) throws DaoException;
+    void saveWithGeneratedKeys(ModelTypeProvider provider, Object... params) throws DaoException;
 
     /**
      * Gets the number of rows in the database.
      *
-     * @param modelManager ModelManager
+     * @param provider ModelTypeProvider
      * @return number of rows
      * @throws DaoException if there was an error accessing the database
      */
-    int countNumberEntityRows(ModelManager modelManager) throws DaoException;
+    int countNumberEntityRows(ModelTypeProvider provider) throws DaoException;
 }

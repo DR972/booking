@@ -7,7 +7,7 @@ import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.model.entity.hotel.StatusReservation;
 import by.rozmysl.booking.model.entity.user.Booking;
 import by.rozmysl.booking.model.service.BookingService;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.validator.BookingValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 import static by.rozmysl.booking.model.util.LoggerMessageError.*;
 
 /**
  * Provides logic for working with data sent to the `Booking` table DAO.
  */
-public class BookingServiceImpl extends ServiceImpl<Booking, Long> implements BookingService {
+public class BookingServiceImpl extends AbstractService<Booking, Long> implements BookingService {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookingServiceImpl.class);
     private static final String MAIL_MESSAGE = "Счет во вложении";
     private static final String INVOICE_PATH = "src/main/resources/static/";
@@ -58,7 +58,7 @@ public class BookingServiceImpl extends ServiceImpl<Booking, Long> implements Bo
      */
     @Override
     public void delete(Long number) throws ServiceException {
-        new Letter().deleteInvoice(INVOICE_PATH + number + ".pdf");
+        new LetterCreator().deleteInvoice(INVOICE_PATH + number + ".pdf");
         updateEntity(BOOKING_DELETE, number);
     }
 
@@ -80,11 +80,11 @@ public class BookingServiceImpl extends ServiceImpl<Booking, Long> implements Bo
      *
      * @param number     id of the Booking
      * @param roomNumber id of the Room
-     * @param service    ServiceFactory service
+     * @param service    ServiceProvider service
      * @throws ServiceException if the operation failed
      */
     @Override
-    public void changeRoom(long number, int roomNumber, ServiceFactory service) throws ServiceException {
+    public void changeRoom(long number, int roomNumber, ServiceProvider service) throws ServiceException {
         Booking booking = findEntity(Booking.class, BOOKING_FIND_BY_ID, number);
         booking.setRoom(service.getRoomService().findEntity(Room.class, ROOM_FIND_BY_ID, roomNumber));
         updateEntity(BOOKING_CHANGE_ROOM, roomNumber, calculateAmount(booking), number);
@@ -95,17 +95,17 @@ public class BookingServiceImpl extends ServiceImpl<Booking, Long> implements Bo
      *
      * @param number  id of the Booking
      * @param status  Booking status
-     * @param service ServiceFactory service
+     * @param service ServiceProvider service
      * @throws ServiceException if the operation failed
      */
     @Override
-    public void changeBookingStatus(long number, String status, ServiceFactory service) throws ServiceException {
+    public void changeBookingStatus(long number, String status, ServiceProvider service) throws ServiceException {
         Booking booking = findEntity(Booking.class, BOOKING_FIND_BY_ID, number);
         String filePath = INVOICE_PATH + number + ".pdf";
 
         if (status.equals(StatusReservation.INVOICE.getStatus())) {
             try {
-                new Letter().createInvoice(booking, filePath);
+                new LetterCreator().createInvoice(booking, filePath);
                 service.getMailSender().sendMailWithAttachment(service.getUserService()
                         .findEntity(User.class, USER_FIND_BY_ID, booking.getUser().getId()).getEmail(), status, MAIL_MESSAGE, filePath);
             } catch (MailException e) {
@@ -115,7 +115,7 @@ public class BookingServiceImpl extends ServiceImpl<Booking, Long> implements Bo
         }
 
         if (status.equals(StatusReservation.CLOSED.getStatus())) {
-            new Letter().deleteInvoice(filePath);
+            new LetterCreator().deleteInvoice(filePath);
         }
         updateEntity(BOOKING_CHANGE_BOOKING_STATUS, status, number);
     }

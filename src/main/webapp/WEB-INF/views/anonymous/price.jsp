@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8">
     <title>${prices}</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" media="screen">
 </head>
 
 <body>

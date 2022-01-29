@@ -6,5 +6,5 @@ import by.rozmysl.booking.model.service.RoomService;
 /**
  * Provides logic for working with data sent to the `Room` table DAO.
  */
-public class RoomServiceImpl extends ServiceImpl<Room, Integer> implements RoomService {
+public class RoomServiceImpl extends AbstractService<Room, Integer> implements RoomService {
 }

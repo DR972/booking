@@ -6,7 +6,7 @@ import by.rozmysl.booking.model.entity.user.Booking;
 /**
  * Provides logic for working with data sent to the `Booking` table DAO.
  */
-public interface BookingService extends Service<Booking, Long>{
+public interface BookingService extends Service<Booking, Long> {
 
     /**
      * Provides logic for saving the Booking in the `BOOKING` table
@@ -39,18 +39,18 @@ public interface BookingService extends Service<Booking, Long>{
      *
      * @param number     id of the Booking
      * @param roomNumber id of the Room
-     * @param service    ServiceFactory service
+     * @param service    ServiceProvider service
      * @throws ServiceException if the operation failed
      */
-    void changeRoom(long number, int roomNumber, ServiceFactory service) throws ServiceException;
+    void changeRoom(long number, int roomNumber, ServiceProvider service) throws ServiceException;
 
     /**
      * Provides logic for changing the Booking Status.
      *
      * @param number  id of the Booking
      * @param status  Booking status
-     * @param service ServiceFactory service
+     * @param service ServiceProvider service
      * @throws ServiceException if the operation failed
      */
-    void changeBookingStatus(long number, String status, ServiceFactory service) throws ServiceException;
+    void changeBookingStatus(long number, String status, ServiceProvider service) throws ServiceException;
 }

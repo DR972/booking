@@ -11,7 +11,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `ROOM` table DAO with the <b>ProxyConnection</b> properties.
  */
-public class RoomDaoImpl extends DaoImpl<Room, Integer> implements RoomDao {
+public class RoomDaoImpl extends AbstractDao<Room, Integer> implements RoomDao {
 
     @Override
     public Room buildEntity(ResultSet resultSet) throws SQLException {

@@ -3,28 +3,34 @@ package by.rozmysl.booking.model.dao;
 import by.rozmysl.booking.model.dao.impl.*;
 
 /**
- * Provides class DaoFactory.
+ * Provides class DaoProvider.
  */
-public final class DaoFactory {
-    private static DaoFactory daoFactory;
+public final class DaoProvider {
+    private final AdditionalServicesDao servicesDao = new AdditionalServicesDaoImpl();
+    private final FoodDao foodDao = new FoodDaoImpl();
+    private final RoomDao roomDao = new RoomDaoImpl();
+    private final BookingDao bookingDao = new BookingDaoImpl();
+    private final RoleDao roleDao = new RoleDaoImpl();
+    private final UserDao userDAO = new UserDaoImpl();
 
     /**
      * Private constructor without parameters.
      * Restrict instantiation of the class.
      */
-    private DaoFactory() {
+    private DaoProvider() {
+    }
+
+    private static class DaoProviderHolder {
+        static final DaoProvider INSTANCE = new DaoProvider();
     }
 
     /**
-     * Returns DaoFactory instance. Initialize instance if it doesn't.
+     * Returns DaoProvider instance. Initialize instance if it doesn't.
      *
      * @return dao
      */
-    public static DaoFactory getInstance() {
-        if (daoFactory == null) {
-            daoFactory = new DaoFactory();
-        }
-        return daoFactory;
+    public static DaoProvider getInstance() {
+        return DaoProviderHolder.INSTANCE;
     }
 
     /**
@@ -33,7 +39,7 @@ public final class DaoFactory {
      * @return the implementation of the AdditionalServicesDao interface
      */
     public AdditionalServicesDao getServicesDao() {
-        return new AdditionalServicesDaoImpl();
+        return servicesDao;
     }
 
     /**
@@ -42,7 +48,7 @@ public final class DaoFactory {
      * @return the implementation of the FoodDao interface
      */
     public FoodDao getFoodDao() {
-        return new FoodDaoImpl();
+        return foodDao;
     }
 
     /**
@@ -51,7 +57,7 @@ public final class DaoFactory {
      * @return the implementation of the RoomDao interface
      */
     public RoomDao getRoomDao() {
-        return new RoomDaoImpl();
+        return roomDao;
     }
 
     /**
@@ -60,7 +66,7 @@ public final class DaoFactory {
      * @return the implementation of the BookingDao interface
      */
     public BookingDao getBookingDao() {
-        return new BookingDaoImpl();
+        return bookingDao;
     }
 
     /**
@@ -69,7 +75,7 @@ public final class DaoFactory {
      * @return the implementation of the RoleDao interface
      */
     public RoleDao getRoleDao() {
-        return new RoleDaoImpl();
+        return roleDao;
     }
 
     /**
@@ -78,6 +84,6 @@ public final class DaoFactory {
      * @return the implementation of the UserDao interface
      */
     public UserDao getUserDao() {
-        return new UserDaoImpl();
+        return userDAO;
     }
 }

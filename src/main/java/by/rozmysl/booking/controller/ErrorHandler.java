@@ -20,7 +20,7 @@ import static by.rozmysl.booking.controller.command.RequestParameter.*;
 @WebServlet(urlPatterns = "/ErrorHandler")
 public class ErrorHandler extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-    public static final String UNKNOWN = "Unknown";
+    private static final String UNKNOWN = "Unknown";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -4,7 +4,7 @@ import by.rozmysl.booking.controller.command.*;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.service.RoomService;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_ROOMS;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 
 /**
  * Provides service to initialize actions on the GetAllRoomsCommand.
@@ -32,7 +32,7 @@ public class GetAllRoomsCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        RoomService roomService = ServiceFactory.getInstance().getRoomService();
+        RoomService roomService = ServiceProvider.getInstance().getRoomService();
 
         try {
             if (req.getParameter(CHANGE_ROOM_PRICE) != null && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {

@@ -11,7 +11,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `FOOD` table DAO.
  */
-public class FoodDaoImpl extends DaoImpl<Food, String> implements FoodDao {
+public class FoodDaoImpl extends AbstractDao<Food, String> implements FoodDao {
 
     /**
      * Create Food entity

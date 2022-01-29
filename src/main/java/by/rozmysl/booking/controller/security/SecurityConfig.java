@@ -34,6 +34,7 @@ public final class SecurityConfig {
         List<String> urlPatternsUSER = new ArrayList<>();
         urlPatternsUSER.add(PATTERNS_USER);
         mapConfig.put(ROLE_USER, urlPatternsUSER);
+
         List<String> urlPatternsADMIN = new ArrayList<>();
         urlPatternsADMIN.add(PATTERNS_ADMIN);
         mapConfig.put(ROLE_ADMIN, urlPatternsADMIN);

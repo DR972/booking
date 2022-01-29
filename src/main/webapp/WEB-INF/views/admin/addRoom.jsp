@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Добавить номер</title>
-    <link rel="stylesheet" type="text/css" href="/css/addRoom.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/addRoom.css">
 </head>
 <body>
     <jsp:include page="adminMenu.jsp"></jsp:include>

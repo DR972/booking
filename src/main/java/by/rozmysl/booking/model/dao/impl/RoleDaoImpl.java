@@ -11,7 +11,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `UserRole` table DAO.
  */
-public class RoleDaoImpl extends DaoImpl<UserRole, String> implements RoleDao {
+public class RoleDaoImpl extends AbstractDao<UserRole, String> implements RoleDao {
 
     /**
      * Create UserRole entity

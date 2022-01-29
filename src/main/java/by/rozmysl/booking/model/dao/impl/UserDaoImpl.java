@@ -13,7 +13,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `User` table DAO.
  */
-public class UserDaoImpl extends DaoImpl<User, String> implements UserDao {
+public class UserDaoImpl extends AbstractDao<User, String> implements UserDao {
 
     /**
      * Create User entity
@@ -43,6 +43,6 @@ public class UserDaoImpl extends DaoImpl<User, String> implements UserDao {
      * @return list of User objects
      */
     private Set<String> getRoles(String str) {
-        return str == null ? new HashSet<>() : new HashSet<>(Arrays.asList(str.split(",")));
+        return str != null ? new HashSet<>(Arrays.asList(str.split(","))) : new HashSet<>();
     }
 }

@@ -13,7 +13,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${accessDenied}</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
     <jsp:include page="/WEB-INF/views/anonymous/menu.jsp"></jsp:include>

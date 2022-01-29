@@ -5,7 +5,7 @@ import by.rozmysl.booking.controller.util.AppUtil;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.user.User;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.UserService;
 
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.LOGIN_ERROR;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
-import static by.rozmysl.booking.model.ModelManager.USER_FIND_BY_ID;
+import static by.rozmysl.booking.model.ModelTypeProvider.USER_FIND_BY_ID;
 
 /**
  * Provides service to initialize actions on the LoginCommand.
@@ -37,7 +37,7 @@ public class LoginCommand implements Command {
             return new PageGuide(PageAddress.LOGIN, TransferMethod.FORWARD);
         }
 
-        UserService userService = ServiceFactory.getInstance().getUserService();
+        UserService userService = ServiceProvider.getInstance().getUserService();
         User user;
         try {
             user = userService.findEntity(User.class, USER_FIND_BY_ID, req.getParameter(USERNAME));

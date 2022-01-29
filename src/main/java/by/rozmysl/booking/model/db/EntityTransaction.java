@@ -14,7 +14,7 @@ public class EntityTransaction implements AutoCloseable {
     /**
      * Constructs EntityTransaction with at least one dao.
      *
-     * @param dao    Dao<T,ID>   dao
+     * @param dao      Dao<T,ID>   dao
      * @param otherDao Dao<T,ID> other dao
      */
     public EntityTransaction(Dao<?, ?> dao, Dao<?, ?>... otherDao) {
@@ -74,7 +74,7 @@ public class EntityTransaction implements AutoCloseable {
     /**
      * Sets connection to all dao.
      *
-     * @param dao       dao
+     * @param dao      dao
      * @param otherDao other dao
      * @see Dao#setConnection(Connection)
      */

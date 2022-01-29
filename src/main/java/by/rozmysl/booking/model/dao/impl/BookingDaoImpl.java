@@ -16,7 +16,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `BOOKING` table DAO.
  */
-public class BookingDaoImpl extends DaoImpl<Booking, Long> implements BookingDao {
+public class BookingDaoImpl extends AbstractDao<Booking, Long> implements BookingDao {
 
     /**
      * Create Booking entity

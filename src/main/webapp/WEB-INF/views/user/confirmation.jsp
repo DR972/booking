@@ -23,7 +23,7 @@
 <head>
     <meta charset="UTF-8">
     <title>${confirmation}</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
     <jsp:include page="menuUser.jsp"></jsp:include>

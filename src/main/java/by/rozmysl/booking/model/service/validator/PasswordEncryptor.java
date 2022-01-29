@@ -15,10 +15,10 @@ import org.slf4j.LoggerFactory;
  * Provides a password encoding service.
  */
 public final class PasswordEncryptor {
-    private static final Logger logger = LoggerFactory.getLogger(PasswordEncryptor.class);
-    private static final int iterations = 20 * 1000;
-    private static final int saltLen = 32;
-    private static final int desiredKeyLen = 256;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordEncryptor.class);
+    private static final int ITERATIONS = 20 * 1000;
+    private static final int SALT_LEN = 32;
+    private static final int DESIRED_KEY_LEN = 256;
 
     /**
      * Private constructor without parameters.
@@ -36,9 +36,9 @@ public final class PasswordEncryptor {
     public static String getSaltedHash(String password) {
         byte[] salt = new byte[0];
         try {
-            salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
+            salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(SALT_LEN);
         } catch (NoSuchAlgorithmException e) {
-            logger.error(String.valueOf(e));
+            LOGGER.error(String.valueOf(e));
         }
         return Base64.encodeBase64String(salt) + "$" + hash(password, salt);
     }
@@ -64,13 +64,13 @@ public final class PasswordEncryptor {
      * @return hash
      */
     private static String hash(String password, byte[] salt) {
-        SecretKeyFactory f;
+        SecretKeyFactory keyFactory;
         SecretKey key = null;
         try {
-            f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            key = f.generateSecret(new PBEKeySpec(password.toCharArray(), salt, iterations, desiredKeyLen));
+            keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            key = keyFactory.generateSecret(new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, DESIRED_KEY_LEN));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            logger.error(String.valueOf(e));
+            LOGGER.error(String.valueOf(e));
         }
         return Base64.encodeBase64String(key != null ? key.getEncoded() : new byte[0]);
     }

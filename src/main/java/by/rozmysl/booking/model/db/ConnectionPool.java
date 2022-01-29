@@ -25,14 +25,14 @@ public class ConnectionPool {
     private static final String DATABASE_USER = "db.user";
     private static final String DATABASE_PASSWORD = "db.password";
     private static final String DATABASE_POOL_SIZE = "db.poolSize";
-
+    private static final Properties properties = new Properties();
     private static final ReentrantLock lock = new ReentrantLock();
     private static final AtomicBoolean isInitialized = new AtomicBoolean(false);
     private static int poolSize;
     private static ConnectionPool instance;
     private final BlockingQueue<ProxyConnection> availableConnections;
     private final BlockingQueue<ProxyConnection> busyConnections;
-    private static final Properties properties = new Properties();
+
 
     /**
      * The constructor creates a new object ConnectionPool without parameters
@@ -156,7 +156,7 @@ public class ConnectionPool {
      *
      * @param connectionQueue connection queue
      * @throws InterruptedException if connection cannot be closed
-     * @throws SQLException if connection cannot be closed
+     * @throws SQLException         if connection cannot be closed
      */
     private void clearConnectionQueue(BlockingQueue<ProxyConnection> connectionQueue) throws SQLException, InterruptedException {
         while (!connectionQueue.isEmpty()) {
@@ -165,7 +165,7 @@ public class ConnectionPool {
     }
 
     /**
-     * Deregistering a Database Driver.
+     * DeRegistering a Database Driver.
      */
     private void deregisterDriver() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
@@ -174,7 +174,7 @@ public class ConnectionPool {
             } catch (SQLException e) {
                 LOGGER.error("There are some problems with deregister driver");
             }
-            LOGGER.info("Deregistration of the driver was successful.");
+            LOGGER.info("DeRegistration of the driver was successful.");
         });
     }
 }

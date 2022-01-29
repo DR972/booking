@@ -1,4 +1,5 @@
 package by.rozmysl.booking.model.dao;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

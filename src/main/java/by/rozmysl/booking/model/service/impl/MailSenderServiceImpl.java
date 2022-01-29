@@ -1,7 +1,7 @@
 package by.rozmysl.booking.model.service.impl;
 
 import by.rozmysl.booking.exception.MailException;
-import by.rozmysl.booking.model.service.MailSender;
+import by.rozmysl.booking.model.service.MailSenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,17 +17,16 @@ import java.util.Properties;
 /**
  * The class is responsible for sending mail with the <b>config</b> properties.
  */
-public class MailSenderImpl implements MailSender {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailSenderImpl.class);
+public class MailSenderServiceImpl implements MailSenderService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailSenderServiceImpl.class);
     private static final String MAIL_PATH = "mail/mail.properties";
     private static final String MAIL_NAME = "hotelproject111@gmail.com";
     private static final String MAIL_PASSWORD = "rfirxylirqzomixp";
-
-    private final Session session;
     private static final Properties properties = new Properties();
+    private final Session session;
 
-    public MailSenderImpl() throws MailException {
-        try (InputStream inputStream = MailSenderImpl.class.getClassLoader().getResourceAsStream(MAIL_PATH)) {
+    public MailSenderServiceImpl() throws MailException {
+        try (InputStream inputStream = MailSenderServiceImpl.class.getClassLoader().getResourceAsStream(MAIL_PATH)) {
             properties.load(inputStream);
             session = Session.getInstance(properties, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {

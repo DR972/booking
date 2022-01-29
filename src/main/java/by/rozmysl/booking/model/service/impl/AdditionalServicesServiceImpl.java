@@ -6,5 +6,5 @@ import by.rozmysl.booking.model.service.AdditionalServicesService;
 /**
  * Provides logic for working with data sent to the `AdditionalServices` table DAO.
  */
-public class AdditionalServicesServiceImpl extends ServiceImpl<AdditionalServices, String> implements AdditionalServicesService {
+public class AdditionalServicesServiceImpl extends AbstractService<AdditionalServices, String> implements AdditionalServicesService {
 }

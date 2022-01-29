@@ -8,7 +8,7 @@ import by.rozmysl.booking.model.entity.hotel.StatusReservation;
 import by.rozmysl.booking.model.entity.user.Booking;
 import by.rozmysl.booking.model.service.BookingService;
 import by.rozmysl.booking.model.service.RoomService;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ import java.util.Map;
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_BOOKINGS;
 import static by.rozmysl.booking.controller.command.RequestAttribute.AVAILABLE_ROOMS;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 
 /**
  * Provides service to initialize actions on the GetAllBookingsCommand.
@@ -37,7 +37,7 @@ public class GetAllBookingsCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        ServiceFactory service = ServiceFactory.getInstance();
+        ServiceProvider service = ServiceProvider.getInstance();
         BookingService bookingService = service.getBookingService();
         RoomService roomService = service.getRoomService();
 

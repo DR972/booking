@@ -7,24 +7,25 @@
 <head>
     <meta charset="utf-8">
     <title>Select the page number</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
+    <c:set var="defaultNumberPages" value="5" scope="session" />
     <div>
         <c:choose>
-            <c:when test="${pageNumber == 0}">
-                <c:set var="finish" value="${pageNumber+2}"/>
+            <c:when test="${pageNumber < defaultNumberPages/2}">
+                <c:set var="finish" value="${defaultNumberPages - 1}"/>
             </c:when>
             <c:otherwise>
-                <c:set var="finish" value="${pageNumber+1}"/>
+                <c:set var="finish" value="${pageNumber + defaultNumberPages/2}"/>
             </c:otherwise>
         </c:choose>
         <c:choose>
-            <c:when test="${pageNumber == countPages-1}">
-                <c:set var="start" value="${pageNumber-2}"/>
+            <c:when test="${pageNumber > countPages - defaultNumberPages/2 - 1}">
+                <c:set var="start" value="${countPages - defaultNumberPages}"/>
             </c:when>
              <c:otherwise>
-                <c:set var="start" value="${pageNumber-1}"/>
+                <c:set var="start" value="${pageNumber - defaultNumberPages/2 + 1}"/>
             </c:otherwise>
         </c:choose>
 

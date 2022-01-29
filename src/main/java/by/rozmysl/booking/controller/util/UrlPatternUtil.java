@@ -42,8 +42,12 @@ public final class UrlPatternUtil {
         ServletContext servletContext = req.getServletContext();
         String servletPath = req.getServletPath();
 
-        if (req.getPathInfo() != null) return servletPath + PATH;
-        if (hasUrlPattern(servletContext, servletPath)) return servletPath;
+        if (req.getPathInfo() != null) {
+            return servletPath + PATH;
+        }
+        if (hasUrlPattern(servletContext, servletPath)) {
+            return servletPath;
+        }
 
         int i = servletPath.lastIndexOf('.');
         if (i != -1) {

@@ -11,7 +11,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
 /**
  * Provides the base model implementation for `ADDITIONALSERVICES` table DAO.
  */
-public class AdditionalServicesDaoImpl extends DaoImpl<AdditionalServices, String> implements AdditionalServicesDao {
+public class AdditionalServicesDaoImpl extends AbstractDao<AdditionalServices, String> implements AdditionalServicesDao {
 
     /**
      * Create AdditionalServices entity

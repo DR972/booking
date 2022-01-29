@@ -3,7 +3,7 @@ package by.rozmysl.booking.controller.command.impl.admin;
 import by.rozmysl.booking.controller.command.*;
 import by.rozmysl.booking.exception.CommandException;
 import by.rozmysl.booking.exception.ServiceException;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 
 /**
  * Provides service to initialize actions on the GetAllUsersCommand.
@@ -29,8 +29,8 @@ public class GetAllUsersCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        ServiceFactory service = ServiceFactory.getInstance();
-        UserService userService = ServiceFactory.getInstance().getUserService();
+        ServiceProvider service = ServiceProvider.getInstance();
+        UserService userService = ServiceProvider.getInstance().getUserService();
 
         try {
             if (req.getParameter(CHANGE_ACCOUNT_LOCK) != null && req.getParameter(CHANGE_ACCOUNT_LOCK).equals(CHANGE_ACCOUNT_LOCK)) {

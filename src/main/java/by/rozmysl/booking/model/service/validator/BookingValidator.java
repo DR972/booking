@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Provides booking validation.
  */
-public final class BookingValidator extends Validator {
+public final class BookingValidator extends AbstractValidator {
     private static final String DATE_PATTERN = "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])";
     private static final String DAYS_PATTERN = "^(?:[1-9]|[1-2][0-9]|3[0-1])$";
     private static final String PERSONS_PATTERN = "^(?:[1-9]|[1][0])$";

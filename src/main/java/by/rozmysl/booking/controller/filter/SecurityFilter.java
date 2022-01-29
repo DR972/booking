@@ -3,9 +3,10 @@ package by.rozmysl.booking.controller.filter;
 import by.rozmysl.booking.controller.security.SecurityUtil;
 import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.controller.util.AppUtil;
-import by.rozmysl.booking.controller.security.UserRoleRequestWrapper;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.Set;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,6 +15,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import static by.rozmysl.booking.controller.command.PageAddress.ACCESS_DENIED;
@@ -34,9 +36,9 @@ public class SecurityFilter implements Filter {
     /**
      * Do filter.
      *
-     * @param req  the Servlet request
-     * @param resp the Servlet response
-     * @param chain     the Filter chain
+     * @param req   the Servlet request
+     * @param resp  the Servlet response
+     * @param chain the Filter chain
      * @throws IOException      Signals that an I/O exception has occurred.
      * @throws ServletException the servlet exception
      */
@@ -53,7 +55,55 @@ public class SecurityFilter implements Filter {
 
         HttpServletRequest wrapRequest = request;
         if (loggedUser != null) {
+
+            /*
+              An extension for the HTTPServletRequest that overrides the getUserPrincipal() and isUserInRole().
+              If the user or roles are null on this wrapper, the parent request is consulted.
+             */
+            final class UserRoleRequestWrapper extends HttpServletRequestWrapper {
+                private final String username;
+                private final Set<String> roles;
+                private final HttpServletRequest realRequest;
+
+                /**
+                 * The constructor creates a new object UserRoleRequestWrapper with the <b>username</b>, <b>roles</b>,
+                 * <b>realRequest</b> properties.
+                 *
+                 * @param username id of the User
+                 * @param roles    roles
+                 * @param request  realRequest
+                 */
+                public UserRoleRequestWrapper(String username, Set<String> roles, HttpServletRequest request) {
+                    super(request);
+                    this.username = username;
+                    this.roles = roles;
+                    this.realRequest = request;
+                }
+
+                /**
+                 * Checks whether this role corresponds to the user
+                 *
+                 * @param role role
+                 * @return verification result
+                 */
+                @Override
+                public boolean isUserInRole(String role) {
+                    return roles == null ? this.realRequest.isUserInRole(role) : roles.contains(role);
+                }
+
+                /**
+                 * Gets the value of the username property
+                 *
+                 * @return a value of the username
+                 */
+                @Override
+                public Principal getUserPrincipal() {
+                    return this.username == null ? realRequest.getUserPrincipal() : (() -> username);
+                }
+            }
+
             wrapRequest = new UserRoleRequestWrapper(loggedUser.getId(), loggedUser.getRoles(), request);
+
         }
 
         if (SecurityUtil.isSecurityPage(request)) {

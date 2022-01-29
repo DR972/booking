@@ -13,13 +13,14 @@
 <html lang="${language}">
 <head>
     <title>${mainPage}</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
 <body>
     <jsp:include page="/WEB-INF/views/anonymous/menu.jsp"></jsp:include>
     <div id="content">
-        <h2>${welcome} ${loggedUser.id}</h2>
+        <h3>${welcome}</h3>
+        <h3>${message} ${loggedUser.id}</h3>
     </div>
 </body>
 </html>

@@ -3,9 +3,9 @@ package by.rozmysl.booking.model.service.validator;
 import java.util.regex.Pattern;
 
 /**
- * Provides base functionality for Validator classes.
+ * Provides base functionality for AbstractValidator classes.
  */
-abstract class Validator {
+abstract class AbstractValidator {
     private String validationMessage;
 
     /**

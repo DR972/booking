@@ -4,12 +4,12 @@ import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.model.service.UserService;
 
-import static by.rozmysl.booking.model.ModelManager.USER_FIND_BY_ID;
+import static by.rozmysl.booking.model.ModelTypeProvider.USER_FIND_BY_ID;
 
 /**
  * Provides user validation.
  */
-public final class UserValidator extends Validator {
+public final class UserValidator extends AbstractValidator {
     private static final String USERNAME_PATTERN = "[A-Za-z][A-Za-z0-9.\\-]{4,20}";
     private static final String PASSWORD_PATTERN = "[0-9]{5,}";// "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,30}";
     private static final String NAME_PATTERN = "[A-Za-zА-Яа-яЁё]{2,20}";
@@ -30,7 +30,6 @@ public final class UserValidator extends Validator {
      * @throws ServiceException if there was an error accessing the database
      */
     public String allValidate(User user, UserService userService) throws ServiceException {
-//        if (userService.findById(user.getId()) != null) {
         if (userService.findEntity(User.class, USER_FIND_BY_ID, user.getId()) != null) {
             return REPEATING_NAME;
         }

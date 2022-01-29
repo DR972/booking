@@ -10,7 +10,7 @@ import by.rozmysl.booking.model.entity.user.Booking;
 import by.rozmysl.booking.model.service.AdditionalServicesService;
 import by.rozmysl.booking.model.service.FoodService;
 import by.rozmysl.booking.model.service.RoomService;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 
 /**
  * Provides service to initialize actions on the GetBookingDetailsCommand.
@@ -40,7 +40,7 @@ public class GetBookingDetailsCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        ServiceFactory service = ServiceFactory.getInstance();
+        ServiceProvider service = ServiceProvider.getInstance();
         RoomService roomService = service.getRoomService();
         FoodService foodService = service.getFoodService();
         AdditionalServicesService services = service.getServicesService();

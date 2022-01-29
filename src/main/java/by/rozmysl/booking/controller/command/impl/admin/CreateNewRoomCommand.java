@@ -6,7 +6,7 @@ import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.hotel.Room;
 
 import by.rozmysl.booking.model.service.RoomService;
-import by.rozmysl.booking.model.service.ServiceFactory;
+import by.rozmysl.booking.model.service.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import static by.rozmysl.booking.controller.command.RequestParameter.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.PRICE;
 import static by.rozmysl.booking.controller.command.RequestParameter.SLEEPS;
 import static by.rozmysl.booking.controller.command.RequestParameter.TYPE;
-import static by.rozmysl.booking.model.ModelManager.*;
+import static by.rozmysl.booking.model.ModelTypeProvider.*;
 
 /**
  * Provides service to initialize actions on the CreateNewRoomCommand.
@@ -35,7 +35,7 @@ public class CreateNewRoomCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        RoomService roomService = ServiceFactory.getInstance().getRoomService();
+        RoomService roomService = ServiceProvider.getInstance().getRoomService();
         try {
             req.setAttribute(ALL_TYPES_ROOMS, roomService.findListEntities(ROOM_FIND_ALL_TYPES_ROOMS));
 
