@@ -44,22 +44,29 @@ public final class SqlQuery {
 
     /* Query to the BOOKING table */
     public static final String BOOKING_QUERY_FIND_BY_ID =
-            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE" +
-                    " from BOOKING left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE where NUMBER = ?";
+            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, " +
+                    "ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE from BOOKING " +
+                    "left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE " +
+                    "left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE where NUMBER = ?";
     public static final String BOOKING_QUERY_FIND_ALL =
-            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE" +
-                    " from BOOKING left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE offset ? * ? ROWS fetch next ? ROWS only";
+            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, " +
+                    "ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE from BOOKING " +
+                    "left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE " +
+                    "left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE offset ? * ? ROWS fetch next ? ROWS only";
     public static final String BOOKING_QUERY_SAVE =
             "insert into BOOKING(USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String BOOKING_QUERY_DELETE =
             "delete from BOOKING where NUMBER  = ?";
     public static final String BOOKING_QUERY_FIND_ALL_BOOKINGS_BETWEEN_TWO_DATES =
-            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE" +
-                    " from BOOKING left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE " +
-                    "where ARRIVAL < ? and DEPARTURE > ?";
+            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, " +
+                    "ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE from BOOKING " +
+                    "left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE " +
+                    "left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE where ARRIVAL < ? and DEPARTURE > ?";
     public static final String BOOKING_QUERY_FIND_ALL_BOOKINGS_BY_USER =
-            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE" +
-                    " from BOOKING left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE where USER = ?";
+            "select NUMBER, USER, ROOM, PERSONS, ARRIVAL, DEPARTURE, FOOD, DAYS, SERVICES, AMOUNT, STATUS, ROOM.TYPE, " +
+                    "ROOM.SLEEPS, ROOM.PRICE, FOOD.PRICE, ADDITIONALSERVICES.PRICE from BOOKING " +
+                    "left join ROOM on ROOM = ROOMNUMBER left join FOOD on FOOD = FOOD.TYPE " +
+                    "left join ADDITIONALSERVICES on SERVICES = ADDITIONALSERVICES.TYPE where USER = ?";
     public static final String BOOKING_QUERY_CHANGE_ROOM =
             "update BOOKING set ROOM = ?, AMOUNT = ? where NUMBER = ?";
     public static final String BOOKING_QUERY_CHANGE_BOOKING_STATUS =
@@ -96,7 +103,7 @@ public final class SqlQuery {
             "update ROOM set PRICE = ? where TYPE = ? and SLEEPS = ?";
     public static final String ROOM_QUERY_UPDATE_PARAMETERS =
             "update ROOM set TYPE = (select TYPE from ROOM where ROOMNUMBER = ?), SLEEPS = (select SLEEPS from ROOM where ROOMNUMBER = ?), " +
-            "PRICE = (select PRICE from ROOM where ROOMNUMBER = ?) where ROOM.ROOMNUMBER = ?";
+                    "PRICE = (select PRICE from ROOM where ROOMNUMBER = ?) where ROOM.ROOMNUMBER = ?";
     public static final String ROOM_QUERY_FIND_ALL_TYPES_ROOMS =
             "select min(ROOMNUMBER) as ROOMNUMBER, min(SLEEPS) as SLEEPS, min(PRICE) as PRICE, TYPE from ROOM group by TYPE order by PRICE";
     public static final String ROOM_QUERY_FIND_ALL_ROOMS_BY_TYPES_AND_SLEEPS =

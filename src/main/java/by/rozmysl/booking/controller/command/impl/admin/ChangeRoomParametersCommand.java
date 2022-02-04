@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_ROOMS;
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_ROOMS_BY_TYPES_AND_SLEEPS;
@@ -36,15 +37,14 @@ public class ChangeRoomParametersCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         RoomService roomService = ServiceProvider.getInstance().getRoomService();
         try {
-            if (req.getParameter(CHANGE_PARAMETERS) != null
-                    && req.getParameter(CHANGE_PARAMETERS).equals(CHANGE_PARAMETERS)) {
+            if (Objects.equals(req.getParameter(CHANGE_PARAMETERS), CHANGE_PARAMETERS)) {
                 int param = Integer.parseInt(req.getParameter(PARAMETER));
                 roomService.updateEntity(ROOM_UPDATE_PARAMETERS, param, param, param, Integer.parseInt(req.getParameter(ROOM_NUMBER)));
                 LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the parameters were changed to '" +
                         req.getParameter(PARAMETER) + "' by admin " + req.getUserPrincipal().getName());
             }
 
-            if (req.getParameter(CHANGE_ROOM_PRICE) != null && req.getParameter(CHANGE_ROOM_PRICE).equals(CHANGE_ROOM_PRICE)) {
+            if (Objects.equals(req.getParameter(CHANGE_ROOM_PRICE), CHANGE_ROOM_PRICE)) {
                 roomService.updateEntity(ROOM_UPDATE_PRICE, new BigDecimal(req.getParameter(PRICE)), req.getParameter(TYPE),
                         Integer.parseInt(req.getParameter(SLEEPS)));
                 LOGGER.info("For room # " + req.getParameter(ROOM_NUMBER) + ", the price was changed to '" +

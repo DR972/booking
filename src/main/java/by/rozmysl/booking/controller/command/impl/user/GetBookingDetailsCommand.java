@@ -40,14 +40,14 @@ public class GetBookingDetailsCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
+        if (Objects.equals(req.getSession().getAttribute(ACTION), BOOKING)) {
+            return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
+        }
+
         ServiceProvider service = ServiceProvider.getInstance();
         RoomService roomService = service.getRoomService();
         FoodService foodService = service.getFoodService();
         AdditionalServicesService services = service.getServicesService();
-
-        if (req.getSession().getAttribute(ACTION) == BOOKING) {
-            return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);
-        }
 
         try {
             req.setAttribute(ALL_FOOD, foodService.findListEntities(FOOD_FIND_ALL, DEFAULT_NUMBER_ROWS, DEFAULT_PAGE_NUMBER, DEFAULT_NUMBER_ROWS));
@@ -79,7 +79,7 @@ public class GetBookingDetailsCommand implements Command {
             List<Room> rooms = roomService.findListEntities(ROOM_FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
                     booking.getPersons(), booking.getDeparture(), booking.getArrival());
 
-            if (rooms.size() == 0) {
+            if (rooms.isEmpty()) {
                 req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
             }
 

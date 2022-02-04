@@ -1,4 +1,4 @@
-package by.rozmysl.booking.model.service.validator;
+package by.rozmysl.booking.model.validator;
 
 import by.rozmysl.booking.exception.ServiceException;
 import by.rozmysl.booking.model.entity.user.User;

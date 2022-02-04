@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import static by.rozmysl.booking.controller.command.PageAddress.ACCESS_DENIED;
 
-
 /**
  * Performs the duty of checking all requests before allowing access to protected pages.
  */
@@ -36,16 +35,16 @@ public class SecurityFilter implements Filter {
     /**
      * Do filter.
      *
-     * @param req   the Servlet request
-     * @param resp  the Servlet response
-     * @param chain the Filter chain
+     * @param servletRequest  the Servlet request
+     * @param servletResponse the Servlet response
+     * @param chain           the Filter chain
      * @throws IOException      Signals that an I/O exception has occurred.
      * @throws ServletException the servlet exception
      */
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         User loggedUser = AppUtil.getLoggedUser(request.getSession());
         if (request.getServletPath().equals(LOGIN) && loggedUser == null) {
@@ -55,31 +54,7 @@ public class SecurityFilter implements Filter {
 
         HttpServletRequest wrapRequest = request;
         if (loggedUser != null) {
-
-            /*
-              An extension for the HTTPServletRequest that overrides the getUserPrincipal() and isUserInRole().
-              If the user or roles are null on this wrapper, the parent request is consulted.
-             */
-            final class UserRoleRequestWrapper extends HttpServletRequestWrapper {
-                private final String username;
-                private final Set<String> roles;
-                private final HttpServletRequest realRequest;
-
-                /**
-                 * The constructor creates a new object UserRoleRequestWrapper with the <b>username</b>, <b>roles</b>,
-                 * <b>realRequest</b> properties.
-                 *
-                 * @param username id of the User
-                 * @param roles    roles
-                 * @param request  realRequest
-                 */
-                public UserRoleRequestWrapper(String username, Set<String> roles, HttpServletRequest request) {
-                    super(request);
-                    this.username = username;
-                    this.roles = roles;
-                    this.realRequest = request;
-                }
-
+            wrapRequest = new HttpServletRequestWrapper(request) {
                 /**
                  * Checks whether this role corresponds to the user
                  *
@@ -88,7 +63,8 @@ public class SecurityFilter implements Filter {
                  */
                 @Override
                 public boolean isUserInRole(String role) {
-                    return roles == null ? this.realRequest.isUserInRole(role) : roles.contains(role);
+                    Set<String> roles = loggedUser.getRoles();
+                    return roles == null ? request.isUserInRole(role) : roles.contains(role);
                 }
 
                 /**
@@ -98,12 +74,10 @@ public class SecurityFilter implements Filter {
                  */
                 @Override
                 public Principal getUserPrincipal() {
-                    return this.username == null ? realRequest.getUserPrincipal() : (() -> username);
+                    String username = loggedUser.getId();
+                    return username == null ? request.getUserPrincipal() : (() -> username);
                 }
-            }
-
-            wrapRequest = new UserRoleRequestWrapper(loggedUser.getId(), loggedUser.getRoles(), request);
-
+            };
         }
 
         if (SecurityUtil.isSecurityPage(request)) {

@@ -25,7 +25,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      * Searches for the object T in the table 'T' by various parameters.
      *
      * @param provider ModelTypeProvider
-     * @param params       Object parameters
+     * @param params   Object parameters
      * @return T object
      * @throws DaoException if there was an error accessing the database
      */
@@ -35,7 +35,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      * Searches for all T objects in the `T` by various parameters.
      *
      * @param provider ModelTypeProvider
-     * @param params       Object parameters
+     * @param params   Object parameters
      * @return list of T objects
      * @throws DaoException if there was an error accessing the database
      */
@@ -45,7 +45,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      * Performs various operations (save, update, delete) on the object T in the table 'T`.
      *
      * @param provider ModelTypeProvider
-     * @param params       Object parameters
+     * @param params   Object parameters
      * @throws DaoException if there was an error accessing the database
      */
     void updateEntity(ModelTypeProvider provider, Object... params) throws DaoException;
@@ -54,7 +54,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      * Performs various operations (save, update, delete) on the object T in the table 'T` using a transaction.
      *
      * @param provider ModelTypeProvider
-     * @param params       Object parameters
+     * @param params   Object parameters
      * @throws DaoException if there was an error accessing the database
      */
     void updateEntityUsingTransaction(ModelTypeProvider provider, Object... params) throws DaoException;
@@ -63,7 +63,7 @@ public interface Dao<T extends Entity<ID>, ID> {
      * Saves information to a database with automatic key generation.
      *
      * @param provider ModelTypeProvider
-     * @param params       Object parameters
+     * @param params   Object parameters
      * @throws DaoException if there was an error accessing the database
      */
     void saveWithGeneratedKeys(ModelTypeProvider provider, Object... params) throws DaoException;

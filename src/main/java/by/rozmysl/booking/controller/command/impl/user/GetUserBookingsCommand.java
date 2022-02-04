@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
+
 import static by.rozmysl.booking.controller.command.RequestAttribute.USER_BOOKING;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
 import static by.rozmysl.booking.model.ModelTypeProvider.BOOKING_FIND_ALL_BOOKINGS_BY_USER;
@@ -31,7 +33,7 @@ public class GetUserBookingsCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         BookingService bookingService = ServiceProvider.getInstance().getBookingService();
         try {
-            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+            if (Objects.equals(req.getParameter(DELETE), DELETE)) {
                 bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
                 LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was canceled by the user.");
             }

@@ -15,4 +15,4 @@ by.rozmysl.booking.model.service.mail
 by.rozmysl.booking.controller.security
 by.rozmysl.booking.controller.tag
 by.rozmysl.booking.controller.util
-by.rozmysl.booking.model.service.validator
+by.rozmysl.booking.model.validator

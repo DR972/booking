@@ -1,4 +1,4 @@
-package by.rozmysl.booking.model.service.validator;
+package by.rozmysl.booking.model.validator;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

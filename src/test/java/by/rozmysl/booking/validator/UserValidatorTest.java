@@ -1,7 +1,7 @@
 package by.rozmysl.booking.validator;
 
 import by.rozmysl.booking.model.entity.user.User;
-import by.rozmysl.booking.model.service.validator.UserValidator;
+import by.rozmysl.booking.model.validator.UserValidator;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

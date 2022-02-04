@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
@@ -35,13 +36,13 @@ public class ToBookingPageCommand implements Command {
      */
     @Override
     public PageGuide execute(HttpServletRequest req) throws CommandException {
-        ServiceProvider service = ServiceProvider.getInstance();
-        RoomService roomService = service.getRoomService();
-
-        if (req.getSession().getAttribute(ACTION) != null && req.getSession().getAttribute(ACTION).equals(CONFIRMATION)) {
+        if (Objects.equals(req.getSession().getAttribute(ACTION), CONFIRMATION)) {
             req.getSession().removeAttribute(ACTION);
             return new PageGuide(PageAddress.CONFIRMATION, TransferMethod.FORWARD);
         }
+
+        ServiceProvider service = ServiceProvider.getInstance();
+        RoomService roomService = service.getRoomService();
 
         try {
             Booking booking = (Booking) req.getSession().getAttribute(BOOKING);
@@ -49,10 +50,10 @@ public class ToBookingPageCommand implements Command {
             List<Room> suitableRooms = roomService.findListEntities(ROOM_FIND_ALL_FREE_ROOMS_BETWEEN_TWO_DATES_BY_TYPES_AND_SLEEPS,
                     room.getType(), room.getSleeps(), booking.getDeparture(), booking.getArrival());
 
-            if (suitableRooms.size() == 0) {
+            if (suitableRooms.isEmpty()) {
                 req.setAttribute(MISSED, MESSAGE_MISSED);
                 if (roomService.findListEntities(ROOM_FIND_ALL_TYPES_FREE_ROOMS_BETWEEN_TWO_DATES_WITH_GREATER_OR_EQUAL_SLEEPS,
-                        booking.getPersons(), booking.getDeparture(), booking.getArrival()).size() == 0) {
+                        booking.getPersons(), booking.getDeparture(), booking.getArrival()).isEmpty()) {
                     req.setAttribute(NO_AVAILABLE, MESSAGE_NO_AVAILABLE);
                 }
                 return new PageGuide(PageAddress.BOOKING, TransferMethod.FORWARD);

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Objects;
+
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
 import static by.rozmysl.booking.model.ModelTypeProvider.*;
@@ -33,15 +35,15 @@ public class GetAllUsersCommand implements Command {
         UserService userService = ServiceProvider.getInstance().getUserService();
 
         try {
-            if (req.getParameter(CHANGE_ACCOUNT_LOCK) != null && req.getParameter(CHANGE_ACCOUNT_LOCK).equals(CHANGE_ACCOUNT_LOCK)) {
+            if (Objects.equals(req.getParameter(CHANGE_ACCOUNT_LOCK), CHANGE_ACCOUNT_LOCK)) {
                 userService.updateEntity(USER_CHANGE_ACCOUNT_LOCK, !Boolean.parseBoolean(req.getParameter(BANNED)), req.getParameter(USERNAME));
             }
 
-            if (req.getParameter(CHANGE_ROLE_LIST) != null && req.getParameter(CHANGE_ROLE_LIST).equals(CHANGE_ROLE_LIST)) {
+            if (Objects.equals(req.getParameter(CHANGE_ROLE_LIST), CHANGE_ROLE_LIST)) {
                 userService.changeListUserRoles(req.getParameter(USERNAME));
             }
 
-            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+            if (Objects.equals(req.getParameter(DELETE), DELETE)) {
                 String username = req.getParameter(USERNAME);
                 if (!service.getBookingService().findListEntities(BOOKING_FIND_ALL_BOOKINGS_BY_USER, username).isEmpty()) {
                     req.setAttribute(ERROR_DELETE_USER, ERROR_DELETE_USER_RU);

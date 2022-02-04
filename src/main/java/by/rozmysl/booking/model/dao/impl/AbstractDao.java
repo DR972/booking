@@ -19,7 +19,7 @@ import static by.rozmysl.booking.model.dao.ColumnName.*;
  */
 public abstract class AbstractDao<T extends Entity<ID>, ID> implements Dao<T, ID> {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDao.class);
-    protected Connection connection;
+    private Connection connection;
 
     /**
      * Sets connection to DAO.
@@ -42,7 +42,7 @@ public abstract class AbstractDao<T extends Entity<ID>, ID> implements Dao<T, ID
     @Override
     public T findEntity(ModelTypeProvider provider, Object... params) throws DaoException {
         List<T> entities = getResultSet(provider, statement -> setStatement(statement, params));
-        return entities.size() != 0 ? entities.get(0) : null;
+        return !entities.isEmpty() ? entities.get(0) : null;
     }
 
     /**

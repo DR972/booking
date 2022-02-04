@@ -8,8 +8,8 @@ import by.rozmysl.booking.model.db.EntityTransaction;
 import by.rozmysl.booking.model.entity.user.User;
 import by.rozmysl.booking.model.service.ServiceProvider;
 import by.rozmysl.booking.model.service.UserService;
-import by.rozmysl.booking.model.service.validator.UserValidator;
-import by.rozmysl.booking.model.service.validator.PasswordEncryptor;
+import by.rozmysl.booking.model.validator.UserValidator;
+import by.rozmysl.booking.model.validator.PasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

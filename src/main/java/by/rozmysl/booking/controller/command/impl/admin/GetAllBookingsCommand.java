@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.ALL_BOOKINGS;
 import static by.rozmysl.booking.controller.command.RequestAttribute.AVAILABLE_ROOMS;
@@ -42,18 +43,18 @@ public class GetAllBookingsCommand implements Command {
         RoomService roomService = service.getRoomService();
 
         try {
-            if (req.getParameter(DELETE) != null && req.getParameter(DELETE).equals(DELETE)) {
+            if (Objects.equals(req.getParameter(DELETE), DELETE)) {
                 bookingService.delete(Long.parseLong(req.getParameter(BOOKING_NUMBER)));
                 LOGGER.info("Booking # " + req.getParameter(BOOKING_NUMBER) + " was deleted by admin " + req.getUserPrincipal().getName());
             }
 
-            if (req.getParameter(CHANGE_ROOM) != null && req.getParameter(CHANGE_ROOM).equals(CHANGE_ROOM)) {
+            if (Objects.equals(req.getParameter(CHANGE_ROOM), CHANGE_ROOM)) {
                 bookingService.changeRoom(Long.parseLong(req.getParameter(BOOKING_NUMBER)), Integer.parseInt(req.getParameter(ROOM_NUMBER)), service);
                 LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the room number was changed to " +
                         req.getParameter(ROOM_NUMBER) + " by the admin " + req.getUserPrincipal().getName());
             }
 
-            if (req.getParameter(CHANGE_STATUS) != null && req.getParameter(CHANGE_STATUS).equals(CHANGE_STATUS)) {
+            if (Objects.equals(req.getParameter(CHANGE_STATUS), CHANGE_STATUS)) {
                 bookingService.changeBookingStatus(Long.parseLong(req.getParameter(BOOKING_NUMBER)), req.getParameter(RequestParameter.STATUS), service);
                 LOGGER.info("In booking # " + req.getParameter(BOOKING_NUMBER) + ", the status was changed to '" +
                         req.getParameter(RequestParameter.STATUS) + "'  by the admin " + req.getUserPrincipal().getName());

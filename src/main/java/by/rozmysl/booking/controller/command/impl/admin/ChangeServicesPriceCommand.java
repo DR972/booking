@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static by.rozmysl.booking.controller.command.RequestAttribute.*;
 import static by.rozmysl.booking.controller.command.RequestParameter.*;
@@ -38,13 +39,13 @@ public class ChangeServicesPriceCommand implements Command {
         AdditionalServicesService servicesService = service.getServicesService();
 
         try {
-            if (req.getParameter(CHANGE_FOOD_PRICE) != null && req.getParameter(CHANGE_FOOD_PRICE).equals(CHANGE_FOOD_PRICE)) {
+            if (Objects.equals(req.getParameter(CHANGE_FOOD_PRICE), CHANGE_FOOD_PRICE)) {
                 foodService.updateEntity(FOOD_CHANGE_FOOD_PRICE, new BigDecimal(req.getParameter(FOOD_PRICE)), req.getParameter(FOOD_TYPE));
                 LOGGER.info("For food '" + req.getParameter(FOOD_TYPE) + "', the price was changed to '" +
                         req.getParameter(FOOD_PRICE) + "' by admin " + req.getUserPrincipal().getName());
             }
 
-            if (req.getParameter(CHANGE_SERVICES_PRICE) != null && req.getParameter(CHANGE_SERVICES_PRICE).equals(CHANGE_SERVICES_PRICE)) {
+            if (Objects.equals(req.getParameter(CHANGE_SERVICES_PRICE), CHANGE_SERVICES_PRICE)) {
                 servicesService.updateEntity(ADDITIONALSERVICES_CHANGE_SERVICE_PRICE, new BigDecimal(req.getParameter(SERVICE_PRICE)), req.getParameter(SERVICE_TYPE));
                 LOGGER.info("For service '" + req.getParameter(SERVICE_TYPE) + "', the price was changed to '" +
                         req.getParameter(SERVICE_PRICE) + "' by admin " + req.getUserPrincipal().getName());

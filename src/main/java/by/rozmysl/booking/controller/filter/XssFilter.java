@@ -20,29 +20,17 @@ public class XssFilter implements Filter {
     /**
      * Do filter.
      *
-     * @param req   the Servlet request
-     * @param resp  the Servlet response
-     * @param chain the Filter chain
+     * @param servletRequest  the Servlet request
+     * @param servletResponse the Servlet response
+     * @param chain           the Filter chain
      * @throws IOException      Signals that an I/O exception has occurred.
      * @throws ServletException the servlet exception
      */
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
 
-        /*
-          An extension for the HTTPServletRequest that overrides the getParameterValues(), getParameter() and getHeader().
-         */
-        final class XssRequestWrapper extends HttpServletRequestWrapper {
+        chain.doFilter(new HttpServletRequestWrapper((HttpServletRequest) servletRequest) {
             private static final String REGEX_PATTERN = "<.*?>";
-
-            /**
-             * Instantiates a new XssRequestWrapper.
-             *
-             * @param request the request
-             */
-            public XssRequestWrapper(HttpServletRequest request) {
-                super(request);
-            }
 
             /**
              * Gets the value of the Header property
@@ -89,9 +77,7 @@ public class XssFilter implements Filter {
             private String deleteStripXss(String value) {
                 return value == null ? null : value.replaceAll(REGEX_PATTERN, "");
             }
-        }
-
-        chain.doFilter(new XssRequestWrapper((HttpServletRequest) req), resp);
+        }, servletResponse);
     }
 
     @Override

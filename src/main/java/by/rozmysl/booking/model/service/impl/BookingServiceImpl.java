@@ -8,7 +8,7 @@ import by.rozmysl.booking.model.entity.hotel.StatusReservation;
 import by.rozmysl.booking.model.entity.user.Booking;
 import by.rozmysl.booking.model.service.BookingService;
 import by.rozmysl.booking.model.service.ServiceProvider;
-import by.rozmysl.booking.model.service.validator.BookingValidator;
+import by.rozmysl.booking.model.validator.BookingValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

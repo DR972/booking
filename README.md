@@ -1,55 +1,47 @@
-#                                                      Web-Project
-              Построить веб-систему, поддерживающую заданную функциональность.
+#Web-Project. Hotel Booking system
+___
+#Project Overview
+___
+##The client fills out an Application specifying the number of beds in the room, the class of apartments and the time of stay. The administrator reviews the received Application, selects the most suitable of the available Rooms, after which the system issues an Invoice to the Client.
+___
+##Roles in project
+___
+###Unauthorised user (anonymous)
+- View prices
+- View the photo gallery
+- View general information about the hotel
+- Sign Up
+- Log In
 
-            Необходимо написать (построить) веб-систему согласно требованиям, приведенным
-      ниже, и реализовать определенную функциональность.
+###User
+- View prices
+- View the photo gallery
+- View general information about the hotel
+- Book a room
+- View information about your bookings
+- Delete booking
 
-      Общие требования к проекту:
-            Приложение реализовать применяя технологии Servlet и JSP.
-            Архитектура приложения должна соответствовать шаблонам Layered architecture и
-      Model-View-Controller.
-            Информация о предметной области должна хранится в БД:
-             - данные в базе хранятся на кириллице, рекомендуется применять кодировку utf-8
-             - технология доступа к БД – JDBC (только JDBC)
-             - для работы с БД в приложении должен быть реализован пул соединений
-             - при проектировании БД рекомендуется не использовать более 6-8 таблиц
-             - доступ к данным в приложении осуществлять с использованием шаблона DAO.
-             Интерфейс приложения должен быть интернационализирован; выбор языков:
-      английский, русский.
-            Приложение должно корректно обрабатывать возникающие исключительные
-      ситуации, в том числе вести их журналирование. В качестве логгера использовать Log4j.
-            Классы и другие сущности приложения должны быть грамотно структурированы по
-      пакетам и иметь отражающую их функциональность название.
-            При реализации бизнес-логики приложения следует при необходимости
-      использовать шаблоны проектирования (например, шаблоны GoF: Factory Method,
-      Command, Builder, Strategy, State, Observer etc), а также необходимо избегать процедурного
-      стиля программирования.
-            Для хранения пользовательской информации между запросами использовать сессию.
-            Для обработки объектов запроса(request) и ответа(response) применить фильтры
-      (например, для установки параметра кодировки запроса/ответа).
-            При реализации страниц JSP следует использовать теги библиотеки JSTL,
-      использовать скриплеты запрещено. Обязательным требованием является реализация и
-      использование пользовательского тега. Просмотр “длинных списков” желательно
-      организовывать в постраничном режиме.
-            Документацию к проекту необходимо оформить согласно требованиям javadoc.
-            Оформление кода должно соответствовать Java Code Convention.
-
-      Общие требования к функциональности проекта:
-        1) Вход(sign in) и выход(sign out) в/из системы.
-        2) Регистрация.
-        3) Просмотр информации (например: просмотр всех курсов, имеющихся кредитных
-           карт, счетов и т.д.)
-        4) Удаление информации (например: отмена заказа, медицинского назначения, отказ
-           от курса обучения и т.д.)
-        5) Добавление и модификация информации (например: создать и отредактировать
-           курс, создать и отредактировать заказ и т.д.)
-           
-                             Предметные области для разработки проекта.     
-            
-            13. Система Заказ гостиницы. Клиент заполняет Заявку, указывая количество мест в
-      номере, класс апартаментов и время пребывания. Администратор просматривает
-      поступившую Заявку, выделяет наиболее подходящий из доступных Номеров, после чего
-      система выставляет Счет Клиенту.
-
-
+###Admin
+- View user information
+- Block a user
+- Unblock a user
+- Delete a user
+- Add the admin role to the user
+- Remove the admin role from the user
+- Book a room
+- View information about all bookings
+- Change a room in a user's booking
+- Change booking status
+- Send an invoice to the user
+- Delete booking
+- View information about all rooms
+- Change the price of a room
+- Delete room
+- View information about available rooms in a certain period of time
+- Change the parameters of existing rooms
+- Change the price of meals and additional services
+- Add a new room
+___
+###Database visualization
+___
 ![](ER-Diagramm_db_Booking.png)

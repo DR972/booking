@@ -14,7 +14,6 @@ public final class LoggerMessageError {
 
     /* TABLE USER */
     public static final String MESSAGE_COUNT_USERS_ROWS = "'CountUsersRows' query has been failed";
-    public static final String MESSAGE_COUNT_USERS_PAGES = "'CountUsersPages' query has been failed";
     public static final String MESSAGE_USER_FIND_BY_ID = "'User findById' query has been failed";
     public static final String MESSAGE_USER_FIND_ALL = "'User findAll' query has been failed";
     public static final String MESSAGE_USER_SAVE = "'Save User' query has been failed";
@@ -30,7 +29,6 @@ public final class LoggerMessageError {
 
     /* TABLE BOOKING */
     public static final String MESSAGE_COUNT_BOOKINGS_ROWS = "'CountBookingsRows' query has been failed";
-    public static final String MESSAGE_COUNT_BOOKINGS_PAGES = "'CountBookingsPages' query has been failed";
     public static final String MESSAGE_BOOKING_FIND_BY_ID = "'Booking findById' query has been failed";
     public static final String MESSAGE_BOOKING_FIND_ALL = "'Booking findAll' query has been failed";
     public static final String MESSAGE_BOOKING_SAVE = "'Booking save' query has been failed";
