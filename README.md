@@ -1,27 +1,22 @@
-#Web-Project. Hotel Booking system
+# Web-Project. Hotel Booking system
+# Project Overview
+### The client fills out an Application specifying the number of beds in the room, the class of apartments and the time of stay. The administrator reviews the received Application, selects the most suitable of the available Rooms, after which the system issues an Invoice to the Client.
 ___
-#Project Overview
-___
-##The client fills out an Application specifying the number of beds in the room, the class of apartments and the time of stay. The administrator reviews the received Application, selects the most suitable of the available Rooms, after which the system issues an Invoice to the Client.
-___
-##Roles in project
-___
-###Unauthorised user (anonymous)
+## Roles in project
+## Unauthorised user (anonymous)
 - View prices
 - View the photo gallery
 - View general information about the hotel
 - Sign Up
 - Log In
-
-###User
+## User
 - View prices
 - View the photo gallery
 - View general information about the hotel
 - Book a room
 - View information about your bookings
 - Delete booking
-
-###Admin
+## Admin
 - View user information
 - Block a user
 - Unblock a user
@@ -42,6 +37,5 @@ ___
 - Change the price of meals and additional services
 - Add a new room
 ___
-###Database visualization
-___
+## Database visualization
 ![](ER-Diagramm_db_Booking.png)
