@@ -31,17 +31,23 @@ public class GetFreeRoomsCommand implements Command {
     public PageGuide execute(HttpServletRequest req) throws CommandException {
         try {
             if (req.getParameter(FROM) != null && req.getParameter(TO) != null) {
-                if (LocalDate.parse(req.getParameter(FROM)).isBefore(LocalDate.parse(req.getParameter(TO)))) {
-                    req.setAttribute(FREE_ROOMS, ServiceProvider.getInstance().getRoomService().findListEntities(ROOM_FIND_ALL_FREE_ROOMS_BETWEEN_TWO_DATES,
-                            LocalDate.parse(req.getParameter(TO)), LocalDate.parse(req.getParameter(FROM))));
+                LocalDate from = LocalDate.parse(req.getParameter(FROM));
+                LocalDate to = LocalDate.parse(req.getParameter(TO));
+
+                if (from.isBefore(to)) {
+                    req.setAttribute(FREE_ROOMS, ServiceProvider.getInstance().getRoomService()
+                            .findListEntities(ROOM_FIND_ALL_FREE_ROOMS_BETWEEN_TWO_DATES, to, from));
                 } else {
                     req.setAttribute(DATE_ERROR, DATE_ERROR_RU);
                 }
+                req.setAttribute(FROM, from);
+                req.setAttribute(TO, to);
             }
         } catch (ServiceException e) {
             LOGGER.error(e.getMessage(), e);
             throw new CommandException(e.getMessage(), e);
         }
+
         return new PageGuide(PageAddress.FREE_ROOMS, TransferMethod.FORWARD);
     }
 }
